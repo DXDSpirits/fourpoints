@@ -13,14 +13,6 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 
-class Answer(models.Model):
-    user = models.ForeignKey(User)
-    choice = models.ForeignKey(Choice)
-    question = models.ForeignKey(Question)
-    
-    time_created = models.DateTimeField(auto_now_add=True)
-
-
 class Play(models.Model):
     user = models.ForeignKey(User)
     city = models.ForeignKey(City)
@@ -36,3 +28,15 @@ class Play(models.Model):
         index_together= [['user', 'time_created',],
                          ['city', 'time_created',],]
         ordering = ['time_created']
+    
+    def __unicode__(self):
+        return u'%s %s' % (unicode(self.user), unicode(self.city))
+
+
+class Answer(models.Model):
+    play = models.ForeignKey(Play)
+    
+    question = models.ForeignKey(Question)
+    choice = models.ForeignKey(Choice)
+    
+    time_created = models.DateTimeField(auto_now_add=True)

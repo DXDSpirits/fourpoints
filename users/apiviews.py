@@ -6,7 +6,7 @@ from .models import Play
 from .serializers import UserSerializer, UserSimpleSerializer, PlaySerializer
 from .permissions import IsSelf, IsOwner
 
-from rest_framework import generics, filters#, viewsets
+from rest_framework import generics, filters, viewsets
 
 
 class IsOwnerFilterBackend(filters.BaseFilterBackend):
@@ -30,7 +30,7 @@ class UserDetail(generics.RetrieveAPIView):
     permission_classes = (IsSelf,)
 
 
-class PlayViewSet(generics.ListCreateAPIView):
+class PlayViewSet(viewsets.ModelViewSet):
     queryset = Play.objects.all()
     serializer_class = PlaySerializer
     permission_classes = (IsOwner,)
@@ -38,5 +38,3 @@ class PlayViewSet(generics.ListCreateAPIView):
     
     def pre_save(self, obj):
         obj.user = self.request.user
-        obj.score = 0
-        obj.complete = False
