@@ -1,0 +1,177 @@
+@import "custom-local";
+
+//== Static url for images
+$static-url: 'http://wedfairy.qiniudn.com/' !default;
+
+
+//== Colors
+//
+//## Gray and brand colors for use across Bootstrap.
+
+
+$brand-primary:         #f28c8c !default;
+$brand-success:         #88bf9b !default;
+$brand-info:            #91d9cc !default;
+$brand-warning:         #d9ae79 !default;
+$brand-danger:          #d9534f !default;
+
+
+//== Typography
+$font-family-sans-serif:  "Helvetica Neue", "Microsoft Yahei", Helvetica, Arial, sans-serif !default;
+$font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
+
+$font-family-base:        $font-family-sans-serif !default;
+$headings-font-family:    $font-family-sans-serif !default;
+
+
+//-- Iconography
+$icon-font-path: "#{$static-url}fonts/bootstrap/" !default;
+
+
+//== Components
+$border-radius-base:        0 !default;
+$border-radius-large:       0 !default;
+$border-radius-small:       0 !default;
+
+
+//== Buttons
+//
+//## For each of Bootstrap's buttons, define text, background and border color.
+
+$btn-font-weight:                normal !default;
+
+$btn-default-color:              #333 !default;
+$btn-default-bg:                 #fff !default;
+$btn-default-border:             #ccc !default;
+
+$btn-primary-color:              #fff !default;
+$btn-primary-bg:                 $brand-primary !default;
+$btn-primary-border:             $btn-primary-bg !default;
+
+$btn-success-color:              #fff !default;
+$btn-success-bg:                 $brand-success !default;
+$btn-success-border:             $btn-success-bg !default;
+
+$btn-info-color:                 #fff !default;
+$btn-info-bg:                    $brand-info !default;
+$btn-info-border:                $btn-info-bg !default;
+
+$btn-warning-color:              #fff !default;
+$btn-warning-bg:                 $brand-warning !default;
+$btn-warning-border:             $btn-warning-bg !default;
+
+$btn-danger-color:               #fff !default;
+$btn-danger-bg:                  $brand-danger !default;
+$btn-danger-border:              $btn-danger-bg !default;
+
+
+//== Forms
+$input-border-focus: #ccc !default;
+
+
+// CSS3 webkit flexbox
+@mixin flexible($flex: 1, $orient: vertical, $defaultSize: 1px) {
+    @if ($orient == vertical) {
+        height: $defaultSize;
+    } @else {
+        width: $defaultSize;
+    }
+    -webkit-box-flex: $flex;   /* OLD - iOS 6-, Safari 3.1-6 */
+       -moz-box-flex: $flex;   /* OLD - Firefox 19- */
+            -ms-flex: $flex;   /* IE 10 */
+        -webkit-flex: $flex;   /* Chrome */
+                flex: $flex;   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+@mixin flex-box($orient: vertical, $direction: normal, $pack: center, $align: center) {
+    
+    /*
+     * Flexbox
+     */
+    display:  -webkit-box;     /* OLD - iOS 6-, Safari 3.1-6 */
+    display:     -moz-box;     /* OLD - Firefox 19- (buggy but mostly works) */
+    //display:  -ms-flexbox;     /* TWEENER - IE 10 */
+    //display: -webkit-flex;     /* NEW - Chrome */
+    //display:         flex;     /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    
+    /*
+     * Orient and direction
+     */
+    -webkit-box-orient: $orient;
+       -moz-box-orient: $orient;
+    -webkit-box-direction: $direction;
+       -moz-box-direction: $direction;
+    
+    /*
+    @if ($orient == vertical) {
+        @if ($direction == normal) {
+                -ms-flex-direction: column;
+            -webkit-flex-direction: column;
+                    flex-direction: column;
+        } @else {
+                -ms-flex-direction: column-reverse;
+            -webkit-flex-direction: column-reverse;
+                    flex-direction: column-reverse;
+        }
+    } @else {
+        @if ($direction == normal) {
+                -ms-flex-direction: row;
+            -webkit-flex-direction: row;
+                    flex-direction: row;
+        } @else {
+                -ms-flex-direction: row-reverse;
+            -webkit-flex-direction: row-reverse;
+                    flex-direction: row-reverse;
+        }
+    }
+    */
+    
+    /*
+     * Pack / Justify
+     */
+           -webkit-box-pack: $pack;
+              -moz-box-pack: $pack;
+    //          -ms-flex-pack: $pack;
+    //-webkit-justify-content: $pack;
+    //        justify-content: $pack;
+    
+    /*
+     * Content align
+     */
+        -webkit-box-align: $align;
+           -moz-box-align: $align;
+    //   -ms-flex-line-pack: $align;
+    //       -ms-flex-align: $align;
+    //-webkit-align-content: $align;
+    //        align-content: $align;
+    
+    > .flexible {
+        @include flexible(1, $orient, 1px);
+    }
+}
+
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} { @content; }
+       @-moz-keyframes #{$name} { @content; }
+         @-o-keyframes #{$name} { @content; }
+            @keyframes #{$name} { @content; }
+}
+
+@mixin keyframes-transform($name, $from, $to) {
+    @-webkit-keyframes #{$name} { from { -webkit-transform: $from; transform: $from; } to { -webkit-transform: $to; transform: $to; } }
+       @-moz-keyframes #{$name} { from {    -moz-transform: $from; transform: $from; } to {    -moz-transform: $to; transform: $to; } }
+         @-o-keyframes #{$name} { from {      -o-transform: $from; transform: $from; } to {      -o-transform: $to; transform: $to; } }
+            @keyframes #{$name} { from {                           transform: $from; } to {                         transform: $to; } }
+}
+
+@mixin scrollable($scrollbarWidth: 0) {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar {
+        @if ($scrollbarWidth == 0) {
+            display: none;
+        } @else {
+            width: $scrollbarWidth;
+        }
+    }
+}

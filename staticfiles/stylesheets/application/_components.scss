@@ -1,0 +1,20 @@
+
+.lr-slide {
+    width: 300%;
+    height: 100%;
+    @include flex-box($orient: horizontal);
+    .slide-item {
+        max-height: 100%;
+        @include scrollable();
+        padding: 15px;
+        @include flexible($orient: horizontal);
+    }
+    @include translate3d(-33.333333%, 0, 0);
+    @include transition-transform(.35s ease-in-out);
+    &.slide-right {
+        @include translate3d(-66.666667%, 0, 0);
+    }
+    &.slide-left {
+        @include translate3d(0, 0, 0);
+    }
+}

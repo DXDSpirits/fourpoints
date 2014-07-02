@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<!--[if IEMobile 7 ]>    <html class="no-js iem7"> <![endif]-->
+<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <title>LE PETIT AMOUR - Dashboard</title>
+    
+    <meta name="description" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="CDNURL" content="/static/">
+    <meta name="StaticURL" content="/static/">
+    <meta name="APIHost" content="/api">
+    
+    <link rel="stylesheet" href="{% static "stylesheets/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "stylesheets/font-awesome.css" %}">
+    <link rel="stylesheet" href="{% static "stylesheets/dashboard.css" %}">
+    
+    <script src="{% static "javascripts/vendor/modernizr-2.6.2.min.js" %}"></script>
+</head>
+<body>
+
+<!-- The dashboard begins here -->
+<div class="views-wrapper">
+    {% include "pages/home.html" %}
+    {% include "pages/city.html" %}
+    {% include "pages/question.html" %}
+</div>
+<!-- The dashboard ends -->
+
+<script>
+    var BOOST = {};
+</script>
+
+<script src="{% static "javascripts/vendor/jquery-2.1.1.min.js" %}"></script>
+<script src="{% static "javascripts/vendor/underscore.min.js" %}"></script>
+<script src="{% static "javascripts/vendor/mustache.min.js" %}"></script>
+<script src="{% static "javascripts/vendor/backbone.min.js" %}"></script>
+<script src="{% static "javascripts/vendor/bootstrap.min.js" %}"></script>
+
+<script src="{% static "javascripts/plugins/fastclick.js" %}"></script>
+
+<script src="{% static "javascripts/amour.js" %}"></script>
+
+<script>
+    var require = { callback: function() { require.config({
+        baseUrl: '{% static "javascripts/dashboard" %}',
+        paths: {},
+        shim: {}
+    })}};
+</script>
+
+<script data-main="{% static "javascripts/dashboard.js" %}" src="{% static "require.js" %}"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-52496372-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+</body>
+</html>

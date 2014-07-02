@@ -1,0 +1,466 @@
+@-webkit-keyframes slideouttoleft {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
+  to {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); } }
+
+@-moz-keyframes slideouttoleft {
+  from {
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
+  to {
+    -moz-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); } }
+
+@-o-keyframes slideouttoleft {
+  from {
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
+  to {
+    -o-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); } }
+
+@keyframes slideouttoleft {
+  from {
+    transform: translate3d(0, 0, 0); }
+
+  to {
+    transform: translate3d(-100%, 0, 0); } }
+
+@-webkit-keyframes slideinfromright {
+  from {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+@-moz-keyframes slideinfromright {
+  from {
+    -moz-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); }
+
+  to {
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+@-o-keyframes slideinfromright {
+  from {
+    -o-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); }
+
+  to {
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+@keyframes slideinfromright {
+  from {
+    transform: translate3d(100%, 0, 0); }
+
+  to {
+    transform: translate3d(0, 0, 0); } }
+
+@-webkit-keyframes slideouttoright {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
+  to {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); } }
+
+@-moz-keyframes slideouttoright {
+  from {
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
+  to {
+    -moz-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); } }
+
+@-o-keyframes slideouttoright {
+  from {
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
+  to {
+    -o-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); } }
+
+@keyframes slideouttoright {
+  from {
+    transform: translate3d(0, 0, 0); }
+
+  to {
+    transform: translate3d(100%, 0, 0); } }
+
+@-webkit-keyframes slideinfromleft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+@-moz-keyframes slideinfromleft {
+  from {
+    -moz-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); }
+
+  to {
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+@-o-keyframes slideinfromleft {
+  from {
+    -o-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); }
+
+  to {
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+@keyframes slideinfromleft {
+  from {
+    transform: translate3d(-100%, 0, 0); }
+
+  to {
+    transform: translate3d(0, 0, 0); } }
+
+.views-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto; }
+
+.view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%; }
+  .view.view-next, .view.view-prev, .view.view-hidden {
+    pointer-events: none; }
+
+.view {
+  padding-bottom: 45px; }
+  .view > .wrapper {
+    background: white;
+    padding: 15px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    /*
+     * Flexbox
+     */
+    display: -webkit-box;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;
+    /* OLD - Firefox 19- (buggy but mostly works) */
+    /*
+     * Orient and direction
+     */
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    /*
+    @if ($orient == vertical) {
+        @if ($direction == normal) {
+                -ms-flex-direction: column;
+            -webkit-flex-direction: column;
+                    flex-direction: column;
+        } @else {
+                -ms-flex-direction: column-reverse;
+            -webkit-flex-direction: column-reverse;
+                    flex-direction: column-reverse;
+        }
+    } @else {
+        @if ($direction == normal) {
+                -ms-flex-direction: row;
+            -webkit-flex-direction: row;
+                    flex-direction: row;
+        } @else {
+                -ms-flex-direction: row-reverse;
+            -webkit-flex-direction: row-reverse;
+                    flex-direction: row-reverse;
+        }
+    }
+    */
+    /*
+     * Pack / Justify
+     */
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    /*
+     * Content align
+     */
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+    .view > .wrapper::-webkit-scrollbar {
+      display: none; }
+    .view > .wrapper > .flexible {
+      height: 1px;
+      -webkit-box-flex: 1;
+      /* OLD - iOS 6-, Safari 3.1-6 */
+      -moz-box-flex: 1;
+      /* OLD - Firefox 19- */
+      -ms-flex: 1;
+      /* IE 10 */
+      -webkit-flex: 1;
+      /* Chrome */
+      flex: 1;
+      /* NEW, Spec - Opera 12.1, Firefox 20+ */ }
+    .view > .wrapper.rendering {
+      opacity: 0; }
+  .view > footer, .view > .footer-navbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 45px;
+    -webkit-transition: visibility, opacity 0.35s ease-in-out;
+    -o-transition: visibility, opacity 0.35s ease-in-out;
+    transition: visibility, opacity 0.35s ease-in-out; }
+
+.view.view-hidden > .wrapper {
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0); }
+
+.view.view-next > .wrapper {
+  -webkit-animation: slideinfromright 0.35s linear;
+  -o-animation: slideinfromright 0.35s linear;
+  animation: slideinfromright 0.35s linear;
+  -webkit-animation-fill-mode: forwards; }
+
+.view.view-next.view-next-reverse > .wrapper {
+  -webkit-animation: slideinfromleft 0.35s linear;
+  -o-animation: slideinfromleft 0.35s linear;
+  animation: slideinfromleft 0.35s linear; }
+
+.view.view-prev > .wrapper {
+  -webkit-animation: slideouttoleft 0.35s linear;
+  -o-animation: slideouttoleft 0.35s linear;
+  animation: slideouttoleft 0.35s linear;
+  -webkit-animation-fill-mode: forwards; }
+
+.view.view-prev.view-prev-reverse > .wrapper {
+  -webkit-animation: slideouttoright 0.35s linear;
+  -o-animation: slideouttoright 0.35s linear;
+  animation: slideouttoright 0.35s linear; }
+
+.view.view-hidden > footer, .view.view-hidden > .footer-navbar {
+  opacity: 0;
+  visibility: hidden; }
+
+#apploader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: opacity 0.35s ease-in-out;
+  -o-transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out; }
+  #apploader .loader {
+    width: 140px;
+    margin: 0 auto;
+    min-height: 64px;
+    pointer-events: none; }
+  #apploader .ajax-error {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    text-align: center;
+    color: #eeeeee; }
+  #apploader .loading-sprite {
+    background-image: url(/assets/images/loading.gif);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    height: 32px;
+    width: 100%; }
+
+@font-face {
+  font-family: 'titan';
+  src: url("/assets/fonts/TitanOne-Regular.ttf");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'greatvibes';
+  src: url("/assets/fonts/GreatVibes.woff");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'circle';
+  src: url("/assets/fonts/CicleFina.ttf");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'wide';
+  src: url("/assets/fonts/DISCO.ttf");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'pacifico';
+  src: url("/assets/fonts/Pacifico.ttf");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'bandasemibold';
+  src: url("/assets/fonts/bandasemibold.otf");
+  font-weight: normal;
+  font-style: normal; }
+
+.lr-slide {
+  width: 300%;
+  height: 100%;
+  /*
+   * Flexbox
+   */
+  display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;
+  /* OLD - Firefox 19- (buggy but mostly works) */
+  /*
+   * Orient and direction
+   */
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  /*
+  @if ($orient == vertical) {
+      @if ($direction == normal) {
+              -ms-flex-direction: column;
+          -webkit-flex-direction: column;
+                  flex-direction: column;
+      } @else {
+              -ms-flex-direction: column-reverse;
+          -webkit-flex-direction: column-reverse;
+                  flex-direction: column-reverse;
+      }
+  } @else {
+      @if ($direction == normal) {
+              -ms-flex-direction: row;
+          -webkit-flex-direction: row;
+                  flex-direction: row;
+      } @else {
+              -ms-flex-direction: row-reverse;
+          -webkit-flex-direction: row-reverse;
+                  flex-direction: row-reverse;
+      }
+  }
+  */
+  /*
+   * Pack / Justify
+   */
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  /*
+   * Content align
+   */
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-transform: translate3d(-33.33333%, 0, 0);
+  transform: translate3d(-33.33333%, 0, 0);
+  -webkit-transition: -webkit-transform 0.35s ease-in-out;
+  -moz-transition: -moz-transform 0.35s ease-in-out;
+  -o-transition: -o-transform 0.35s ease-in-out;
+  transition: transform 0.35s ease-in-out; }
+  .lr-slide > .flexible {
+    width: 1px;
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;
+    /* OLD - Firefox 19- */
+    -ms-flex: 1;
+    /* IE 10 */
+    -webkit-flex: 1;
+    /* Chrome */
+    flex: 1;
+    /* NEW, Spec - Opera 12.1, Firefox 20+ */ }
+  .lr-slide .slide-item {
+    max-height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 15px;
+    width: 1px;
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;
+    /* OLD - Firefox 19- */
+    -ms-flex: 1;
+    /* IE 10 */
+    -webkit-flex: 1;
+    /* Chrome */
+    flex: 1;
+    /* NEW, Spec - Opera 12.1, Firefox 20+ */ }
+    .lr-slide .slide-item::-webkit-scrollbar {
+      display: none; }
+  .lr-slide.slide-right {
+    -webkit-transform: translate3d(-66.66667%, 0, 0);
+    transform: translate3d(-66.66667%, 0, 0); }
+  .lr-slide.slide-left {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+
+#view-home .stories-wrapper {
+  width: 100%; }
+  #view-home .stories-wrapper:before, #view-home .stories-wrapper:after {
+    content: " ";
+    display: table; }
+  #view-home .stories-wrapper:after {
+    clear: both; }
+#view-home .story-item {
+  position: relative;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+  border: 1px solid #999999;
+  float: left;
+  padding-top: 48%;
+  width: 48%;
+  margin-top: 4%;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: -webkit-transform 0.1s ease-in-out;
+  -moz-transition: -moz-transform 0.1s ease-in-out;
+  -o-transition: -o-transform 0.1s ease-in-out;
+  transition: transform 0.1s ease-in-out; }
+  #view-home .story-item:nth-child(2n+1) {
+    margin-right: 4%; }
+  #view-home .story-item.selected {
+    -webkit-transform: scale(1.1, 1.1);
+    -ms-transform: scale(1.1, 1.1);
+    -o-transform: scale(1.1, 1.1);
+    transform: scale(1.1, 1.1); }

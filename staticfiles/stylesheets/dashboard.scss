@@ -1,0 +1,38 @@
+// Core variables and mixins
+@import "vars-mixins";
+
+// Main styles
+@import "application/layouts";
+@import "application/type";
+@import "application/components";
+
+
+// Page specific styles
+
+#view-home {
+    .stories-wrapper {
+        width: 100%;
+        @include clearfix();
+    }
+    .story-item {
+        position: relative;
+        background-color: $body-bg;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        border: 1px solid $gray-light;
+        float: left;
+        padding-top: 48%;
+        width: 48%;
+        margin-top: 4%;
+        &:nth-child(2n+1) {
+            margin-right: 4%;
+        }
+        @include translate3d(0, 0, 0);
+        &.selected {
+            @include scale(1.1, 1.1);
+        }
+        @include transition-transform(.1s ease-in-out);
+    }
+}

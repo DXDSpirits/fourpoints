@@ -1,0 +1,15 @@
+*.pyc
+*.pyo
+/logs/
+/.idea/
+/fourpoints/settings_local.py
+newrelic.ini
+
+/static/
+/media/
+/logs/
+
+.sass-cache
+
+# Local Dev
+# _custom-local.scss
