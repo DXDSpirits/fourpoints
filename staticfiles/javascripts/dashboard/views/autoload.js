@@ -1,5 +1,6 @@
 define(function(require) {
     require('./home');
     require('./login');
-    require('./newstory');
+    require('./city');
+    require('./question');
 });

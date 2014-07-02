@@ -10,6 +10,7 @@ newrelic.ini
 /logs/
 
 .sass-cache
+*.css
 
 # Local Dev
 # _custom-local.scss

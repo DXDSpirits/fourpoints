@@ -283,57 +283,31 @@
     Amour.Models = {};
     Amour.Collections = {};
     
-    var dataMixins = {
-        getData: function(key) {
-            var data = this.get('data');
-            if (!_.isObject(data)) data = {};
-            return key != null ? data[key] : data;
-        },
-        setData: function(key, value) {
-            if (key == null) return;
-            if (!_.isObject(this.attributes.data)) this.attributes.data = {};
-            if (_.isObject(key)) {
-                _.extend(this.attributes.data, key);
-            } else {
-                this.attributes.data[key] = value;
-            }
-        }
-    };
-    
-    Amour.Models.StoryEvent = Amour.Model.extend({
-        urlRoot: Amour.APIHost + '/sites/storyevent/'
-    }).extend(dataMixins);
-    
-    Amour.Collections.StoryEvents = Amour.Collection.extend({
-        url: Amour.APIHost + '/sites/storyevent/',
-        model: Amour.Models.StoryEvent
+    Amour.Models.Region = Amour.Model.extend({
+        urlRoot: Amour.APIHost + '/polls/region/'
     });
     
-    Amour.Models.Story = Amour.Model.extend({
-        urlRoot: Amour.APIHost + '/sites/story/',
-        initModel: function() {
-            this.storyEvents = new Amour.Collections.StoryEvents(this.get('storyEvents'));
-            this.on('change:storyEvents', function() {
-                this.storyEvents.reset(this.get('storyEvents'));
-            }, this);
-        },
-        getStoryEvent: function(name) {
-            return this.storyEvents.findWhere({name: name});
-        },
-        getStoryEventData: function(name, key) {
-            var storyEvent = this.storyEvents.findWhere({name: name});
-            return storyEvent.getData(key);
-        },
-        updateStoryEvent: function(name, updates) {
-            var storyEvent = this.storyEvents.findWhere({name: name});
-            storyEvent.setData(updates);
-            storyEvent.save();
-        }
-    }).extend(dataMixins);
+    Amour.Collections.Regions = Amour.Collection.extend({
+        url: Amour.APIHost + '/polls/region/',
+        model: Amour.Models.Region
+    });
     
-    Amour.Collections.Stories = Amour.Collection.extend({
-        url: Amour.APIHost + '/sites/story/',
-        model: Amour.Models.Story
+    Amour.Models.City = Amour.Model.extend({
+        urlRoot: Amour.APIHost + '/polls/city/',
+    });
+    
+    Amour.Collections.Cities = Amour.Collection.extend({
+        url: Amour.APIHost + '/polls/city/',
+        model: Amour.Models.City
+    });
+    
+    Amour.Models.Play = Amour.Model.extend({
+        urlRoot: Amour.APIHost + '/users/play/',
+    });
+    
+    Amour.Collections.Plays = Amour.Collection.extend({
+        url: Amour.APIHost + '/polls/play/',
+        model: Amour.Models.Play
     });
     
     Amour.Models.User = Amour.Model.extend({
@@ -342,7 +316,7 @@
         login: function(auth, options) {
             this.clear().set(auth);
             options = options || {};
-            options.url = Amour.APIHost + '/api-token-auth/';
+            options.url = Amour.APIHost + '/token-auth/';
             var success = options.success;
             options.success = function(model, response, options) {
                 Amour.TokenAuth.set(response.token);
@@ -352,7 +326,6 @@
             this.save({}, options);
         }
     });
-    
     
     /*
      * Initializations

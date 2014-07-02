@@ -18,6 +18,6 @@ define(['app'], function(App) {
             });
         },
         render: function() {}
-    }))({el: $('#view-newstory')});
+    }))({el: $('#view-question')});
     
 });
