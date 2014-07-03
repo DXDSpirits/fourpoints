@@ -3,4 +3,6 @@ define(function(require) {
     require('./login');
     require('./city');
     require('./question');
+    require('./instruction');
+    require('./ranking');
 });

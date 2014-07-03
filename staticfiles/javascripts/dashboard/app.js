@@ -10,8 +10,13 @@ define(function() {
     
     App.router = new Amour.Router(App.Pages);
     
-    $('body').on('click', '.footer-navbar .btn-return', function() {
-        App.router.goBack();
+    $('body').on('click', '.header-navbar > ul > li', function(e) {
+        if (e.preventDefault) e.preventDefault();
+        if (App.router.history.active == App.Pages.Question) return;
+        var $el = $(e.currentTarget);
+        var target = $el.data('target');
+        $el.addClass('active').siblings().removeClass('active');
+        App.router.goTo(target);
     });
     
     var timeout = 1000;
