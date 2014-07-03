@@ -5,7 +5,7 @@
 <!--[if IEMobile 7 ]>    <html class="no-js iem7"> <![endif]-->
 <!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
-    <title>LE PETIT AMOUR - Dashboard</title>
+    <title>Four Points by Sheraton</title>
     
     <meta name="description" content="">
     <meta charset="utf-8">
@@ -25,6 +25,13 @@
     <script src="{% static "javascripts/vendor/modernizr-2.6.2.min.js" %}"></script>
 </head>
 <body>
+
+<div id="apploader" class="invisible">
+    <div class="loader">
+        <div class="loading-sprite"></div>
+        <p class="ajax-error hidden">网络不给力啊，请稍后再试！</p>
+    </div>
+</div>
 
 <!-- The dashboard begins here -->
 {% include "header.html" %}

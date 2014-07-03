@@ -16,7 +16,8 @@ a:hover, a:focus {
 }
 
 .img-loading {
-    background-color: rgba(255, 255, 255, .9);
+    //background-color: rgba(255, 255, 255, .9);
+    background-color: transparent;
     background-size: 32px 32px !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
@@ -52,7 +53,7 @@ textarea {
 }
 
 .btn {
-    border-radius: 0;
+    //border-radius: 0;
 }
 
 .progress {

@@ -18,3 +18,36 @@
         @include translate3d(0, 0, 0);
     }
 }
+
+#apploader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    @include user-select(none);
+    @include transition(opacity .35s ease-in-out);
+    .loader {
+        width: 140px;
+        margin: 0 auto;
+        min-height: 64px;
+        pointer-events: none;
+    }
+    .ajax-error {
+        padding: 10px;
+        border-radius: 5px;
+        background-color: rgba(0, 0, 0, 0.6);
+        font-size: $font-size-small;
+        text-align: center;
+        color: $gray-lighter;
+    }
+    .loading-sprite {
+        background-image: url(#{$static-url}images/loading.gif);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        pointer-events: none;
+        height: 32px;
+        width: 100%;
+    }
+}

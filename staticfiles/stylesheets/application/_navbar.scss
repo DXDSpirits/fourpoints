@@ -1,0 +1,56 @@
+
+// Headers and Footers
+
+body > header, body > .header-navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #05374e;
+    border-bottom: 5px solid $brand-primary;
+    padding-left: 80px;
+    > .logo {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        width: 60px;
+        height: 40px;
+    }
+    > .nav {
+        height: 40px;
+        margin-top: 20px;
+        > li {
+            width: 33.333333%;
+            margin: 0;
+            > a {
+                white-space: nowrap;
+                padding: 10px;
+                text-align: center;
+                color: #fff;
+                border: 0;
+                &:hover {
+                    background-color: transparent;
+                }
+            }
+            &.active > a {
+                background-color: $brand-primary;
+                > .fa { display: none; }
+            }
+        }
+    }
+}
+
+body > footer, body > .footer-navbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: #05374e;
+    padding: 10px;
+    .img {
+        background-size: contain;
+        @include square(100%);
+    }
+}
