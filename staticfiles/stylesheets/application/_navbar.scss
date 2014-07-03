@@ -32,6 +32,8 @@ body > header, body > .header-navbar {
                 &:hover {
                     background-color: transparent;
                 }
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
             }
             &.active > a {
                 background-color: $brand-primary;
