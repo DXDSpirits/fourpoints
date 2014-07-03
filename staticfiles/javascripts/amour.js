@@ -324,6 +324,11 @@
                 model.trigger('login');
             };
             this.save({}, options);
+        },
+        verify: function(code, options) {
+            options = options || {};
+            options.url = this.url() + 'verify/';
+            this.save({code: code}, options);
         }
     });
     

@@ -1,13 +1,13 @@
 <div class="view view-hidden" id="view-home">
-    <div class="login-box">
+    <div class="login-box hidden">
         <h4 class="text-center">登录</h4>
         <form>
             <div class="form-group">
-                <input class="form-control" type="text" name="username" placeholder="手机号码">
+                <input class="form-control" type="tel" name="mobile" placeholder="手机号码">
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <input class="form-control" type="tel" name="password" placeholder="输入验证码">
+                    <input class="form-control" type="tel" name="code" placeholder="输入验证码">
                     <span class="input-group-btn">
                         <button class="btn btn-default btn-send" type="button">发送验证码</button>
                     </span>
@@ -20,8 +20,11 @@
                 <button type="button" class="btn btn-info btn-lg btn-cancel">取消</button>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-success btn-lg btn-login">确认</button>
+                <button type="button" class="btn btn-success btn-lg btn-verify">确认</button>
             </div>
         </div>
+    </div>
+    <div class="play-box hidden">
+        <h3 class="text-center">开始游戏</h3>
     </div>
 </div>

@@ -4,17 +4,17 @@ define(['app'], function(App) {
     
     App.Pages.Home = new (Amour.PageView.extend({
         events: {
-            'click .btn-signup': 'signup',
-            'click .btn-signin': 'signin'
+            'click .btn-send': 'getcode',
+            'click .btn-verify': 'verify'
         },
-        initPage: function() {
-            Amour.ajax.on('unauthorized', this.go);
-        },
+        initPage: function() {},
         signin: function() {
-            var username = this.$('input[name=username]').val() || null;
-            var password = this.$('input[name=password]').val() || null;
-            if (username && password) {
-                user.login({ username : username, password : password }, {
+            var mobile = this.$('input[name=mobile]').val() || null;
+            if (mobile) {
+                user.login({
+                    username : mobile,
+                    password : mobile
+                }, {
                     success : function() {
                         App.router.refreshActivePage();
                     },
@@ -24,11 +24,34 @@ define(['app'], function(App) {
                 });
             }
         },
-        signup: function() {
-            this.signin();
+        verify: function() {
+            var code = this.$('input[name=code]').val() || null;
+            var self = this;
+            if (code) {
+                user.verify(code, {
+                    success: function() {
+                        self.signin();
+                    },
+                    error: function() {
+                        alert('Invalid Code');
+                    }
+                });
+            } else {
+                this.signin();
+            }
+        },
+        getcode: function() {
+            var mobile = this.$('input[name=mobile]').val() || null;
+            if (mobile) {
+                user.set('username', mobile);
+                user.save();
+            }
         },
         render: function() {
             this.$('input').val('');
+            var logged_in = Amour.TokenAuth.get() != null;
+            this.$('.login-box').toggleClass('hidden', logged_in);
+            this.$('.play-box').toggleClass('hidden', !logged_in);
             return this;
         }
     }))({el: $('#view-home')});
