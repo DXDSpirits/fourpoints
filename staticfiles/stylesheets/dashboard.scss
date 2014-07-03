@@ -29,9 +29,29 @@
         border-color: transparent;
         border-radius: 0;
     }
+    .play-box {
+        padding: 20px;
+        background-color: lighten($brand-primary, 10%);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+        border-radius: 5px;
+    }
 }
 
 #view-instruction {
     color: #fff;
     background: rgba(40, 104, 132, 0.7);
+}
+
+#view-region {
+    padding: 0;
+    .city-item {
+        cursor: pointer;
+        height: 150px;
+        width: 100%;
+        padding: 10px 20px;
+        color: #fff;
+        .title {
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+    }
 }

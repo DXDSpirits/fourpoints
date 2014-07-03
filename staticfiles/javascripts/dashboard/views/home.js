@@ -5,9 +5,12 @@ define(['app'], function(App) {
     App.Pages.Home = new (Amour.PageView.extend({
         events: {
             'click .btn-send': 'getcode',
-            'click .btn-verify': 'verify'
+            'click .btn-verify': 'verify',
+            'click .btn-play': 'play'
         },
-        initPage: function() {},
+        initPage: function() {
+            Amour.ajax.on('unauthorized', this.go);
+        },
         signin: function() {
             var mobile = this.$('input[name=mobile]').val() || null;
             if (mobile) {
@@ -46,6 +49,9 @@ define(['app'], function(App) {
                 user.set('username', mobile);
                 user.save();
             }
+        },
+        play: function() {
+            App.router.goTo('Region');
         },
         render: function() {
             this.$('input').val('');

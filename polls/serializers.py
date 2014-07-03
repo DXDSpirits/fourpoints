@@ -17,6 +17,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 class CitySerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, source='question_set')
+    image = serializers.Field(source='image.url')
     class Meta:
         model = models.City
         fields = ('id', 'name', 'description', 'image', 'questions')
@@ -24,6 +25,7 @@ class CitySerializer(serializers.ModelSerializer):
 
 class RegionSerializer(serializers.ModelSerializer):
     cities = CitySerializer(many=True, source='city_set')
+    image = serializers.Field(source='image.url')
     class Meta:
         model = models.Region
         fields = ('id', 'name', 'image', 'cities')

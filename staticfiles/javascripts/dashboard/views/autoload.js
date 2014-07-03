@@ -1,6 +1,6 @@
 define(function(require) {
     require('./home');
-    require('./login');
+    require('./region');
     require('./city');
     require('./question');
     require('./instruction');
