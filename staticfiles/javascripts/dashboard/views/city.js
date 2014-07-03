@@ -14,7 +14,8 @@ define(['app'], function(App) {
         },
         play: function() {
             App.router.goTo('Question', {
-                questions: this.city.get('questions')
+                questions: _.sample(this.city.get('questions'), 5),
+                cityId: this.city.id
             });
         },
         renderCity: function() {

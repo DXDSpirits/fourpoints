@@ -1,9 +1,50 @@
 define(['app'], function(App) {
     
+    var QuestionsView = Amour.CollectionView.extend({
+        ModelView: Amour.ModelView.extend({
+            template: '<p>{{text}}</p>{{#choices}}<div class="radio"><label><input type="radio" value="{{id}}" name=question-{{question}}> {{text}}</label></div>{{/choices}}',
+            className: 'question-item'
+        })
+    });
+    
     App.Pages.Question = new (Amour.PageView.extend({
-        events: {},
-        initPage: function() {},
-        render: function() {}
+        events: {
+            'click .btn-finish': 'finish'
+        },
+        initPage: function() {
+            this.play = new Amour.Models.Play();
+            this.questions = new Amour.Collection();
+            this.views = {
+                questions: new QuestionsView({
+                    collection: this.questions,
+                    el: this.$('.question-list')
+                })
+            }
+        },
+        finish: function() {
+            var answers = this.questions.reduce(function(answers, question) {
+                return answers.concat({
+                    question: question.id,
+                    choice: +this.$('input[name=question-' + question.id + ']:checked').val()
+                });
+            }, [], this);
+            this.play.save({
+                answers: answers
+            });
+        },
+        newPlay: function() {
+            this.play.clear();
+            this.play.save({
+                city: this.options.cityId,
+                platform: 'weixin'
+            });
+        },
+        render: function() {
+            this.newPlay();
+            if (this.options.questions) {
+                this.questions.set(this.options.questions)
+            }
+        }
     }))({el: $('#view-question')});
     
 });
