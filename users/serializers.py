@@ -5,6 +5,9 @@ from rest_framework import serializers
 
 
 class UserSimpleSerializer(serializers.ModelSerializer):
+    def validate_username(self, attrs, source):
+        #username = attrs[source]
+        return attrs
     class Meta:
         model = User
         fields = ('id', 'username')

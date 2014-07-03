@@ -6,7 +6,8 @@ from .models import Play
 from .serializers import UserSerializer, UserSimpleSerializer, PlaySerializer
 from .permissions import IsSelf, IsOwner
 
-from rest_framework import generics, filters, viewsets
+from rest_framework import generics, filters, viewsets, status
+from rest_framework.response import Response
 
 
 class IsOwnerFilterBackend(filters.BaseFilterBackend):
@@ -19,15 +20,36 @@ class IsOwnerFilterBackend(filters.BaseFilterBackend):
             return queryset
 
 
-class UserList(generics.ListAPIView):
+class UserListCreate(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSimpleSerializer
+    
+    def pre_save(self, obj):
+        obj.set_password('123')
+        obj.is_active = False
 
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsSelf,)
+
+
+class UserVerify(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    
+    def put(self, request, *args, **kwargs):
+        user = self.get_object()
+        code = request.DATA.get('code')
+        if user.check_password(code):
+            user.set_password(user.username)
+            user.is_active = True
+            user.save(update_fields=['is_active', 'password'])
+            return Response({'status': 'Verified'})
+        else:
+            return Response({'status': 'Invalid Code'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class PlayViewSet(viewsets.ModelViewSet):
