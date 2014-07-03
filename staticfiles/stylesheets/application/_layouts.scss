@@ -5,12 +5,41 @@
 @include keyframes-transform(slideouttoright, translate3d(0, 0, 0), translate3d(100%, 0, 0));
 @include keyframes-transform(slideinfromleft, translate3d(-100%, 0, 0), translate3d(0, 0, 0));
 
+body {
+    padding-top: 45px;
+    padding-bottom: 45px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+// Headers and Footers
+
+body > footer, body > .footer-navbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 45px;
+    background-color: yellow;
+}
+
+body > header, body > .header-navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 45px;
+    background-color: yellow;
+}
+
+// Views
+
 .views-wrapper {
     position: relative;
     overflow: hidden;
     width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
+    height: 100%;
 }
 
 .view {
@@ -26,60 +55,41 @@
     }
 }
 
-// .view = .wrapper + footer
-
 .view {
-    padding-bottom: 45px;
-    > .wrapper {
-        background: $body-bg;
-        padding: 15px;
-        width: 100%;
-        height: 100%;
-        @include scrollable();
-        @include flex-box($orient: vertical, $pack: center);
-        @include backface-visibility(hidden);
-        @include translate3d(0, 0, 0);
-        &.rendering {
-            opacity: 0;
-        }
-    }
-    > footer, > .footer-navbar {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 45px;
-        @include transition(visibility,opacity .35s ease-in-out);
+    background: $body-bg;
+    padding: 15px;
+    width: 100%;
+    height: 100%;
+    @include scrollable();
+    @include backface-visibility(hidden);
+    @include translate3d(0, 0, 0);
+    &.rendering {
+        opacity: 0;
     }
 }
 
 // Animations
 
-.view.view-hidden  > .wrapper {
+.view.view-hidden {
     @include translate3d(100%, 0, 0);
 }
 
-.view.view-next > .wrapper {
+.view.view-next {
     @include animation(slideinfromright .35s linear);
     -webkit-animation-fill-mode: forwards;
 }
 
-.view.view-next.view-next-reverse > .wrapper {
+.view.view-next.view-next-reverse {
     @include animation(slideinfromleft .35s linear);
 }
 
-.view.view-prev > .wrapper {
+.view.view-prev {
     @include animation(slideouttoleft .35s linear);
     -webkit-animation-fill-mode: forwards;
 }
 
-.view.view-prev.view-prev-reverse > .wrapper {
+.view.view-prev.view-prev-reverse {
     @include animation(slideouttoright .35s linear);
-}
-
-.view.view-hidden > footer, .view.view-hidden > .footer-navbar {
-    opacity: 0;
-    visibility: hidden;
 }
 
 // Loading sprite

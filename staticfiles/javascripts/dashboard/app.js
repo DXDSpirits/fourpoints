@@ -1,6 +1,6 @@
 define(function() {
     
-    $('.views-wrapper').height($(window).height());
+    //$('.views-wrapper').height($(window).height());
     
     var App = {
         Models: {},

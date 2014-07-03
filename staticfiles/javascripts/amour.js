@@ -179,7 +179,7 @@
             this.views = {};
             _.bindAll(this, 'showPage', 'go', 'refresh', 'render', 'reset');
             var $el = this.$el;
-            this.$('.wrapper').on('webkitAnimationEnd', function(e) {
+            this.$el.on('webkitAnimationEnd', function(e) {
                 var animationName = e.originalEvent.animationName;
                 if (animationName == "slideouttoleft" || animationName == "slideouttoright") {
                     $el.trigger('pageClose');

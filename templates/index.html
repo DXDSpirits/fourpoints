@@ -27,11 +27,14 @@
 <body>
 
 <!-- The dashboard begins here -->
+{% include "header.html" %}
 <div class="views-wrapper">
     {% include "pages/home.html" %}
+    {% include "pages/login.html" %}
     {% include "pages/city.html" %}
     {% include "pages/question.html" %}
 </div>
+{% include "footer.html" %}
 <!-- The dashboard ends -->
 
 <script>
