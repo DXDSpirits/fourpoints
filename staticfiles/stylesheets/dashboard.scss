@@ -244,3 +244,31 @@
         margin-right: -30px;
     }
 }
+
+#view-ranking {
+    .tip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .ranking-list {
+        
+    }
+    .ranking-title, .ranking-item {
+        font-weight: bold;
+        font-size: 1.3em;
+        text-align: center;
+        background: #fff;
+        border-radius: 3px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        :nth-child(1) { color: #797373; }
+        :nth-child(2) { color: #4a86aa; }
+        :nth-child(3) { color: #a94547; }
+    }
+}

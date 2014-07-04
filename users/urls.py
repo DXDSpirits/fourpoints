@@ -5,6 +5,7 @@ import apiviews
 
 router = routers.DefaultRouter()
 router.register(r'play', apiviews.PlayViewSet)
+router.register(r'ranking', apiviews.RankingViewSet)
 
 
 urlpatterns = patterns('',

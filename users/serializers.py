@@ -41,6 +41,7 @@ class PlaySerializer(serializers.ModelSerializer):
 
 
 class RankingSerializer(serializers.ModelSerializer):
+    user = serializers.RelatedField()
     class Meta:
         model = Ranking
         fields = ('platform', 'user', 'score')

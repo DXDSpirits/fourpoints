@@ -30,12 +30,16 @@ define(['app'], function(App) {
             }, [], this);
             this.play.save({
                 answers: answers
+            }, {
+                success: function() {
+                    App.router.goTo('Ranking');
+                }
             });
         },
         newPlay: function() {
             this.play = App.plays.create({
                 city: this.options.cityId,
-                platform: 'weixin'
+                platform: App.isWeixin ? 'weixin' : 'weibo'
             });
         },
         render: function() {

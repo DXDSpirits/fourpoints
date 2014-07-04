@@ -1,5 +1,7 @@
 #from django.shortcuts import render
 
+import django_filters
+
 from django.contrib.auth.models import User
 
 from .models import Play, Ranking
@@ -68,6 +70,11 @@ class PlayViewSet(mixins.CreateModelMixin,
 
 
 class RankingViewSet(viewsets.ReadOnlyModelViewSet):
+    class RankingFilter(django_filters.FilterSet):
+        class Meta:
+            model = Ranking
+            fields = ['platform', 'user']
+            ordering = ['-score']
     queryset = Ranking.objects.all()
     serializer_class = RankingSerializer
-    filter_fields = ('platform',)
+    filter_class = RankingFilter

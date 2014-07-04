@@ -59,7 +59,7 @@ define(['app'], function(App) {
                 App.router.goTo('Region', {
                     region: regionId[it]
                 });
-            }, 350);
+            }, 500);
         },
         play: function() {
             this.$('.card').removeClass('selected');

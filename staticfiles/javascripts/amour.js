@@ -313,6 +313,21 @@
         }
     });
     
+    Amour.Models.Ranking = Amour.Model.extend({
+        urlRoot: Amour.APIHost + '/users/ranking/',
+    });
+    
+    Amour.Collections.Rankings = Amour.Collection.extend({
+        url: Amour.APIHost + '/users/ranking/',
+        model: Amour.Models.Ranking,
+        parse: function(response) {
+            _.forEach(response, function(item, index) {
+                item.rank = index + 1;
+            });
+            return response;
+        }
+    });
+    
     Amour.Models.User = Amour.Model.extend({
         urlRoot: Amour.APIHost + '/users/user/',
         initModel: function() {},

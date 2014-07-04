@@ -8,6 +8,9 @@ define(function() {
         Pages: {}
     };
     
+    App.isWeixin = /MicroMessenger/i.test(navigator.userAgent);
+    App.isWeixin = true;
+    
     App.router = new Amour.Router(App.Pages);
     
     $('body').on('click', '.header-navbar > ul > li', function(e) {
@@ -53,10 +56,12 @@ define(function() {
         });
     };
     
+    Amour.TokenAuth.clear();
     App.user = new Amour.Models.User();
     App.plays = new Amour.Collections.Plays();
     
     App.user.on('login', function() {
+        App.user.fetch();
         App.plays.fetch({reset:true});
     });
     
