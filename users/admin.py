@@ -14,5 +14,10 @@ class PlayAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
 
 
+class RankingAdmin(admin.ModelAdmin):
+    list_display = ['id', 'last_modified', 'platform', 'score', 'user']
+
+
 admin.site.register(models.Answer, AnwserAdmin)
 admin.site.register(models.Play, PlayAdmin)
+admin.site.register(models.Ranking, RankingAdmin)

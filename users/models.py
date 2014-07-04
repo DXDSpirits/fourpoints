@@ -25,7 +25,7 @@ class Play(models.Model):
     platform = models.SlugField()
     
     class Meta:
-        index_together= [['user', 'time_created',],
+        index_together = [['user', 'time_created',],
                          ['city', 'time_created',],]
         ordering = ['time_created']
     
@@ -40,3 +40,15 @@ class Answer(models.Model):
     choice = models.ForeignKey(Choice)
     
     time_created = models.DateTimeField(auto_now_add=True)
+
+
+class Ranking(models.Model):
+    user = models.ForeignKey(User)
+    score = models.IntegerField()
+    platform = models.SlugField()
+    
+    last_modified = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        index_together = [['platform', 'score',],]
+        ordering = ['platform', '-score']

@@ -2,8 +2,8 @@
 
 from django.contrib.auth.models import User
 
-from .models import Play
-from .serializers import UserSerializer, UserSimpleSerializer, PlaySerializer
+from .models import Play, Ranking
+from .serializers import UserSerializer, UserSimpleSerializer, PlaySerializer, RankingSerializer
 from .permissions import IsSelf, IsOwner
 
 from rest_framework import generics, filters, viewsets, status
@@ -60,3 +60,9 @@ class PlayViewSet(viewsets.ModelViewSet):
     
     def pre_save(self, obj):
         obj.user = self.request.user
+
+
+class RankingViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Ranking.objects.all()
+    serializer_class = RankingSerializer
+    filter_fields = ('platform',)

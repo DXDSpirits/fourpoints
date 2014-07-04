@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import Play, Answer
+from .models import Play, Answer, Ranking
 #from polls.models import Choice, Question
 from rest_framework import serializers
 
@@ -38,3 +38,9 @@ class PlaySerializer(serializers.ModelSerializer):
         model = Play
         fields = ('id', 'time_created', 'user', 'city', 'score', 'complete', 'platform', 'answers')
         read_only_fields = ('user', 'score', 'complete')
+
+
+class RankingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ranking
+        fields = ('platform', 'user', 'score')
