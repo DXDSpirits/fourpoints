@@ -12,7 +12,7 @@ define(['app'], function(App) {
             'click .btn-finish': 'finish'
         },
         initPage: function() {
-            this.play = new Amour.Models.Play();
+            this.play = null;
             this.questions = new Amour.Collection();
             this.views = {
                 questions: new QuestionsView({
@@ -33,8 +33,7 @@ define(['app'], function(App) {
             });
         },
         newPlay: function() {
-            this.play.clear();
-            this.play.save({
+            App.plays.create({
                 city: this.options.cityId,
                 platform: 'weixin'
             });

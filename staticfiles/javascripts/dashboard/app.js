@@ -53,8 +53,16 @@ define(function() {
         });
     };
     
+    App.user = new Amour.Models.User();
+    App.plays = new Amour.Collections.Plays();
+    
+    App.user.on('login', function() {
+        App.plays.fetch({reset:true});
+    });
+    
     App.start = function() {
         fillImages();
+        if (Amour.TokenAuth.get() != null) App.user.trigger('login')
         App.router.goTo('Home');
     };
     

@@ -1,7 +1,5 @@
 define(['app'], function(App) {
     
-    var user = new Amour.Models.User();
-    
     App.Pages.Home = new (Amour.PageView.extend({
         events: {
             'click .btn-send': 'getcode',
@@ -14,7 +12,7 @@ define(['app'], function(App) {
         signin: function() {
             var mobile = this.$('input[name=mobile]').val() || null;
             if (mobile) {
-                user.login({
+                App.user.login({
                     username : mobile,
                     password : mobile
                 }, {
@@ -31,7 +29,7 @@ define(['app'], function(App) {
             var code = this.$('input[name=code]').val() || null;
             var self = this;
             if (code) {
-                user.verify(code, {
+                App.user.verify(code, {
                     success: function() {
                         self.signin();
                     },
@@ -46,8 +44,8 @@ define(['app'], function(App) {
         getcode: function() {
             var mobile = this.$('input[name=mobile]').val() || null;
             if (mobile) {
-                user.set('username', mobile);
-                user.save();
+                App.user.set('username', mobile);
+                App.user.save();
             }
         },
         play: function() {
@@ -55,7 +53,7 @@ define(['app'], function(App) {
         },
         render: function() {
             this.$('input').val('');
-            var logged_in = Amour.TokenAuth.get() != null;
+            var logged_in = (Amour.TokenAuth.get() != null);
             this.$('.login-box').toggleClass('hidden', logged_in);
             this.$('.play-box').toggleClass('hidden', !logged_in);
             return this;

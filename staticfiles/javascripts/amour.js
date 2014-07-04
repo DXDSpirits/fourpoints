@@ -306,8 +306,11 @@
     });
     
     Amour.Collections.Plays = Amour.Collection.extend({
-        url: Amour.APIHost + '/polls/play/',
-        model: Amour.Models.Play
+        url: Amour.APIHost + '/users/play/',
+        model: Amour.Models.Play,
+        citiesPlayed: function() {
+            return _.uniq(this.pluck('city'));
+        }
     });
     
     Amour.Models.User = Amour.Model.extend({
