@@ -12,11 +12,14 @@ define(function() {
     
     $('body').on('click', '.header-navbar > ul > li', function(e) {
         if (e.preventDefault) e.preventDefault();
-        if (App.router.history.active == App.Pages.Question) return;
+        var curPage = App.router.history.active;
+        if (curPage == App.Pages.Question) return;
         var $el = $(e.currentTarget);
         var target = $el.data('target');
-        $el.addClass('active').siblings().removeClass('active');
-        App.router.goTo(target);
+        if (curPage == App.Pages.Ranking || curPage == App.Pages.Instruction || target != 'Home') {
+            $el.addClass('active').siblings().removeClass('active');
+            App.router.goTo(target);
+        }
     });
     
     var timeout = 1000;
