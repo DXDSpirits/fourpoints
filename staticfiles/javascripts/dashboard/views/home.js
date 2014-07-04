@@ -1,5 +1,7 @@
 define(['app'], function(App) {
     
+    var regionId = [1,2,3,4,5];
+    
     App.Pages.Home = new (Amour.PageView.extend({
         events: {
             'click .btn-send': 'getcode',
@@ -48,8 +50,24 @@ define(['app'], function(App) {
                 App.user.save();
             }
         },
+        stop: function() {
+            this.$('.hand').addClass('stop');
+            var left = this.$('.ball').offset().left;
+            var it = parseInt(left / this.$el.width() * 5);
+            this.$('.card'+(it+1)).addClass('selected');
+            setTimeout(function() {
+                App.router.goTo('Region', {
+                    region: regionId[it]
+                });
+            }, 350);
+        },
         play: function() {
-            App.router.goTo('Region');
+            this.$('.card').removeClass('selected');
+            this.$('.hand').removeClass('stop').addClass('automatically');
+            var self = this;
+            setTimeout(function() {
+                self.stop();
+            }, 4000 + Math.random() * 1000);
         },
         render: function() {
             this.$('.merge').removeClass('merge');
