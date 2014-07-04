@@ -4,7 +4,7 @@ define(['app'], function(App) {
         events: {
             'click .btn-send': 'getcode',
             'click .btn-verify': 'verify',
-            'click .btn-play': 'play'
+            'click .play-box': 'play'
         },
         initPage: function() {
             Amour.ajax.on('unauthorized', this.go);
@@ -52,6 +52,7 @@ define(['app'], function(App) {
             App.router.goTo('Region');
         },
         render: function() {
+            this.$('.merge').removeClass('merge');
             this.$('input').val('');
             var logged_in = (Amour.TokenAuth.get() != null);
             this.$('.login-box').toggleClass('hidden', logged_in);

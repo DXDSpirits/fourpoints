@@ -11,7 +11,7 @@ $static-url: 'http://wedfairy.qiniudn.com/' !default;
 
 $brand-primary:         #acd0d4 !default;
 $brand-success:         #88bf9b !default;
-$brand-info:            #91d9cc !default;
+$brand-info:            #05374e !default;
 $brand-warning:         #d9ae79 !default;
 $brand-danger:          #d9534f !default;
 
@@ -174,4 +174,11 @@ $input-border-focus: #ccc !default;
             width: $scrollbarWidth;
         }
     }
+}
+
+@mixin transform($transform) {
+  -webkit-transform: $transform;
+      -ms-transform: $transform; // IE9 only
+       -o-transform: $transform;
+          transform: $transform;
 }

@@ -7,33 +7,134 @@
 @import "application/type";
 @import "application/components";
 
+// Keyframes
+
+@include keyframes-transform(swing, rotate(25deg), rotate(-25deg));
 
 // Page specific styles
 
 #view-home {
-    .login-box {
-        padding-top: 1px;
+    > .wrapper {
+        min-height: 100%;
+        padding-top: 130%;
+        position: relative;
+        overflow: hidden;
+    }
+}
+
+#view-home {
+    -webkit-overflow-scrolling: auto;
+    padding: 0;
+    position: relative;
+    background-color: rgba(darken($brand-info, 10%), 0.3);
+    .play-box, .login-box {
+        position: absolute;
         background-color: lighten($brand-primary, 10%);
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
         border-radius: 5px;
+        overflow: hidden;
+        .btn {
+            color: darken($brand-primary, 30%);
+            background: transparent;
+            border-color: transparent;
+            border-radius: 0;
+        }
+    }
+    .login-box {
+        top: 0;
+        z-index: 3;
+        margin: 20px;
+        padding-top: 1px;
         > form {
             margin: 0 20px;
         }
-    }
-    .btn-send {
-        height: $input-height-base;
-    }
-    .btn {
-        color: darken($brand-primary, 30%);
-        background: transparent;
-        border-color: transparent;
-        border-radius: 0;
+        .btn-send {
+            height: $input-height-base;
+        }
     }
     .play-box {
-        padding: 20px;
-        background-color: lighten($brand-primary, 10%);
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-        border-radius: 5px;
+        background-position: bottom center;
+        top: 0;
+        z-index: 1;
+        width: 90%;
+        margin: 20px 5%;
+        padding-top: 60%;
+    }
+}
+
+#view-home {
+    .board {
+        position: absolute;
+        top: 100%;
+        margin-top: -50%;
+        left: 0;
+        width: 100%;
+    }
+    .card {
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+        width: 20%;
+        padding-top: 30%;
+        background-color: rgba($brand-primary, 0.7);
+        @include transition-transform(.35s ease-in-out);
+        @include transform-origin(50% 100%);
+    }
+    .card1 { @include transform(translate3d(16%, 24%, 0) rotate(-22deg)); }
+    .card2 { @include transform(translate3d(6%, 6%, 0) rotate(-11deg)); }
+    .card3 { @include transform(translate3d(0, 0, 0) rotate(0)); }
+    .card4 { @include transform(translate3d(-6%, 6%, 0) rotate(11deg)); }
+    .card5 { @include transform(translate3d(-16%, 24%, 0) rotate(22deg)); }
+    .board.merge {
+        visibility: hidden;
+        .card1 { @include transform(translate3d(200%, 0, 0) rotate(0)); }
+        .card2 { @include transform(translate3d(100%, 0, 0) rotate(0)); }
+        .card3 { @include transform(translate3d(0, 0, 0) rotate(0)); }
+        .card4 { @include transform(translate3d(-100%, 0, 0) rotate(0)); }
+        .card5 { @include transform(translate3d(-200%, 0, 0) rotate(0)); }
+    }
+    .guideline {
+        opacity: 0.9;
+        box-shadow: 0 0 3px rgba(darken($brand-primary, 10%), 0.7);
+        margin: 35% -30%;
+        padding-top: 160%;
+        border-top: 2px solid saturate($brand-primary, 10%);
+        border-radius: 50%;
+        position: relative;
+    }
+    .hand {
+        position: absolute;
+        top: 25px;
+        left: 50%;
+        margin-left: -1px;
+        width: 2px;
+        height: 50%;
+        background: #d1d443; //$brand-primary;
+        @include transform-origin(50% 100%);
+        &.manually {
+            @include transition-transform(.35s ease-in-out);
+            &.left { @include rotate(-22deg); }
+            &.right { @include rotate(22deg); }
+        }
+        &.automatically {
+            @include animation(swing 1s ease-in-out infinite alternate);
+        }
+        > .fa-caret-up {
+            color: #d1d443;
+            position: absolute;
+            top: -10px;
+            width: 24px;
+            margin-left: -12px;
+            left: 50%;
+        }
+        > .ball {
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            background-color: #fff;
+            position: absolute;
+            top: -33px;
+            @include square(16px);
+            margin-left: -8px;
+            left: 50%;
+        }
     }
 }
 
