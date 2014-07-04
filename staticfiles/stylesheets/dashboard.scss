@@ -108,4 +108,23 @@
 
 #view-question {
     background-color: rgba(255, 255, 255, 0.5);
+    .question-list {
+        margin-right: 20px;
+    }
+    .question-item {
+        margin: 20px 0;
+        font-size: 1.2em;
+    }
+    .radio {
+        margin: 20px 0;
+    }
+    .radio label {
+        padding-left: 0;
+        padding-right: 30px;
+    }
+    .radio input[type="radio"] {
+        float: right;
+        margin-left: 0;
+        margin-right: -30px;
+    }
 }

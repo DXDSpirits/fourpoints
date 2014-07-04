@@ -2,7 +2,7 @@ define(['app'], function(App) {
     
     var QuestionsView = Amour.CollectionView.extend({
         ModelView: Amour.ModelView.extend({
-            template: '<p>{{text}}</p>{{#choices}}<div class="radio"><label><input type="radio" value="{{id}}" name=question-{{question}}> {{text}}</label></div>{{/choices}}',
+            template: '<p><strong>{{text}}</strong></p>{{#choices}}<p class="radio"><label><input type="radio" value="{{id}}" name=question-{{question}}> {{text}}</label></p>{{/choices}}',
             className: 'question-item'
         })
     });
@@ -33,7 +33,7 @@ define(['app'], function(App) {
             });
         },
         newPlay: function() {
-            App.plays.create({
+            this.play = App.plays.create({
                 city: this.options.cityId,
                 platform: 'weixin'
             });
