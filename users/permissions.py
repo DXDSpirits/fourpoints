@@ -9,3 +9,8 @@ class IsSelf(permissions.IsAuthenticated):
 class IsOwner(permissions.IsAuthenticated):
     def has_object_permission(self, request, view, obj):
         return request.user == obj.user
+
+
+class Answerable(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.method != 'PUT' or not obj.complete

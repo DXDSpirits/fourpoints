@@ -52,3 +52,12 @@ class Ranking(models.Model):
     class Meta:
         index_together = [['platform', 'score',],]
         ordering = ['platform', '-score']
+
+@receiver(post_save, sender=Play)
+def update_ranking(sender, instance=None, created=False, **kwargs):
+    if instance.complete:
+        ranking, _created = Ranking.objects.get_or_create(user=instance.user,
+                                                          platform=instance.platform,
+                                                          defaults={'score': 0})
+        ranking.score += instance.score
+        ranking.save(update_fields=['score'])

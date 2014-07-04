@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 
 from .models import Play, Ranking
 from .serializers import UserSerializer, UserSimpleSerializer, PlaySerializer, RankingSerializer
-from .permissions import IsSelf, IsOwner
+from .permissions import IsSelf, IsOwner, Answerable
 
-from rest_framework import generics, filters, viewsets, status
+from rest_framework import generics, filters, viewsets, status, mixins
 from rest_framework.response import Response
 
 
@@ -52,10 +52,15 @@ class UserVerify(generics.UpdateAPIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
 
-class PlayViewSet(viewsets.ModelViewSet):
+class PlayViewSet(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  #mixins.DestroyModelMixin,
+                  mixins.ListModelMixin,
+                  viewsets.GenericViewSet):
     queryset = Play.objects.all()
     serializer_class = PlaySerializer
-    permission_classes = (IsOwner,)
+    permission_classes = (IsOwner, Answerable)
     filter_backends = (IsOwnerFilterBackend,)
     
     def pre_save(self, obj):
