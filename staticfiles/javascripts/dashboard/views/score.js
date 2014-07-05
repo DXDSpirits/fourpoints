@@ -18,7 +18,7 @@ define(['app'], function(App) {
     
     App.Pages.Score = new (Amour.PageView.extend({
         events: {
-            
+            'click .btn-replay': 'replay'
         },
         initPage: function() {
             this.plays = App.plays;
@@ -28,6 +28,9 @@ define(['app'], function(App) {
                     collection: this.plays
                 })
             };
+        },
+        replay: function() {
+            App.router.goTo('Home');
         },
         render: function() {
             this.plays.fetch({
