@@ -32,7 +32,7 @@ define(['app'], function(App) {
                 answers: answers
             }, {
                 success: function() {
-                    App.router.goTo('Ranking');
+                    App.router.goTo('Score');
                 }
             });
         },

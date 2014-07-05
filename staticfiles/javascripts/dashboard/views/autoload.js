@@ -3,6 +3,7 @@ define(function(require) {
     require('./region');
     require('./city');
     require('./question');
+    require('./score');
     require('./instruction');
     require('./ranking');
 });

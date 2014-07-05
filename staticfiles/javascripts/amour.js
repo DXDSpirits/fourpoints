@@ -77,10 +77,12 @@
                 this.count = response.count;
                 this.previous = response.previous;
                 this.next = response.next;
-                return response.results;
-            } else {
-                return response;
+                response = response.results;
             }
+            _.forEach(response, function(item, index) {
+                item.index = (item.index != null ? item.index : index + 1);
+            });
+            return response;
         }
     });
     
@@ -293,7 +295,7 @@
     });
     
     Amour.Models.City = Amour.Model.extend({
-        urlRoot: Amour.APIHost + '/polls/city/',
+        urlRoot: Amour.APIHost + '/polls/city/'
     });
     
     Amour.Collections.Cities = Amour.Collection.extend({
@@ -302,7 +304,7 @@
     });
     
     Amour.Models.Play = Amour.Model.extend({
-        urlRoot: Amour.APIHost + '/users/play/',
+        urlRoot: Amour.APIHost + '/users/play/'
     });
     
     Amour.Collections.Plays = Amour.Collection.extend({
@@ -314,18 +316,12 @@
     });
     
     Amour.Models.Ranking = Amour.Model.extend({
-        urlRoot: Amour.APIHost + '/users/ranking/',
+        urlRoot: Amour.APIHost + '/users/ranking/'
     });
     
     Amour.Collections.Rankings = Amour.Collection.extend({
         url: Amour.APIHost + '/users/ranking/',
-        model: Amour.Models.Ranking,
-        parse: function(response) {
-            _.forEach(response, function(item, index) {
-                item.rank = index + 1;
-            });
-            return response;
-        }
+        model: Amour.Models.Ranking
     });
     
     Amour.Models.User = Amour.Model.extend({
