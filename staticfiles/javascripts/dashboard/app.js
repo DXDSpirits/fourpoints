@@ -92,6 +92,11 @@ define(function() {
         model: Amour.Models.Play,
         citiesPlayed: function() {
             return _.uniq(this.pluck('city'));
+        },
+        timesToday: function() {
+            return this.filter(function(play) {
+                return moment().dayOfYear() == moment(play.get('time_created')).dayOfYear()
+            }).length;
         }
     });
     

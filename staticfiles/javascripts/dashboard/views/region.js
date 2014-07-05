@@ -42,7 +42,6 @@ define(['app'], function(App) {
                 data: { region: region }
             });
             citiesPlayed = App.plays.citiesPlayed();
-            citiesPlayed = [];
         }
     }))({el: $('#view-region')});
     

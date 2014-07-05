@@ -22,6 +22,9 @@ define(['app'], function(App) {
             Amour.loadBgImage(this.$el, this.city.get('image'));
             this.$('.title').html(this.city.get('name'));
             this.$('.content').html(this.city.get('description'));
+            var outOfPlay = App.plays.timesToday() >= 5;
+            this.$('.btn-play').toggleClass('disabled', outOfPlay);
+            this.$('.btn-play').text(outOfPlay ? '今日五次答题机会已用完' : '开始答题');
         },
         render: function() {
             this.$('>article').removeClass('open');

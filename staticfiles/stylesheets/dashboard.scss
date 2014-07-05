@@ -229,6 +229,9 @@
         }
         .btn-play {
             margin-bottom: -40px;
+            &.disabled {
+                font-size: 1em;
+            }
         }
         .content {
             height: 100%;
