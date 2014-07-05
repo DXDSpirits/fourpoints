@@ -184,6 +184,7 @@
 }
 
 #view-city {
+    overflow: hidden;
     padding: 0;
     background-position: center;
     background-repeat: no-repeat;
@@ -191,8 +192,18 @@
     > article {
         margin-left: 100px;
         background-color: $brand-primary;
-        padding: 20px;
-        min-height: 100%;
+        padding: 40px 20px 60px;
+        height: 100%;
+        .title {
+            margin-top: -30px;
+        }
+        .btn-play {
+            margin-bottom: -40px;
+        }
+        .content {
+            height: 100%;
+            @include scrollable(1px);
+        }
         @include transition-transform(.35s ease-in-out);
         @include translate3d(100%, 0, 0);
         &.open {
@@ -203,6 +214,7 @@
         }
         position: relative;
         .left-btn {
+            @include user-select(none);
             cursor: pointer;
             background-color: $brand-primary;
             &:active {
@@ -246,22 +258,20 @@
 }
 
 #view-ranking {
-    .ranking-list {
-        
-    }
     .ranking-title, .ranking-item {
         font-weight: bold;
-        font-size: 1.3em;
-        text-align: center;
         background: #fff;
         border-radius: 3px;
         margin-top: 10px;
         margin-bottom: 10px;
         padding-top: 10px;
         padding-bottom: 10px;
-        :nth-child(1) { color: #797373; }
-        :nth-child(2) { color: #4a86aa; }
-        :nth-child(3) { color: #a94547; }
+        :nth-child(1) { color: #797373; padding-right: 0; text-align: left; }
+        :nth-child(2) { color: #4a86aa; padding-left: 0; padding-right: 0; text-align: center; }
+        :nth-child(3) { color: #a94547; padding-left: 0; text-align: right; }
+    }
+    .ranking-item {
+        font-size: 1.2em;
     }
 }
 
@@ -275,22 +285,20 @@
         width: 100%;
         background-color: rgba(0, 0, 0, 0.5);
     }
-    .score-list {
-        
-    }
     .score-title, .score-item {
         font-weight: bold;
-        font-size: 1.3em;
-        text-align: center;
         background: #fff;
         border-radius: 3px;
         margin-top: 10px;
         margin-bottom: 10px;
         padding-top: 10px;
         padding-bottom: 10px;
-        :nth-child(1) { color: #797373; }
-        :nth-child(2) { color: #a94547; }
-        :nth-child(3) { color: #4a86aa; }
-        :nth-child(4) { color: #a94547; }
+        :nth-child(1) { color: #797373; padding-right: 0; text-align: left; }
+        :nth-child(2) { color: #879546; padding-right: 0; text-align: center; }
+        :nth-child(3) { color: #4a86aa; padding-left: 0; text-align: right; }
+        :nth-child(4) { color: #a94547; padding-left: 0; text-align: right; }
+    }
+    .score-item {
+        font-size: 1.2em;
     }
 }

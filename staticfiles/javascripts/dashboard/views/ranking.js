@@ -2,7 +2,9 @@ define(['app'], function(App) {
     
     var RankingView = Amour.CollectionView.extend({
         ModelView: Amour.ModelView.extend({
-            template: '<div class="col-xs-2">{{index}}</div><div class="col-xs-6">{{user}}</div><div class="col-xs-4">{{score}}</div>',
+            template: '<div class="col-xs-2">{{index}}</div>' +
+                      '<div class="col-xs-6">{{user}}</div>' +
+                      '<div class="col-xs-4">{{score}}</div>',
             className: 'row ranking-item'
         })
     });

@@ -3,10 +3,16 @@ define(['app'], function(App) {
     var ScoreView = Amour.CollectionView.extend({
         ModelView: Amour.ModelView.extend({
             template: '<div class="col-xs-2">{{index}}</div>' +
-                      '<div class="col-xs-3">{{time}}</div>' +
-                      '<div class="col-xs-3">{{solved}}</div>' +
+                      '<div class="col-xs-2">{{solved}}</div>' +
+                      '<div class="col-xs-4">{{formatted_time}}</div>' +
                       '<div class="col-xs-4">{{score}}</div>',
-            className: 'row score-item'
+            className: 'row score-item',
+            templateHelpers: {
+                formatted_time: function() {
+                    var time = parseInt((+this.time) * 10) / 10;
+                    return time + (time == parseInt(time) ? '.0' : '');
+                }
+            }
         })
     });
     
