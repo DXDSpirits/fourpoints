@@ -16,7 +16,10 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 class Play(models.Model):
     user = models.ForeignKey(User)
     city = models.ForeignKey(City)
+    
     score = models.IntegerField()
+    time = models.FloatField()
+    solved = models.IntegerField()
     
     time_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -26,7 +29,7 @@ class Play(models.Model):
     
     class Meta:
         index_together = [['user', 'time_created',],
-                         ['city', 'time_created',],]
+                          ['city', 'time_created',],]
         ordering = ['time_created']
     
     def __unicode__(self):

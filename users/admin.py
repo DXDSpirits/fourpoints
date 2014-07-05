@@ -10,7 +10,7 @@ class PlayAdmin(admin.ModelAdmin):
     class AnswerInline(admin.TabularInline):
         model = models.Answer
         extra = 0
-    list_display = ['id', 'time_created', 'user', 'city', 'score', 'complete', 'platform']
+    list_display = ['id', 'time_created', 'user', 'city', 'time', 'solved', 'score', 'complete', 'platform']
     inlines = [AnswerInline]
 
 
