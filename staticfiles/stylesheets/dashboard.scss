@@ -56,18 +56,29 @@
         background-position: bottom center;
         cursor: pointer;
         top: 0;
-        z-index: 1;
         width: 90%;
         margin: 20px 5%;
         padding-top: 60%;
     }
+    .play-box.initial {
+        z-index: 1;
+    }
+    .play-box.ready {
+        z-index: 2;
+    }
 }
 
 #view-home {
+    .btn-select-region {
+        position: absolute;
+        bottom: 0;
+        z-index: 2;
+    }
     .board {
         position: absolute;
+        z-index: 1;
         top: 100%;
-        margin-top: -50%;
+        margin-top: -60%;
         left: 0;
         width: 100%;
     }
@@ -78,17 +89,26 @@
         background-color: rgba($brand-primary, 0.7);
         @include transition-transform(.35s ease-in-out);
         @include transform-origin(50% 100%);
+        position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        &.selected::after {
+            display: none;
+        }
     }
     .card1 { @include transform(translate3d(16%, 24%, 0) rotate(-22deg)); }
     .card2 { @include transform(translate3d(6%, 6%, 0) rotate(-11deg)); }
     .card3 { @include transform(translate3d(0, 0, 0) rotate(0)); }
     .card4 { @include transform(translate3d(-6%, 6%, 0) rotate(11deg)); }
     .card5 { @include transform(translate3d(-16%, 24%, 0) rotate(22deg)); }
-    .card1.selected { @include transform(scale(1.5, 1.5) translate3d(16%, 24%, 0) rotate(-22deg)); }
-    .card2.selected { @include transform(scale(1.5, 1.5) translate3d(6%, 6%, 0) rotate(-11deg)); }
-    .card3.selected { @include transform(scale(1.5, 1.5) translate3d(0, 0, 0) rotate(0)); }
-    .card4.selected { @include transform(scale(1.5, 1.5) translate3d(-6%, 6%, 0) rotate(11deg)); }
-    .card5.selected { @include transform(scale(1.5, 1.5) translate3d(-16%, 24%, 0) rotate(22deg)); }
     .board.merge {
         visibility: hidden;
         .card1 { @include transform(translate3d(200%, 0, 0) rotate(0)); }
@@ -105,6 +125,16 @@
         border-top: 2px solid saturate($brand-primary, 10%);
         border-radius: 50%;
         position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 90%;
+            width: 90%;
+            border-top: 2px dotted rgba($brand-primary, 0.7);
+            border-radius: 50%;
+        }
     }
     .hand {
         position: absolute;

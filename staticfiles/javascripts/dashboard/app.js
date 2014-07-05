@@ -1,7 +1,5 @@
 define(function() {
     
-    //$('.views-wrapper').height($(window).height());
-    
     var App = {
         Models: {},
         Views: {},
@@ -24,6 +22,10 @@ define(function() {
             App.router.goTo(target);
         }
     });
+    
+    /*
+     * Ajax Events
+     */
     
     var timeout = 1000;
     
@@ -55,6 +57,74 @@ define(function() {
             src && Amour.loadBgImage($(this), src);
         });
     };
+    
+    /*
+     * Models and Collections API
+     */
+    
+    Amour.Models = {};
+    Amour.Collections = {};
+    
+    Amour.Models.Region = Amour.Model.extend({
+        urlRoot: Amour.APIHost + '/polls/region/'
+    });
+    
+    Amour.Collections.Regions = Amour.Collection.extend({
+        url: Amour.APIHost + '/polls/region/',
+        model: Amour.Models.Region
+    });
+    
+    Amour.Models.City = Amour.Model.extend({
+        urlRoot: Amour.APIHost + '/polls/city/'
+    });
+    
+    Amour.Collections.Cities = Amour.Collection.extend({
+        url: Amour.APIHost + '/polls/city/',
+        model: Amour.Models.City
+    });
+    
+    Amour.Models.Play = Amour.Model.extend({
+        urlRoot: Amour.APIHost + '/users/play/'
+    });
+    
+    Amour.Collections.Plays = Amour.Collection.extend({
+        url: Amour.APIHost + '/users/play/',
+        model: Amour.Models.Play,
+        citiesPlayed: function() {
+            return _.uniq(this.pluck('city'));
+        }
+    });
+    
+    Amour.Models.Ranking = Amour.Model.extend({
+        urlRoot: Amour.APIHost + '/users/ranking/'
+    });
+    
+    Amour.Collections.Rankings = Amour.Collection.extend({
+        url: Amour.APIHost + '/users/ranking/',
+        model: Amour.Models.Ranking
+    });
+    
+    Amour.Models.User = Amour.Model.extend({
+        urlRoot: Amour.APIHost + '/users/user/',
+        initModel: function() {},
+        login: function(auth, options) {
+            this.clear().set(auth);
+            options = options || {};
+            options.url = Amour.APIHost + '/token-auth/';
+            var success = options.success;
+            options.success = function(model, response, options) {
+                Amour.TokenAuth.set(response.token);
+                if (success) success(model, response, options);
+                model.trigger('login');
+            };
+            this.save({}, options);
+        },
+        verify: function(code, options) {
+            options = options || {};
+            options.url = this.url() + 'verify/';
+            this.save({code: code}, options);
+        }
+    });
     
     Amour.TokenAuth.clear();
     App.user = new Amour.Models.User();

@@ -6,10 +6,13 @@ define(['app'], function(App) {
         events: {
             'click .btn-send': 'getcode',
             'click .btn-verify': 'verify',
-            'click .play-box': 'play'
+            'click .play-box.initial': 'ready',
+            'click .play-box.ready': 'play',
+            'click .btn-select-region': 'selectRegion'
         },
         initPage: function() {
             Amour.ajax.on('unauthorized', this.go);
+            _.bindAll(this, 'signin', 'ready', 'play', 'stop');
         },
         signin: function() {
             var mobile = this.$('input[name=mobile]').val() || null;
@@ -18,23 +21,18 @@ define(['app'], function(App) {
                     username : mobile,
                     password : mobile
                 }, {
-                    success : function() {
-                        App.router.refreshActivePage();
-                    },
+                    success : this.ready,
                     error : function() {
-                        alert('Login failed');
+                        alert('登录失败');
                     }
                 });
             }
         },
         verify: function() {
             var code = this.$('input[name=code]').val() || null;
-            var self = this;
             if (code) {
                 App.user.verify(code, {
-                    success: function() {
-                        self.signin();
-                    },
+                    success: this.signin(),
                     error: function() {
                         alert('Invalid Code');
                     }
@@ -50,31 +48,37 @@ define(['app'], function(App) {
                 App.user.save();
             }
         },
+        selectRegion: function() {
+            var left = this.$('.ball').offset().left;
+            var it = parseInt(left / this.$el.width() * 5);
+            App.router.goTo('Region', {
+                region: regionId[it]
+            });
+        },
         stop: function() {
+            this.$('.btn-select-region').removeClass('hidden');
             this.$('.hand').addClass('stop');
             var left = this.$('.ball').offset().left;
             var it = parseInt(left / this.$el.width() * 5);
             this.$('.card'+(it+1)).addClass('selected');
-            setTimeout(function() {
-                App.router.goTo('Region', {
-                    region: regionId[it]
-                });
-            }, 500);
         },
         play: function() {
+            this.$('.btn-select-region').addClass('hidden');
             this.$('.card').removeClass('selected');
             this.$('.hand').removeClass('stop').addClass('automatically');
             var self = this;
-            setTimeout(function() {
-                self.stop();
-            }, 4000 + Math.random() * 1000);
+            setTimeout(this.stop, 4000 + Math.random() * 1000);
         },
-        render: function() {
-            this.$('.merge').removeClass('merge');
-            this.$('input').val('');
+        ready: function() {
+            this.$('.play-box.initial').addClass('hidden');
             var logged_in = (Amour.TokenAuth.get() != null);
             this.$('.login-box').toggleClass('hidden', logged_in);
-            this.$('.play-box').toggleClass('hidden', !logged_in);
+            this.$('.play-box.ready').toggleClass('hidden', !logged_in);
+        },
+        render: function() {
+            this.$('.btn-select-region').addClass('hidden');
+            this.$('.merge').removeClass('merge');
+            this.$('input').val('');
             return this;
         }
     }))({el: $('#view-home')});
