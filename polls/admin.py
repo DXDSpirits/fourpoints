@@ -1,5 +1,6 @@
 from django.contrib import admin
 import models
+import polls
 
 
 class ChoiceAdmin(admin.ModelAdmin):
@@ -20,13 +21,21 @@ class CityAdmin(admin.ModelAdmin):
     class QuestionInline(admin.StackedInline):
         model = models.Question
         extra = 0
+    
     def thumbnail(self, instance):
         return u'<img src="%s" style="max-width:100px;height:50px;" alt="" />' % instance.image.url
     thumbnail.allow_tags = True
     thumbnail.short_description = "Thumbnail"
+    
+    def random_questions(self, request, queryset):
+        for city in queryset:
+            polls.random_questions(city)
+    random_questions.short_description = "Generate Random Questions"
+    
     list_display = ['id', 'name', 'thumbnail']
     list_display_links = ['id', 'name']
     inlines = [QuestionInline]
+    actions = ['random_questions']
 
 
 class RegionAdmin(admin.ModelAdmin):
