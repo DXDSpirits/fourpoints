@@ -33,6 +33,7 @@ define(['app'], function(App) {
             App.router.goTo('Home');
         },
         render: function() {
+            App.showShareTip();
             this.plays.fetch({
                 reset: true,
                 data: {

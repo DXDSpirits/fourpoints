@@ -13,6 +13,22 @@
 
 // Page specific styles
 
+#sharetip {
+    position: absolute;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-repeat: no-repeat;
+    background-size: 260px 160px;
+    background-position: top right;
+    padding-top: 200px;
+    padding-right: 30px;
+    text-align: right;
+}
+
 #view-home {
     > .wrapper {
         min-height: 100%;
@@ -321,14 +337,6 @@
 #view-score {
     > header {
         color: #fff;
-    }
-    .tip {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
     }
     .score-title, .score-item {
         font-weight: bold;

@@ -23,6 +23,14 @@ define(function() {
         }
     });
     
+    $('body').on('click', '#sharetip .btn', function() {
+        $('#sharetip').addClass('hidden');
+    });
+    
+    App.showShareTip = function() {
+        $('#sharetip').removeClass('hidden');
+    }
+    
     /*
      * Ajax Events
      */

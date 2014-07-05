@@ -56,6 +56,7 @@ define(['app'], function(App) {
             });
         },
         stop: function() {
+            this.playing = false;
             this.$('.btn-select-region').removeClass('hidden');
             this.$('.hand').addClass('stop');
             var left = this.$('.ball').offset().left;
@@ -63,6 +64,8 @@ define(['app'], function(App) {
             this.$('.card'+(it+1)).addClass('selected');
         },
         play: function() {
+            if (this.playing) return;
+            this.playing = true;
             this.$('.btn-select-region').addClass('hidden');
             this.$('.card').removeClass('selected');
             this.$('.hand').removeClass('stop').addClass('automatically');
