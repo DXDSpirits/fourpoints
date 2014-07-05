@@ -131,7 +131,7 @@ define(function() {
         }
     });
     
-    Amour.TokenAuth.clear();
+    //Amour.TokenAuth.clear();
     App.user = new Amour.Models.User();
     App.plays = new Amour.Collections.Plays();
     

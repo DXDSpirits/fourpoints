@@ -277,9 +277,18 @@
         font-size: 1.2em;
     }
     .radio {
-        margin: 20px 0;
+        margin: 0 0 0 30px;
     }
     .radio label {
+        display: block;
+        padding-top: 15px;
+        padding-bottom: 10px;
+    }
+    .radio input[type="radio"] {
+        margin-top: 0;
+        height: 24px;
+    }
+    /*.radio label {
         padding-left: 0;
         padding-right: 30px;
     }
@@ -287,7 +296,7 @@
         float: right;
         margin-left: 0;
         margin-right: -30px;
-    }
+    }*/
 }
 
 #view-ranking {
