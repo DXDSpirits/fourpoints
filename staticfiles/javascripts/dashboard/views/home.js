@@ -34,7 +34,7 @@ define(['app'], function(App) {
                 App.user.verify(code, {
                     success: this.signin,
                     error: function() {
-                        alert('Invalid Code');
+                        alert('验证码错误');
                     }
                 });
             } else {
@@ -44,8 +44,15 @@ define(['app'], function(App) {
         getcode: function() {
             var mobile = this.$('input[name=mobile]').val() || null;
             if (mobile) {
-                App.user.set('username', mobile);
-                App.user.save();
+                var $btn = $('.btn-send');
+                $btn.html('<i class="fa fa-refresh fa-spin"></i>');
+                App.user.save({
+                    username: mobile
+                }, {
+                    success: function() {
+                        $btn.addClass('disabled').text('已发送验证码');
+                    }
+                });
             }
         },
         selectRegion: function() {
@@ -73,6 +80,7 @@ define(['app'], function(App) {
             setTimeout(this.stop, 4000 + Math.random() * 1000);
         },
         ready: function() {
+            this.$('.btn-send').removeClass('disabled').text('发送验证码');
             this.$('.play-box.initial').addClass('hidden');
             var logged_in = (Amour.TokenAuth.get() != null);
             this.$('.login-box').toggleClass('hidden', logged_in);
