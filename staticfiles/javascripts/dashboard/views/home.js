@@ -32,7 +32,7 @@ define(['app'], function(App) {
             var code = this.$('input[name=code]').val() || null;
             if (code) {
                 App.user.verify(code, {
-                    success: this.signin(),
+                    success: this.signin,
                     error: function() {
                         alert('Invalid Code');
                     }

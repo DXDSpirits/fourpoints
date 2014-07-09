@@ -1,7 +1,5 @@
 define(['app'], function(App) {
     
-    var user = new Amour.Models.User();
-    
     App.Pages.Login = new (Amour.PageView.extend({
         events: {
             'click .btn-signup': 'signup',
@@ -14,7 +12,7 @@ define(['app'], function(App) {
             var username = this.$('input[name=username]').val() || null;
             var password = this.$('input[name=password]').val() || null;
             if (username && password) {
-                user.login({ username : username, password : password }, {
+                App.user.login({ username : username, password : password }, {
                     success : function() {
                         App.router.refreshActivePage();
                     },

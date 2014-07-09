@@ -14,7 +14,7 @@ define(['app'], function(App) {
             
         },
         initPage: function() {
-            this.rankings = new Amour.Collections.Rankings();
+            this.rankings = new App.Collections.Rankings();
             this.views = {
                 ranking: new RankingView({
                     el: this.$('.ranking-list'),

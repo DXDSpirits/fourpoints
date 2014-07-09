@@ -28,7 +28,7 @@ define(['app'], function(App) {
     App.Pages.Region = new (Amour.PageView.extend({
         events: {},
         initPage: function() {
-            this.cities = new Amour.Collections.Cities();
+            this.cities = new App.Collections.Cities();
             this.views = {
                 cities: new CitiesView({
                     collection: this.cities,

@@ -6,7 +6,7 @@ define(['app'], function(App) {
             'click .btn-play': 'play'
         },
         initPage: function() {
-            this.city = new Amour.Models.City();
+            this.city = new App.Models.City();
             this.listenTo(this.city, 'change', this.renderCity);
         },
         openArticle: function() {

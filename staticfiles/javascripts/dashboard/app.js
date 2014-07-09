@@ -70,34 +70,34 @@ define(function() {
      * Models and Collections API
      */
     
-    Amour.Models = {};
-    Amour.Collections = {};
+    App.Models = {};
+    App.Collections = {};
     
-    Amour.Models.Region = Amour.Model.extend({
+    App.Models.Region = Amour.Model.extend({
         urlRoot: Amour.APIHost + '/polls/region/'
     });
     
-    Amour.Collections.Regions = Amour.Collection.extend({
+    App.Collections.Regions = Amour.Collection.extend({
         url: Amour.APIHost + '/polls/region/',
-        model: Amour.Models.Region
+        model: App.Models.Region
     });
     
-    Amour.Models.City = Amour.Model.extend({
+    App.Models.City = Amour.Model.extend({
         urlRoot: Amour.APIHost + '/polls/city/'
     });
     
-    Amour.Collections.Cities = Amour.Collection.extend({
+    App.Collections.Cities = Amour.Collection.extend({
         url: Amour.APIHost + '/polls/city/',
-        model: Amour.Models.City
+        model: App.Models.City
     });
     
-    Amour.Models.Play = Amour.Model.extend({
+    App.Models.Play = Amour.Model.extend({
         urlRoot: Amour.APIHost + '/users/play/'
     });
     
-    Amour.Collections.Plays = Amour.Collection.extend({
+    App.Collections.Plays = Amour.Collection.extend({
         url: Amour.APIHost + '/users/play/',
-        model: Amour.Models.Play,
+        model: App.Models.Play,
         citiesPlayed: function() {
             return _.uniq(this.pluck('city'));
         },
@@ -108,16 +108,16 @@ define(function() {
         }
     });
     
-    Amour.Models.Ranking = Amour.Model.extend({
+    App.Models.Ranking = Amour.Model.extend({
         urlRoot: Amour.APIHost + '/users/ranking/'
     });
     
-    Amour.Collections.Rankings = Amour.Collection.extend({
+    App.Collections.Rankings = Amour.Collection.extend({
         url: Amour.APIHost + '/users/ranking/',
-        model: Amour.Models.Ranking
+        model: App.Models.Ranking
     });
     
-    Amour.Models.User = Amour.Model.extend({
+    App.Models.User = Amour.Model.extend({
         urlRoot: Amour.APIHost + '/users/user/',
         initModel: function() {},
         login: function(auth, options) {
@@ -140,8 +140,8 @@ define(function() {
     });
     
     //Amour.TokenAuth.clear();
-    App.user = new Amour.Models.User();
-    App.plays = new Amour.Collections.Plays();
+    App.user = new App.Models.User();
+    App.plays = new App.Collections.Plays();
     
     App.user.on('login', function() {
         App.user.fetch();
