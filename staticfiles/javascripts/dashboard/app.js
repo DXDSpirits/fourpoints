@@ -14,10 +14,11 @@ define(function() {
     $('body').on('click', '.header-navbar > ul > li', function(e) {
         if (e.preventDefault) e.preventDefault();
         var curPage = App.router.history.active;
-        if (curPage == App.Pages.Question) return;
         var $el = $(e.currentTarget);
         var target = $el.data('target');
-        if (curPage == App.Pages.Ranking || curPage == App.Pages.Instruction || target != 'Home') {
+        if (curPage == App.Pages.Ranking ||
+            curPage == App.Pages.Instruction ||
+            curPage == App.Pages.Home) {
             $el.addClass('active').siblings().removeClass('active');
             App.router.goTo(target);
         }

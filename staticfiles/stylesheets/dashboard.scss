@@ -245,7 +245,7 @@
         }
         .btn-play {
             margin-bottom: -40px;
-            &.disabled {
+            &.disabled, &.played {
                 font-size: 1em;
             }
         }
