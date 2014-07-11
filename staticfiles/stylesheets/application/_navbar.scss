@@ -3,6 +3,7 @@
 
 body > header, body > .header-navbar {
     position: absolute;
+    z-index: 1;
     top: 0;
     left: 0;
     width: 100%;
@@ -45,6 +46,7 @@ body > header, body > .header-navbar {
 
 body > footer, body > .footer-navbar {
     position: absolute;
+    z-index: 1;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -54,5 +56,23 @@ body > footer, body > .footer-navbar {
     .img {
         background-size: contain;
         @include square(100%);
+    }
+}
+
+.message {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    background: $brand-primary;
+    .times {
+        color: #4a86aa;
+    }
+    .timer {
+        color: #a94547;
     }
 }

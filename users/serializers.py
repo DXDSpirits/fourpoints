@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models import Play, Answer, Ranking
 #from polls.models import Choice, Question
 from rest_framework import serializers
+import math
 
 
 class UserSimpleSerializer(serializers.ModelSerializer):
@@ -34,14 +35,15 @@ class PlaySerializer(serializers.ModelSerializer):
         return attrs
     def validate_time(self, attrs, source):
         if hasattr(self.object, 'time_created'):
-            attrs[source] = (datetime.now() - self.object.time_created).total_seconds()
+            time = (datetime.now() - self.object.time_created).total_seconds()
+            attrs[source] = min(180, time)
         else:
             attrs[source] = 0
         return attrs
     def validate(self, attrs):
         answers = attrs['answer_set']
         solved = sum([1 for answer in answers if answer.choice.right])
-        attrs['score'] = int((solved * 5) * (attrs['time'] * 10))
+        attrs['score'] = int(100 * solved * math.log(max(math.e, 180 - attrs['time'])))
         attrs['solved'] = solved
         attrs['complete'] = len(answers) > 0
         return attrs

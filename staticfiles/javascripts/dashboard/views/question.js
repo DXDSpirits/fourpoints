@@ -22,10 +22,12 @@ define(['app'], function(App) {
             }
         },
         finish: function() {
+            $('.header-navbar .message').addClass('hidden');
             var answers = this.questions.reduce(function(answers, question) {
-                return answers.concat({
+                var checked = this.$('input[name=question-' + question.id + ']:checked');
+                return checked.length == 0 ? answers : answers.concat({
                     question: question.id,
-                    choice: +this.$('input[name=question-' + question.id + ']:checked').val()
+                    choice: +checked.val()
                 });
             }, [], this);
             this.play.save({
@@ -42,8 +44,31 @@ define(['app'], function(App) {
                 platform: App.isWeixin ? 'weixin' : 'weibo'
             });
         },
+        initMessage: function() {
+            $('.header-navbar .times').text(App.plays.timesToday());
+            clearInterval(this.timer);
+            var end = moment().add('minutes', 3);
+            var $timer = $('.header-navbar .timer');
+            var self = this;
+            var timer = this.timer = setInterval(function() {
+                var left = end.diff(moment(), 'seconds');
+                if (left <= 0) {
+                    alert('答题时间到');
+                    clearInterval(timer);
+                    self.finish();
+                } else {
+                    dur = moment.duration(left, 'seconds');
+                    $timer.text(moment({
+                        minute: dur.minutes(),
+                        second: dur.seconds()
+                    }).format('mm:ss'));
+                }
+            }, 1000);
+        },
         render: function() {
+            $('.header-navbar .message').removeClass('hidden');
             this.newPlay();
+            this.initMessage();
             if (this.options.questions) {
                 this.questions.set(this.options.questions)
             }
