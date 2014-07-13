@@ -18,6 +18,9 @@ try:
 except:
     pass
 
+ADMINS = (
+    ('Xindong Ding', 'dxd.spirits@gmail.com'),
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
