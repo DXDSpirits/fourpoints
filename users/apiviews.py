@@ -28,6 +28,9 @@ class UserListCreate(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSimpleSerializer
     
+    def get_queryset(self):
+        return self.queryset.filter(id=self.request.user.id)
+    
     def pre_save(self, obj):
         code = str(random.randint(1000, 9999))
         send_veriry_code(obj.username, code)
@@ -82,3 +85,4 @@ class RankingViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ranking.objects.all()
     serializer_class = RankingSerializer
     filter_class = RankingFilter
+    paginate_by = 10

@@ -116,7 +116,16 @@ define(function() {
     });
     
     App.Models.Ranking = Amour.Model.extend({
-        urlRoot: Amour.APIHost + '/users/ranking/'
+        urlRoot: Amour.APIHost + '/users/ranking/',
+        parse: function(response) {
+            var mobile = response.user;
+            if (mobile == App.user.get('username')) {
+                response.user = '你的成绩';
+            } else {
+                response.user = [mobile.slice(0,3), '****', mobile.slice(7, 11)].join('');
+            }
+            return response;
+        }
     });
     
     App.Collections.Rankings = Amour.Collection.extend({
@@ -127,6 +136,9 @@ define(function() {
     App.Models.User = Amour.Model.extend({
         urlRoot: Amour.APIHost + '/users/user/',
         initModel: function() {},
+        parse: function(response) {
+            return _.isArray(response) ? response[0] : response;
+        },
         login: function(auth, options) {
             this.clear().set(auth);
             options = options || {};

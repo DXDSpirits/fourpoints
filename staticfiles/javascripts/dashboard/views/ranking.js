@@ -22,11 +22,30 @@ define(['app'], function(App) {
                 })
             };
         },
+        showMyRanking: function() {
+            var self = this;
+            var myRanking = new App.Collections.Rankings();
+            myRanking.fetch({
+                data: {
+                    platform: App.platform,
+                    user: App.user.id
+                },
+                success: function(collection) {
+                    var ranking = collection.at(0);
+                    ranking.set('index', parseInt(Math.random() * 900) + 100);
+                    self.rankings.add(ranking);
+                }
+            });
+        },
         render: function() {
+            var self = this;
             this.rankings.fetch({
                 reset: true,
-                data: {
-                    platform: App.platform
+                data: { platform: App.platform },
+                success: function(collection) {
+                    if (collection.findWhere({user: '你的成绩'}) == null) {
+                        self.showMyRanking();
+                    }
                 }
             });
         }
