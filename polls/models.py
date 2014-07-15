@@ -20,6 +20,7 @@ class City(models.Model):
     image = models.ImageField(upload_to=image_name)
     
     description = models.TextField()
+    adurl = models.URLField()
     
     def __unicode__(self):
         return unicode(self.name)

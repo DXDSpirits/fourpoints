@@ -20,7 +20,7 @@ class CitySerializer(serializers.ModelSerializer):
     image = serializers.Field(source='image.url')
     class Meta:
         model = models.City
-        fields = ('id', 'name', 'description', 'image', 'questions')
+        fields = ('id', 'name', 'description', 'image', 'questions', 'adurl')
 
 
 class RegionSerializer(serializers.ModelSerializer):

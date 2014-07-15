@@ -32,7 +32,7 @@ class CityAdmin(admin.ModelAdmin):
             polls.random_questions(city)
     random_questions.short_description = "Generate Random Questions"
     
-    list_display = ['id', 'name', 'thumbnail']
+    list_display = ['id', 'name', 'thumbnail', 'adurl']
     list_display_links = ['id', 'name']
     inlines = [QuestionInline]
     actions = ['random_questions']
