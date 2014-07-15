@@ -5,11 +5,16 @@ define(['app'], function(App) {
     App.Pages.City = new (Amour.PageView.extend({
         events: {
             'click .left-btn': 'openArticle',
-            'click .btn-play': 'play'
+            'click .btn-play': 'play',
+            'click .ad > a': 'goToAd'
         },
         initPage: function() {
             this.city = new App.Models.City();
             this.listenTo(this.city, 'change', this.renderCity);
+        },
+        goToAd: function(e) {
+            e.preventDefault && e.preventDefault();
+            window.open(this.city.get('adurl'), '_blank', 'location=no');
         },
         openArticle: function() {
             this.$('>article').toggleClass('open');
@@ -26,7 +31,7 @@ define(['app'], function(App) {
         },
         renderCity: function() {
             Amour.loadBgImage(this.$el, this.city.get('image'));
-            this.$('.title').html(this.city.get('name'));
+            this.$('.title, .ad>span').html(this.city.get('name'));
             this.$('.content').html(this.city.get('description'));
             var outOfPlay = App.plays.timesToday() >= 5;
             var cityPlayed = _.contains(App.plays.citiesPlayed(), this.city.id);

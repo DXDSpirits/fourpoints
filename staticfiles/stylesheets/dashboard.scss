@@ -238,21 +238,8 @@
     > article {
         margin-left: 100px;
         background-color: $brand-primary;
-        padding: 40px 20px 60px;
+        padding: 40px 20px 90px;
         height: 100%;
-        .title {
-            margin-top: -30px;
-        }
-        .btn-play {
-            margin-bottom: -40px;
-            &.disabled, &.played {
-                font-size: 1em;
-            }
-        }
-        .content {
-            height: 100%;
-            @include scrollable(1px);
-        }
         @include transition-transform(.35s ease-in-out);
         @include translate3d(100%, 0, 0);
         &.open {
@@ -262,23 +249,47 @@
             }
         }
         position: relative;
-        .left-btn {
-            @include user-select(none);
-            cursor: pointer;
-            background-color: $brand-primary;
-            &:active {
-                background-color: darken($brand-primary, 5%);
-            }
-            position: absolute;
-            width: 30px;
-            height: 100%;
-            top: 0;
-            left: -30px;
-            .fa {
-                position: relative;
-                top: 50%;
-                margin-top: -10px;
-            }
+    }
+    .left-btn {
+        @include user-select(none);
+        cursor: pointer;
+        background-color: $brand-primary;
+        &:active {
+            background-color: darken($brand-primary, 5%);
+        }
+        position: absolute;
+        width: 30px;
+        height: 100%;
+        top: 0;
+        left: -30px;
+        .fa {
+            position: relative;
+            top: 40%;
+        }
+    }
+    .title {
+        margin-top: -30px;
+    }
+    .btn-play {
+        &.disabled, &.played {
+            font-size: 1em;
+        }
+    }
+    .content {
+        height: 100%;
+        @include scrollable(1px);
+    }
+    .ad {
+        position: absolute;
+        margin: 0;
+        padding: 5px 10px;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #184d66;
+        color: #fff;
+        > a {
+            color: $brand-warning;
         }
     }
 }

@@ -39,11 +39,11 @@ define(['app'], function(App) {
                 reset: true,
                 data: { platform: App.platform },
                 success: function(collection) {
-                    filter = _.chain(collection.toJSON()).filter(function(play) {
-                        return moment(play.get('time_created')).diff(moment(), 'days') == 0
+                    var filter = _.chain(collection.toJSON()).filter(function(play) {
+                        return moment(play.time_created).diff(moment(), 'days') == 0
                     }).each(function(play, index) {
                         play.index = index + 1;
-                    });
+                    }).value();
                     self.plays.reset(filter);
                 }
             });
