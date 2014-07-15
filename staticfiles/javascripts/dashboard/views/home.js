@@ -63,7 +63,6 @@ define(['app'], function(App) {
             });
         },
         stop: function() {
-            this.playing = false;
             this.$('.btn-select-region').removeClass('hidden');
             this.$('.hand').addClass('stop');
             var left = this.$('.ball').offset().left;
@@ -71,8 +70,8 @@ define(['app'], function(App) {
             this.$('.card'+(it+1)).addClass('selected');
         },
         play: function() {
-            if (this.playing) return;
-            this.playing = true;
+            if (App.Playing) return;
+            App.Playing = true;
             this.$('.btn-select-region').addClass('hidden');
             this.$('.card').removeClass('selected');
             this.$('.hand').removeClass('stop').addClass('automatically');
@@ -87,8 +86,10 @@ define(['app'], function(App) {
             this.$('.play-box.ready').toggleClass('hidden', !logged_in);
         },
         render: function() {
+            App.Playing = false;
             this.$('.btn-select-region').addClass('hidden');
             this.$('.merge').removeClass('merge');
+            this.$('.card').removeClass('selected');
             this.$('input').val('');
             return this;
         }

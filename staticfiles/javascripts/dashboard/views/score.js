@@ -21,7 +21,7 @@ define(['app'], function(App) {
             'click .btn-replay': 'replay'
         },
         initPage: function() {
-            this.plays = App.plays;
+            this.plays = new App.Collections.Plays();
             this.views = {
                 score: new ScoreView({
                     el: this.$('.score-list'),
@@ -34,10 +34,17 @@ define(['app'], function(App) {
         },
         render: function() {
             App.showShareTip();
-            this.plays.fetch({
+            var self = this;
+            App.plays.fetch({
                 reset: true,
-                data: {
-                    platform: App.isWeixin ? 'weixin' : 'weibo'
+                data: { platform: App.platform },
+                success: function(collection) {
+                    filter = _.chain(collection.toJSON()).filter(function(play) {
+                        return moment(play.get('time_created')).diff(moment(), 'days') == 0
+                    }).each(function(play, index) {
+                        play.index = index + 1;
+                    });
+                    self.plays.reset(filter);
                 }
             });
         }

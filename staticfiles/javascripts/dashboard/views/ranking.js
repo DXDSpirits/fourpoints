@@ -26,7 +26,7 @@ define(['app'], function(App) {
             this.rankings.fetch({
                 reset: true,
                 data: {
-                    platform: App.isWeixin ? 'weixin' : 'weibo'
+                    platform: App.platform
                 }
             });
         }

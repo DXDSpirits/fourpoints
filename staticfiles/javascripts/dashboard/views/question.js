@@ -41,7 +41,7 @@ define(['app'], function(App) {
         newPlay: function() {
             this.play = App.plays.create({
                 city: this.options.cityId,
-                platform: App.isWeixin ? 'weixin' : 'weibo'
+                platform: App.platform
             });
         },
         initMessage: function() {
@@ -66,6 +66,7 @@ define(['app'], function(App) {
             }, 1000);
         },
         render: function() {
+            this.$el.scrollTop(0);
             $('.header-navbar .message').removeClass('hidden');
             this.newPlay();
             this.initMessage();

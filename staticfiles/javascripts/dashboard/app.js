@@ -1,6 +1,7 @@
 define(function() {
     
     var App = {
+        Playing: false,
         Models: {},
         Views: {},
         Pages: {}
@@ -8,6 +9,7 @@ define(function() {
     
     App.isWeixin = /MicroMessenger/i.test(navigator.userAgent);
     App.isWeixin = true;
+    App.platform = App.isWeixin ? 'weixin' : 'weibo';
     
     App.router = new Amour.Router(App.Pages);
     
@@ -16,9 +18,10 @@ define(function() {
         var curPage = App.router.history.active;
         var $el = $(e.currentTarget);
         var target = $el.data('target');
-        if (curPage == App.Pages.Ranking ||
-            curPage == App.Pages.Instruction ||
-            curPage == App.Pages.Home) {
+        if (!App.Playing &&
+            (curPage == App.Pages.Ranking ||
+             curPage == App.Pages.Instruction ||
+             curPage == App.Pages.Home)) {
             $el.addClass('active').siblings().removeClass('active');
             App.router.goTo(target);
         }
@@ -29,7 +32,10 @@ define(function() {
     });
     
     App.showShareTip = function() {
-        $('#sharetip').removeClass('hidden');
+        if (!localStorage.getItem('user-shared-to-social')) {
+            $('#sharetip').removeClass('hidden');
+            localStorage.setItem('user-shared-to-social', true);
+        }
     }
     
     /*
