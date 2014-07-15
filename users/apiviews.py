@@ -1,12 +1,14 @@
 #from django.shortcuts import render
 
 import django_filters
+import random
 
 from django.contrib.auth.models import User
 
 from .models import Play, Ranking
 from .serializers import UserSerializer, UserSimpleSerializer, PlaySerializer, RankingSerializer
 from .permissions import IsSelf, IsOwner, Answerable
+from .sms import send_veriry_code
 
 from rest_framework import generics, filters, viewsets, status, mixins
 from rest_framework.response import Response
@@ -27,7 +29,9 @@ class UserListCreate(generics.ListCreateAPIView):
     serializer_class = UserSimpleSerializer
     
     def pre_save(self, obj):
-        obj.set_password('123')
+        code = str(random.randint(1000, 9999))
+        send_veriry_code(obj.username, code)
+        obj.set_password(code)
         obj.is_active = False
 
 
