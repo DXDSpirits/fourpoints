@@ -23,16 +23,25 @@ def http_request(url, args = None, post_args = None):
 
 
 def send_sms(dest, content):
-    result = http_request(url = 'http://59.151.46.205:8888/sms.aspx',
-                          post_args = {'userid': '140',
-                                       'account': 'xidawu',
-                                       'password': 'xidawu0710',
-                                       'action': 'send',
-                                       'mobile': dest,
-                                       'content': unicode(content),
-                                       'sendTime': '',
-                                       'extno': ''})
-    logger.info('SMS Sent to %s %s' % (str(dest), str(result)))
+    if dest[:3] in {'133', '153', '180', '181', '189'}:
+        result = http_request(url = 'http://59.151.46.205:8888/sms.aspx',
+                              post_args = {'userid': '140',
+                                           'account': 'xidawu',
+                                           'password': 'xidawu0710',
+                                           'action': 'send',
+                                           'mobile': dest,
+                                           'content': unicode(content),
+                                           'sendTime': '',
+                                           'extno': ''})
+        logger.info('SMS Sent to %s %s' % (str(dest), str(result)))
+    else:
+        result = http_request(url = 'http://www.wemediacn.net/webservice/smsservice.asmx/SendSMS',
+                              args = {'TokenID': '7100882330723323',
+                                      'mobile': dest,
+                                      'Content': unicode(content),
+                                      'ScheduleDate': '2014-01-01',
+                                      'FormatID': '8'})
+        logger.info('SMS Sent to %s %s' % (str(dest), str(result)))
 
 
 def send_veriry_code(mobile, code):
