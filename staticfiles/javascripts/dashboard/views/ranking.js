@@ -43,7 +43,7 @@ define(['app'], function(App) {
                 reset: true,
                 data: { platform: App.platform },
                 success: function(collection) {
-                    if (collection.findWhere({user: '你的成绩'}) == null) {
+                    if (collection.findWhere({user: '你的成绩'}) == null && App.user.id != null) {
                         self.showMyRanking();
                     }
                 }
