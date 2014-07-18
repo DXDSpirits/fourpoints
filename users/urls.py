@@ -12,5 +12,5 @@ urlpatterns = patterns('',
     url(r'^', include(router.urls)),
     url(r'^user/$', apiviews.UserListCreate.as_view()),
     url(r'^user/(?P<pk>[0-9]+)/$', apiviews.UserDetail.as_view()),
-    url(r'^user/(?P<pk>[0-9]+)/verify/$', apiviews.UserVerify.as_view()),
+    url(r'^code/$', apiviews.CodeView.as_view()),
 )

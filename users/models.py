@@ -7,6 +7,16 @@ from rest_framework.authtoken.models import Token
 from polls.models import Choice, Question, City
 
 
+class VerifyCode(models.Model):
+    mobile = models.SlugField()
+    code = models.IntegerField()
+    
+    time_created = models.DateTimeField(auto_now_add=True)
+    
+    def __unicode__(self):
+        return self.mobile
+
+
 @receiver(post_save, sender=get_user_model())
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:

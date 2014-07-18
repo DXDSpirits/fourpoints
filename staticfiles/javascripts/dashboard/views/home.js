@@ -2,6 +2,8 @@ define(['app'], function(App) {
     
     var regionId = [1,2,3,4,5];
     
+    var verifyCode = new Amour.Model();
+    
     App.Pages.Home = new (Amour.PageView.extend({
         events: {
             'click .btn-send': 'getcode',
@@ -29,9 +31,12 @@ define(['app'], function(App) {
             }
         },
         verify: function() {
-            var code = this.$('input[name=code]').val() || null;
-            if (code) {
-                App.user.verify(code, {
+            var mobile = this.$('input[name=mobile]').val() || null;
+            var code = +this.$('input[name=code]').val();
+            if (mobile && code) {
+                verifyCode.set({ mobile: mobile, code: code });
+                Backbone.sync('update', verifyCode, {
+                    url: Amour.APIHost + '/users/code/',
                     success: this.signin,
                     error: function() {
                         alert('验证码错误');
@@ -46,9 +51,9 @@ define(['app'], function(App) {
             if (mobile) {
                 var $btn = $('.btn-send');
                 $btn.html('<i class="fa fa-refresh fa-spin"></i>');
-                App.user.save({
-                    username: mobile
-                }, {
+                verifyCode.set({ mobile: mobile });
+                Backbone.sync('create', verifyCode, {
+                    url: Amour.APIHost + '/users/code/',
                     success: function() {
                         $btn.addClass('disabled').text('已发送验证码');
                     }

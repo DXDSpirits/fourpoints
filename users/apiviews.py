@@ -5,13 +5,14 @@ import random
 
 from django.contrib.auth.models import User
 
-from .models import Play, Ranking
+from .models import Play, Ranking, VerifyCode
 from .serializers import UserSerializer, UserSimpleSerializer, PlaySerializer, RankingSerializer
 from .permissions import IsSelf, IsOwner, Answerable
 from .sms import send_veriry_code
 
 from rest_framework import generics, filters, viewsets, status, mixins
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 class IsOwnerFilterBackend(filters.BaseFilterBackend):
@@ -44,17 +45,28 @@ class UserDetail(generics.RetrieveAPIView):
     permission_classes = (IsSelf,)
 
 
-class UserVerify(generics.UpdateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class CodeView(APIView):
+    def post(self, request, *args, **kwargs):
+        mobile = request.DATA.get('mobile')
+        if mobile:
+            code = str(random.randint(1000, 9999))
+            send_veriry_code(mobile, code)
+            verifycode, created = VerifyCode.objects.get_or_create(mobile = mobile,
+                                                                   defaults={'code': code})
+            if not created:
+                verifycode.code = code
+                verifycode.save(update_fields=['code'])
+            return Response({'status': 'Sent'})
+        return Response({'status': 'Invalid Mobile'}, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request, *args, **kwargs):
-        user = self.get_object()
+        mobile = request.DATA.get('mobile')
         code = request.DATA.get('code')
-        if user.check_password(code):
-            user.set_password(user.username)
-            user.is_active = True
-            user.save(update_fields=['is_active', 'password'])
+        verifycode = VerifyCode.objects.get(mobile = mobile)
+        if verifycode.code == code:
+            user = User(username=mobile)
+            user.set_password(mobile)
+            user.save(force_insert=True)
             return Response({'status': 'Verified'})
         else:
             return Response({'status': 'Invalid Code'},
