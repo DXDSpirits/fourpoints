@@ -8,6 +8,7 @@ define(['app'], function(App) {
         events: {
             'click .btn-send': 'getcode',
             'click .btn-verify': 'verify',
+            'click .btn-cancel': 'cancelLogin',
             'click .play-box.initial': 'ready',
             'click .play-box.ready': 'play',
             'click .btn-select-region': 'selectRegion'
@@ -89,6 +90,12 @@ define(['app'], function(App) {
             var logged_in = (Amour.TokenAuth.get() != null);
             this.$('.login-box').toggleClass('hidden', logged_in);
             this.$('.play-box.ready').toggleClass('hidden', !logged_in);
+        },
+        cancelLogin: function() {
+            this.$('.btn-send').removeClass('disabled').text('发送验证码');
+            this.$('.play-box.initial').removeClass('hidden');
+            this.$('.play-box.ready').addClass('hidden');
+            this.$('.login-box').addClass('hidden');
         },
         render: function() {
             App.Playing = false;

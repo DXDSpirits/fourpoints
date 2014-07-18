@@ -153,7 +153,7 @@ define(function() {
         }
     });
     
-    //Amour.TokenAuth.clear();
+    Amour.TokenAuth.clear();
     App.user = new App.Models.User();
     App.plays = new App.Collections.Plays();
     
