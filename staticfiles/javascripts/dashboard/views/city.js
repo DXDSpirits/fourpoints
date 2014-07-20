@@ -35,8 +35,7 @@ define(['app'], function(App) {
             this.$('.content').html(this.city.get('description'));
             var outOfPlay = App.plays.timesToday() >= 5;
             var cityPlayed = _.contains(App.plays.citiesPlayed(), this.city.id);
-            this.$('.btn-play').toggleClass('disabled', outOfPlay);
-            this.$('.btn-play').toggleClass('played', cityPlayed);
+            this.$('.btn-play').toggleClass('played', cityPlayed || outOfPlay);
             this.$('.btn-play').text(outOfPlay ? '今日五次答题机会已用完' : 
                                     (cityPlayed ? '已答题，换个城市' : '开始答题'));
         },

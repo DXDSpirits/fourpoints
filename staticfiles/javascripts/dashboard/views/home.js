@@ -16,6 +16,7 @@ define(['app'], function(App) {
         initPage: function() {
             Amour.ajax.on('unauthorized', this.go);
             _.bindAll(this, 'signin', 'ready', 'play', 'stop');
+            this.$('.board').css('margin-top', -($(window).width() * 0.6));
         },
         signin: function() {
             var mobile = this.$('input[name=mobile]').val() || null;
