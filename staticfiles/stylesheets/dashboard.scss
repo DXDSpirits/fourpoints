@@ -58,7 +58,7 @@
     }
     .login-box {
         top: 0;
-        z-index: 3;
+        z-index: 3000;
         margin: 20px;
         padding-top: 1px;
         > form {
@@ -77,10 +77,10 @@
         padding-top: 60%;
     }
     .play-box.initial {
-        z-index: 1;
+        z-index: 1000;
     }
     .play-box.ready {
-        z-index: 2;
+        z-index: 2000;
     }
 }
 
@@ -88,11 +88,11 @@
     .btn-select-region {
         position: absolute;
         bottom: 0;
-        z-index: 2;
+        z-index: 2000;
     }
     .board {
         position: absolute;
-        z-index: 1;
+        z-index: 999;
         top: 100%;
         //margin-top: -60%;
         left: 0;
@@ -113,7 +113,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: 1000;
             background-color: rgba(0, 0, 0, 0.5);
         }
         &.selected::after {

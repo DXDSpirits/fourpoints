@@ -8,7 +8,6 @@ define(function() {
     };
     
     App.isWeixin = /MicroMessenger/i.test(navigator.userAgent);
-    App.isWeixin = true;
     App.platform = App.isWeixin ? 'weixin' : 'weibo';
     
     App.router = new Amour.Router(App.Pages);
@@ -153,7 +152,7 @@ define(function() {
         }
     });
     
-    Amour.TokenAuth.clear();
+    //Amour.TokenAuth.clear();
     App.user = new App.Models.User();
     App.plays = new App.Collections.Plays();
     
@@ -165,7 +164,15 @@ define(function() {
     App.start = function() {
         fillImages();
         if (Amour.TokenAuth.get() != null) App.user.trigger('login')
-        App.router.goTo('Home');
+        var cityId = localStorage.getItem('city-left-from');
+        if (cityId != null) {
+            localStorage.removeItem('city-left-from');
+            App.router.goTo('City', {
+                cityId: cityId
+            });
+        } else {
+            App.router.goTo('Home');
+        }
     };
     
     return App;

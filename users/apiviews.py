@@ -64,9 +64,10 @@ class CodeView(APIView):
         code = request.DATA.get('code')
         verifycode = VerifyCode.objects.get(mobile = mobile)
         if verifycode.code == code:
-            user = User(username=mobile)
-            user.set_password(mobile)
-            user.save(force_insert=True)
+            user, created = User.objects.get_or_create(username=mobile)
+            if created:
+                user.set_password(mobile)
+                user.save()
             return Response({'status': 'Verified'})
         else:
             return Response({'status': 'Invalid Code'},

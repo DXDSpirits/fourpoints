@@ -14,6 +14,7 @@ define(['app'], function(App) {
         },
         goToAd: function(e) {
             e.preventDefault && e.preventDefault();
+            localStorage.setItem('city-left-from', this.city.id);
             window.open(this.city.get('adurl'), '_blank', 'location=no');
         },
         openArticle: function() {
