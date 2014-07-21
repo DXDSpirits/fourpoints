@@ -22,7 +22,7 @@ define(['app'], function(App) {
             }
         },
         finish: function() {
-            $('.header-navbar .message').addClass('hidden');
+            $('.global-message').addClass('hidden');
             var answers = this.questions.reduce(function(answers, question) {
                 var checked = this.$('input[name=question-' + question.id + ']:checked');
                 return checked.length == 0 ? answers : answers.concat({
@@ -67,7 +67,7 @@ define(['app'], function(App) {
         },
         render: function() {
             this.$el.scrollTop(0);
-            $('.header-navbar .message').removeClass('hidden');
+            $('.global-message').removeClass('hidden');
             this.newPlay();
             this.initMessage();
             if (this.options.questions) {

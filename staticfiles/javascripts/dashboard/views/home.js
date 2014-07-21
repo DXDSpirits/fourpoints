@@ -75,6 +75,7 @@ define(['app'], function(App) {
             var left = this.$('.ball').offset().left;
             var it = parseInt(left / this.$el.width() * 5);
             this.$('.card'+(it+1)).addClass('selected');
+            this.$el.scrollTop(this.$('>.wrapper').outerHeight()-this.$el.innerHeight());
         },
         play: function() {
             if (App.Playing) return;
