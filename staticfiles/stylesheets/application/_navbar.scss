@@ -59,8 +59,9 @@ body > footer, body > .footer-navbar {
     }
 }
 
-.message {
+.global-message {
     position: absolute;
+    z-index: 9999;
     top: 60px;
     left: 0;
     width: 100%;

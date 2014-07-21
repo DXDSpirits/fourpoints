@@ -45,10 +45,10 @@ define(['app'], function(App) {
             });
         },
         initMessage: function() {
-            $('.header-navbar .times').text(App.plays.timesToday());
+            $('.global-message .times').text(App.plays.timesToday());
             clearInterval(this.timer);
             var end = moment().add('minutes', 3);
-            var $timer = $('.header-navbar .timer');
+            var $timer = $('.global-message .timer');
             var self = this;
             var timer = this.timer = setInterval(function() {
                 var left = end.diff(moment(), 'seconds');
