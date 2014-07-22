@@ -4,15 +4,16 @@ import polls
 
 
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ['id', 'text']
+    list_display = ['id', 'question', 'text', 'right']
     list_display_links = ['id', 'text']
+    list_editable = ['right']
 
 
 class QuestionAdmin(admin.ModelAdmin):
     class ChoiceInline(admin.TabularInline):
         model = models.Choice
         extra = 0
-    list_display = ['id', 'text']
+    list_display = ['id', 'city', 'text']
     list_display_links = ['id', 'text']
     inlines = [ChoiceInline]
 

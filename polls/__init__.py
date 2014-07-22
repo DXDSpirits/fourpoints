@@ -48,3 +48,21 @@ def random_questions(city):
                           right = (index == 0))
                    for index, text in enumerate(q['choices'])]
         Choice.objects.bulk_create(choices)
+
+
+import os
+def insert_questions():
+    f = open(os.path.join(os.path.dirname(__file__), 'questions.txt'))
+    lines = f.readlines()
+    c = 1
+    q = 1
+    for i in range(0, len(lines), 5):
+        margin = 3 if q < 10 else 4
+        question = Question.objects.create(city_id = c, text = lines[i][margin:])
+        choices = [Choice(question = question, text = lines[i+j], right = False)
+                   for j in range(1, 5)]
+        Choice.objects.bulk_create(choices)
+        q += 1
+        if q > 10:
+            q = 1
+            c += 1
