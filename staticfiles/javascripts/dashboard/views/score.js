@@ -39,8 +39,9 @@ define(['app'], function(App) {
                 reset: true,
                 data: { platform: App.platform },
                 success: function(collection) {
+                    var today = moment().dayOfYear();
                     var filter = _.chain(collection.toJSON()).filter(function(play) {
-                        return moment(play.time_created).diff(moment(), 'days') == 0
+                        return moment(play.time_created).dayOfYear() == today
                     }).each(function(play, index) {
                         play.index = index + 1;
                     }).value();

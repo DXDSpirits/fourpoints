@@ -32,7 +32,7 @@ define(['app'], function(App) {
         },
         renderCity: function() {
             Amour.loadBgImage(this.$el, this.city.get('image'));
-            //this.$('.title, .ad>span').html(this.city.get('name'));
+            this.$('.title').html(this.city.get('name'));
             this.$('.content').html(this.city.get('description'));
             var outOfPlay = App.plays.timesToday() >= 5;
             var cityPlayed = _.contains(App.plays.citiesPlayed(), this.city.id);

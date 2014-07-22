@@ -108,8 +108,9 @@ define(function() {
             return _.uniq(this.pluck('city'));
         },
         timesToday: function() {
+            var today = moment().dayOfYear();
             return this.filter(function(play) {
-                return moment().dayOfYear() == moment(play.get('time_created')).dayOfYear()
+                return today == moment(play.get('time_created')).dayOfYear()
             }).length;
         }
     });
@@ -161,7 +162,34 @@ define(function() {
         App.plays.fetch({reset:true});
     });
     
+    var bindWxSharing = function() {
+        var match = window.location.search.match(/[\?\&]radius=(\d+)(&|$)/);
+        var radius = match ? +match[1] : 0;
+        var message = {
+            "img_url": "http://fourpoints.oatpie.com/static/images/fp-logo.jpg",
+            "img_width" : "640",
+            "img_height" : "640",
+            "link" : [window.location.origin, window.location.pathname, '?radius=', radius + 1].join(''),
+            "desc" : '带你玩转旅行新地点',
+            "title" : '福朋自由派'
+        };
+        var onBridgeReady = function () {
+            WeixinJSBridge.on('menu:share:appmessage', function(argv) {
+                WeixinJSBridge.invoke('sendAppMessage', message);
+            });
+            WeixinJSBridge.on('menu:share:timeline', function(argv) {
+                WeixinJSBridge.invoke('shareTimeline', message);
+            });
+        };
+        if (window.WeixinJSBridge) {
+            onBridgeReady();
+        } else {
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        }
+    };
+    
     App.start = function() {
+        bindWxSharing();
         fillImages();
         if (Amour.TokenAuth.get() != null) App.user.trigger('login')
         var cityId = localStorage.getItem('city-left-from');

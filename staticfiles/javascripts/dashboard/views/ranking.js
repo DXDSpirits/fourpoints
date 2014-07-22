@@ -31,6 +31,7 @@ define(['app'], function(App) {
                     user: App.user.id
                 },
                 success: function(collection) {
+                    if (collection.length == 0) return;
                     var ranking = collection.at(0);
                     ranking.set('index', parseInt(Math.random() * 900) + 100);
                     self.rankings.add(ranking);
