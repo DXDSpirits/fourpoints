@@ -170,8 +170,8 @@ define(function() {
             "img_width" : "640",
             "img_height" : "640",
             "link" : [window.location.origin, window.location.pathname, '?radius=', radius + 1].join(''),
-            "desc" : '带你玩转旅行新地点',
-            "title" : '福朋自由派'
+            "desc" : '福朋自由派, 带你玩转旅行新地点',
+            "title" : '福朋自由派, 带你玩转旅行新地点'
         };
         var onBridgeReady = function () {
             WeixinJSBridge.on('menu:share:appmessage', function(argv) {

@@ -12,7 +12,7 @@ class ChoiceAdmin(admin.ModelAdmin):
     def of_city(self, obj):
         return obj.question.city
     of_city.short_description = 'City'  
-    list_display = ['id', 'of_city', 'question', 'text', 'right']
+    list_display = ['id', 'of_city', 'question', 'right', 'text']
     list_display_links = ['id', 'text']
     list_editable = ['right']
     ordering = ['id']
