@@ -4,6 +4,11 @@ import polls
 
 
 class ChoiceAdmin(admin.ModelAdmin):
+    def suit_row_attributes(self, obj, request):
+        if obj.right:
+            return {'class': 'success'}
+        else:
+            return {}
     def of_city(self, obj):
         return obj.question.city
     of_city.short_description = 'City'  
