@@ -30,6 +30,7 @@ define(['app'], function(App) {
             }
         },
         render: function() {
+            this.$el.scrollTop(0);
             var region = this.options.region || 1;
             this.cities.fetch({
                 data: { region: region }

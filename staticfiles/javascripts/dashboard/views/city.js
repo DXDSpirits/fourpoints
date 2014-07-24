@@ -28,6 +28,7 @@ define(['app'], function(App) {
             }
         },
         renderCity: function() {
+            this.$('.content').scrollTop(0);
             Amour.loadBgImage(this.$el, this.city.get('image'));
             this.$('.title').html(this.city.get('name'));
             this.$('.content').html(this.city.get('description'));
