@@ -1,7 +1,5 @@
 define(['app'], function(App) {
     
-    var citiesPlayed = [];
-    
     App.Pages.City = new (Amour.PageView.extend({
         events: {
             'click .left-btn': 'openArticle',
@@ -10,7 +8,6 @@ define(['app'], function(App) {
         },
         initPage: function() {
             this.city = new App.Models.City();
-            this.listenTo(this.city, 'change', this.renderCity);
         },
         goToAd: function(e) {
             e.preventDefault && e.preventDefault();
@@ -44,11 +41,16 @@ define(['app'], function(App) {
             this.$('>article').removeClass('open');
             if (this.options.city) {
                 this.city.set(this.options.city)
+                this.renderCity();
             } else if (this.options.cityId) {
+                var self = this;
                 this.city.set('id', this.options.cityId);
-                this.city.fetch();
+                this.city.fetch({
+                    success: function() {
+                        self.renderCity();
+                    }
+                });
             }
-            citiesPlayed = App.plays.citiesPlayed();
         }
     }))({el: $('#view-city')});
     
