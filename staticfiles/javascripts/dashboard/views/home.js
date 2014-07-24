@@ -63,18 +63,12 @@ define(['app'], function(App) {
             }
         },
         selectRegion: function() {
-            var left = this.$('.ball').offset().left;
-            var it = parseInt(left / this.$el.width() * 5);
-            App.router.goTo('Region', {
-                region: regionId[it]
-            });
+            App.router.goTo('Region', { region: this.selectedRegion });
         },
-        stop: function() {
+        stop: function(pos) {
+            this.selectedRegion = regionId[pos];
             this.$('.btn-select-region').removeClass('hidden');
-            this.$('.hand').addClass('stop');
-            var left = this.$('.ball').offset().left;
-            var it = parseInt(left / this.$el.width() * 5);
-            this.$('.card'+(it+1)).addClass('selected');
+            this.$('.card' + pos).addClass('selected');
             this.$el.scrollTop(this.$('>.wrapper').outerHeight()-this.$el.innerHeight());
         },
         play: function() {
@@ -82,9 +76,24 @@ define(['app'], function(App) {
             App.Playing = true;
             this.$('.btn-select-region').addClass('hidden');
             this.$('.card').removeClass('selected');
-            this.$('.hand').removeClass('stop').addClass('automatically');
-            var self = this;
-            setTimeout(this.stop, 4000 + Math.random() * 1000);
+            var $hand = this.$('.hand'), self = this;
+            var pos = 1, dir = 1;
+            var iter = 0, end = Math.random() * 10 + 20;
+            $hand.attr('class', 'hand manually');
+            $hand.addClass('stop' + pos);
+            $hand.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function() {
+                if (iter >= end) {
+                    $hand.off('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd');
+                    self.stop(pos);
+                    return;
+                }
+                $hand.removeClass('stop' + pos);
+                if (pos == 5) dir = -1;
+                if (pos == 1) dir = 1;
+                pos = pos + dir;
+                $hand.addClass('stop' + pos);
+                iter++;
+            });
         },
         ready: function() {
             this.$('.btn-send').removeClass('disabled').text('发送验证码');

@@ -22,6 +22,7 @@ define(['app'], function(App) {
             }
         },
         finish: function() {
+            clearInterval(this.timer);
             $('.global-message').addClass('hidden');
             var answers = this.questions.reduce(function(answers, question) {
                 var checked = this.$('input[name=question-' + question.id + ']:checked');
@@ -54,7 +55,6 @@ define(['app'], function(App) {
                 var left = end.diff(moment(), 'seconds');
                 if (left <= 0) {
                     alert('答题时间到');
-                    clearInterval(timer);
                     self.finish();
                 } else {
                     dur = moment.duration(left, 'seconds');
