@@ -69,9 +69,9 @@ define(['app'], function(App) {
             this.selectedRegion = regionId[pos-1];
             this.$('.btn-select-region').removeClass('hidden');
             this.$('.card' + pos).addClass('selected');
-            this.$el.scrollTop(this.$('>.wrapper').outerHeight()-this.$el.innerHeight());
         },
         play: function() {
+            this.$el.scrollTop(this.$('>.wrapper').outerHeight()-this.$el.innerHeight());
             if (App.Playing) return;
             App.Playing = true;
             this.$('.btn-select-region').addClass('hidden');
