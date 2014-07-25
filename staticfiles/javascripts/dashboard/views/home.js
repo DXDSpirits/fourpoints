@@ -66,7 +66,7 @@ define(['app'], function(App) {
             App.router.goTo('Region', { region: this.selectedRegion });
         },
         stop: function(pos) {
-            this.selectedRegion = regionId[pos];
+            this.selectedRegion = regionId[pos-1];
             this.$('.btn-select-region').removeClass('hidden');
             this.$('.card' + pos).addClass('selected');
             this.$el.scrollTop(this.$('>.wrapper').outerHeight()-this.$el.innerHeight());
