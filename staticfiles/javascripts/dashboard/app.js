@@ -10,19 +10,17 @@ define(function() {
     App.isWeixin = /MicroMessenger/i.test(navigator.userAgent);
     App.platform = App.isWeixin ? 'weixin' : 'weibo';
     
-    App.router = new Amour.Router(App.Pages);
-    
     $('body').on('click', '.header-navbar > ul > li', function(e) {
         if (e.preventDefault) e.preventDefault();
-        var curPage = App.router.history.active;
+        var curPage = location.hash;
         var $el = $(e.currentTarget);
         var target = $el.data('target');
         if (!App.Playing &&
-            (curPage == App.Pages.Ranking ||
-             curPage == App.Pages.Instruction ||
-             curPage == App.Pages.Home)) {
+            (curPage == '#ranking' ||
+             curPage == '#instruction' ||
+             curPage == '#home')) {
             $el.addClass('active').siblings().removeClass('active');
-            App.router.goTo(target);
+            App.router.navigate(target);
         }
     });
     
@@ -191,16 +189,15 @@ define(function() {
     App.start = function() {
         bindWxSharing();
         fillImages();
-        if (Amour.TokenAuth.get() != null) App.user.trigger('login')
+        if (Amour.TokenAuth.get() != null) App.user.trigger('login');
         var cityId = localStorage.getItem('city-left-from');
         if (cityId != null) {
             localStorage.removeItem('city-left-from');
-            App.router.goTo('City', {
-                cityId: cityId
-            });
+            App.router.navigate('city/' + cityId);
         } else {
-            App.router.goTo('Home');
+            App.router.navigate('home');
         }
+        Backbone.history.start();
     };
     
     return App;

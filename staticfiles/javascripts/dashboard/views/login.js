@@ -1,6 +1,9 @@
-define(['app'], function(App) {
+define([
+    'app',
+    'pageview'
+], function(App, PageView) {
     
-    App.Pages.Login = new (Amour.PageView.extend({
+    App.Pages.Login = new (PageView.extend({
         events: {
             'click .btn-signup': 'signup',
             'click .btn-signin': 'signin'

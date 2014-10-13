@@ -1,4 +1,7 @@
-define(['app'], function(App) {
+define([
+    'app',
+    'pageview'
+], function(App, PageView) {
     
     var ScoreView = Amour.CollectionView.extend({
         ModelView: Amour.ModelView.extend({
@@ -16,7 +19,7 @@ define(['app'], function(App) {
         })
     });
     
-    App.Pages.Score = new (Amour.PageView.extend({
+    App.Pages.Score = new (PageView.extend({
         events: {
             'click .btn-replay': 'replay'
         },
@@ -30,7 +33,7 @@ define(['app'], function(App) {
             };
         },
         replay: function() {
-            App.router.goTo('Home');
+            App.router.navigate('home');
         },
         render: function() {
             App.showShareTip();

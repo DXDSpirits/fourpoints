@@ -1,10 +1,13 @@
-define(['app'], function(App) {
+define([
+    'app',
+    'pageview'
+], function(App, PageView) {
     
     var regionId = [1,2,3,4,5];
     
     var verifyCode = new Amour.Model();
     
-    App.Pages.Home = new (Amour.PageView.extend({
+    App.Pages.Home = new (PageView.extend({
         events: {
             'click .btn-send': 'getcode',
             'click .btn-verify': 'verify',
@@ -63,7 +66,7 @@ define(['app'], function(App) {
             }
         },
         selectRegion: function() {
-            App.router.goTo('Region', { region: this.selectedRegion });
+            App.router.navigate('region/' + this.selectedRegion);
         },
         stop: function(pos) {
             this.selectedRegion = regionId[pos-1];

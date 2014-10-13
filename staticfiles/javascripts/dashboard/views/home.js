@@ -1,8 +1,11 @@
-define(['app'], function(App) {
+define([
+    'app',
+    'pageview'
+], function(App, PageView) {
     
     var regionId = [1,2,3,4,5];
     
-    App.Pages.Home = new (Amour.PageView.extend({
+    App.Pages.Home = new (PageView.extend({
         events: {
             'click .hero-layer': 'ready',
             'click .card': 'selectCard',
@@ -10,8 +13,11 @@ define(['app'], function(App) {
         },
         initPage: function() {},
         goToRegion: function() {
-            var selectedRegion = +this.$('.card.selected').data('region');
-            App.router.goTo('Region', { region: selectedRegion });
+            var $selected = this.$('.card.selected');
+            if ($selected.length) {
+                var selectedRegion = +$selected.data('region');
+                App.router.navigate('region/' + selectedRegion);
+            }
         },
         ready: function() {
             this.$('.hero-layer').addClass('hidden');

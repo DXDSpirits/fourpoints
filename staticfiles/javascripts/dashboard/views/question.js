@@ -1,4 +1,7 @@
-define(['app'], function(App) {
+define([
+    'app',
+    'pageview'
+], function(App, PageView) {
     
     var QuestionsView = Amour.CollectionView.extend({
         ModelView: Amour.ModelView.extend({
@@ -7,7 +10,7 @@ define(['app'], function(App) {
         })
     });
     
-    App.Pages.Question = new (Amour.PageView.extend({
+    App.Pages.Question = new (PageView.extend({
         events: {
             'click .btn-finish': 'finish'
         },
@@ -35,7 +38,7 @@ define(['app'], function(App) {
                 answers: answers
             }, {
                 success: function() {
-                    App.router.goTo('Score');
+                    App.router.navigate('score');
                 }
             });
         },
@@ -72,6 +75,17 @@ define(['app'], function(App) {
             this.initMessage();
             if (this.options.questions) {
                 this.questions.set(this.options.questions)
+            } else if (this.options.cityId) {
+                var city = new App.Models.City({
+                    id: this.options.cityId
+                });
+                var self = this;
+                city.fetch({
+                    success: function(model) {
+                        var questions = _.sample(model.get('questions'), 5);
+                        self.questions.set(questions);
+                    }
+                });
             }
         }
     }))({el: $('#view-question')});

@@ -1,6 +1,9 @@
-define(['app'], function(App) {
+define([
+    'app',
+    'pageview'
+], function(App, PageView) {
     
-    App.Pages.City = new (Amour.PageView.extend({
+    App.Pages.City = new (PageView.extend({
         events: {
             'click .left-btn': 'openArticle',
             'click .btn-play': 'play',
@@ -15,16 +18,13 @@ define(['app'], function(App) {
             window.open(this.city.get('adurl'), '_blank', 'location=no');
         },
         openArticle: function() {
-            this.$('>article').toggleClass('open');
+            this.$el.toggleClass('open');
         },
         play: function() {
             if (this.$('.btn-play').hasClass('played')) {
-                App.router.goTo('Home');
+                App.router.navigate('home');
             } else {
-                App.router.goTo('Question', {
-                    questions: _.sample(this.city.get('questions'), 5),
-                    cityId: this.city.id
-                });
+                App.router.navigate('question/' + this.city.id);
             }
         },
         renderCity: function() {
@@ -39,7 +39,7 @@ define(['app'], function(App) {
                                     (cityPlayed ? '已答题，换个城市' : '开始答题'));
         },
         render: function() {
-            this.$('>article').removeClass('open');
+            this.$el.removeClass('open');
             if (this.options.city) {
                 this.city.set(this.options.city)
                 this.renderCity();

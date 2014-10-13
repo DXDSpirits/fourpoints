@@ -1,10 +1,35 @@
 (function() {
     
-    new FastClick(document.body);
+    if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+        var msViewportStyle = document.createElement("style");
+        msViewportStyle.appendChild(
+            document.createTextNode(
+                "@-ms-viewport{width:auto!important}"
+            )
+        );
+        document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+    }
+    
+    var fastclick = new FastClick(document.body);
+    $('body').on('focus', 'textarea', function() {
+        if (fastclick != null) {
+            fastclick.destroy();
+            fastclick = null;
+        }
+    });
+    $('body').on('blur', 'textarea', function() {
+        if (fastclick == null) {
+            fastclick = new FastClick(document.body);
+        }
+    });
     
     if (!window.location.origin) {
         window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
     }
+    
+    /*
+     * Amour
+     */
     
     var Amour = {
         version: '1.0',
@@ -16,7 +41,7 @@
      * Events and Routers
      */
     
-    // Allow the `Backbone` object to serve as a global event bus
+    // Allow the `Amour` object to serve as a global event bus
     _.extend(Amour, Backbone.Events);
     
     var EventAggregator = Amour.EventAggregator = (function() {
@@ -25,33 +50,6 @@
         _.extend(EA.prototype, Backbone.Events);
         return EA;
     })();
-    
-    var Router = Amour.Router = function(pages) {
-        this.pages = pages;
-        this.history = { active: null, stack: [] };
-        this.goTo = function(pageName, options) {
-            var next = this.pages[pageName];
-            (options || (options = {})).caller = options.caller || this.history.active;
-            if (next != this.history.active) {
-                this.history.active && this.history.stack.push(this.history.active);
-                this.history.active = next;
-                this.history.active.go(options);
-            }
-        };
-        this.clearHistory = function() {
-            this.history.stack.length = 0;
-        };
-        this.refreshActivePage = function() {
-            this.history.active.refresh();
-        };
-        this.goBack = function() {
-            if (this.history.stack.length > 0) {
-                var prev = this.history.stack.pop();
-                this.history.active = prev;
-                this.history.active.showPage({reverse: true});
-            }
-        };
-    };
     
     /*
      * Models and Views
@@ -77,12 +75,24 @@
                 this.count = response.count;
                 this.previous = response.previous;
                 this.next = response.next;
-                response = response.results;
+                return response.results;
+            } else {
+                return response;
             }
-            _.forEach(response, function(item, index) {
-                item.index = (item.index != null ? item.index : index + 1);
-            });
-            return response;
+        },
+        fetchNext: function(options) {
+            var options = options || {};
+            if (this.next) {
+                options.url = this.next;
+                this.fetch(options);
+            }
+        },
+        fetchPrev: function(options) {
+            var options = options || {};
+            if (this.previous) {
+                options.url = this.previous;
+                this.fetch(options);
+            }
         }
     });
     
@@ -91,7 +101,7 @@
             if (this.initView) this.initView(options || {});
         },
         renderTemplate: function(attrs, template) {
-            var template = template || this.template || '';
+            var template = template || _.result(this, 'template') || '';
             var attrs = this.mixinTemplateHelpers(attrs);
             this.$el.html(Mustache.render(template, attrs));
             this.$el.find('img[data-src]').addBack('img[data-src]').each(function() {
@@ -104,17 +114,24 @@
         },
         mixinTemplateHelpers: function(target){
             var target = target || {};
-            return _.extend(target, this.templateHelpers);
-        },
+            return _.extend(target, _.result(this, 'templateHelpers'));
+        }
     });
     
     var ModelView = Amour.ModelView = View.extend({
-        initView: function() {
-            if (this.model) {
-                this.listenTo(this.model, 'change', this.render);
-                this.listenTo(this.model, 'hide', this.hide);
-            }
-            if (this.initModelView) this.initModelView();
+        listenToModel: function() {
+            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'hide', this.hide);
+        },
+        initView: function(options) {
+            this.model = this.model || new Model();
+            this.listenToModel();
+            if (this.initModelView) this.initModelView(options || {});
+        },
+        setModel: function(model) {
+            this.stopListening(this.model);
+            this.model = model;
+            this.listenToModel();
         },
         hide: function() {
             this.remove();
@@ -129,13 +146,22 @@
     
     var CollectionView = Amour.CollectionView = View.extend({
         ModelView: ModelView,
-        initView: function() {
-            if (this.collection) {
-                this.listenTo(this.collection, 'reset', this.addAll);
-                this.listenTo(this.collection, 'add', this.addOne);
-                this.listenTo(this.collection, 'remove', this.removeOne);
-            }
-            if (this.initCollectionView) this.initCollectionView();
+        listenToCollection: function() {
+            this.listenTo(this.collection, 'reset', this.addAll);
+            this.listenTo(this.collection, 'add', this.addOne);
+            this.listenTo(this.collection, 'remove', this.removeOne);
+        },
+        initView: function(options) {
+            options = options || {};
+            this.reverse = (options.reverse === true);
+            this.collection = this.collection || new Collection();
+            this.listenToCollection();
+            if (this.initCollectionView) this.initCollectionView(options);
+        },
+        setCollection: function(collection) {
+            this.stopListening(this.collection);
+            this.collection = collection;
+            this.listenToCollection();
         },
         renderItem: function(item) {
             var modelView = new this.ModelView({model: item});
@@ -145,7 +171,8 @@
             item.trigger('hide');
         },
         addOne: function(item) {
-            this.$el.append(this.renderItem(item));
+            var method = this.reverse ? 'prepend' : 'append';
+            this.$el[method](this.renderItem(item));
         },
         addAll: function(_collection, options) {
             if (options && options.previousModels) {
@@ -157,7 +184,7 @@
                 var nodelist = this.collection.reduce(function(nodelist, item) {
                     return nodelist.concat(this.renderItem(item));
                 }, [], this);
-                this.$el.html(nodelist);
+                this.$el.html(this.reverse ? nodelist.reverse() : nodelist);
             }
         },
         render: function() {
@@ -166,90 +193,31 @@
         }
     });
     
-    var PageView = Amour.PageView = Amour.View.extend({
-        disablePage: function() {
-            this.undelegateEvents();
-            this.go = function() {};
-            this.refresh = function() {};
-            this.showPage = function() {};
-        },
-        initView: function() {
-            if (!this.el) {
-                this.disablePage();
-                return;
-            }
-            this.views = {};
-            _.bindAll(this, 'showPage', 'go', 'refresh', 'render', 'reset');
-            var $el = this.$el;
-            this.$el.on('webkitAnimationEnd', function(e) {
-                var animationName = e.originalEvent.animationName;
-                if (animationName == "slideouttoleft" || animationName == "slideouttoright") {
-                    $el.trigger('pageClose');
-                } else if (animationName == "slideinfromright" || animationName == "slideinfromleft") {
-                    $el.trigger('pageOpen');
-                }
-            });
-            if (this.initPage) this.initPage();
-        },
-        go: function(options) {
-            this.options = options || {};
-            this.reset();
-            var timeout;
-            var render = this.render, pageOpen = function() {
-                clearTimeout(timeout);
-                render();
-            };
-            timeout = setTimeout(pageOpen, 1000);
-            this.$el.one('pageOpen', pageOpen);
-            this.showPage();
-        },
-        refresh: function() {
-            var timeout;
-            var render = this.render, pageOpen = function() {
-                clearTimeout(timeout);
-                render();
-            };
-            timeout = setTimeout(pageOpen, 1000);
-            this.$el.one('pageOpen', pageOpen);
-            this.showPage();
-        },
-        reset: function() {},
-        showPage: function(options) {
-            var options = options || {};
-            if (this.$el && this.$el.hasClass('view-hidden')) {
-                var $curPage = $('.view:not(".view-hidden")');
-                var curPageCloseTimeout;
-                var closeCurPage = function() {
-                    clearTimeout(curPageCloseTimeout);
-                    $curPage.removeClass('view-prev').removeClass('view-prev-reverse');
-                    $curPage.find('input').blur();
-                };
-                $curPage.addClass('view-hidden');
-                $curPage.addClass('view-prev');
-                if (options.reverse) $curPage.addClass('view-prev-reverse');
-                curPageCloseTimeout = setTimeout(closeCurPage, 1000);
-                $curPage.one('pageClose', closeCurPage);
-                
-                var $nextPage = this.$el;
-                var nextPageOpenTimeout;
-                var openNextPage = function() {
-                    clearTimeout(nextPageOpenTimeout);
-                    $nextPage.removeClass('view-next').removeClass('view-next-reverse');
-                    $nextPage.find('input').blur();
-                    window.scrollTo(0, 0);
-                };
-                $nextPage.removeClass('view-hidden');
-                $nextPage.addClass('view-next');
-                if (options.reverse) $nextPage.addClass('view-next-reverse');
-                nextPageOpenTimeout = setTimeout(openNextPage, 1000);
-                $nextPage.one('pageOpen', openNextPage);
-            }
-        }
-    });
-    
     /*
      * Utility Functions
      */
+    
+    Amour.isWeixin = /MicroMessenger/i.test(navigator.userAgent);
+    Amour.isMobile = /iPhone|Android|iPad|Windows Phone/i.test(navigator.userAgent);
+    
+    Amour.storage = new function() {
+        this.set = function(key, val) { localStorage.setItem(key, val); }
+        this.get = function(key) { return localStorage.getItem(key); }
+        this.del = function(key) { localStorage.removeItem(key); }
+        try {
+            localStorage.setItem('TEST_LOCALSTORAGE', 1);
+        } catch (e) {
+            alert('您的浏览器可能开启了“无痕(Private)浏览”，可能需要多次输入用户名和密码以保持登录状态');
+            this.vault = {};
+            this.set = function(key, val) { this.vault[key] = val; }
+            this.get = function(key) { return this.vault[key]; }
+            this.del = function(key) { this.vault[key] = null; }
+        }
+    };
+    
+    Amour.openWindow = function(link) {
+        window.open(link, '_self', 'location=no');
+    }
     
     Amour.imageFullpath = function(src) {
         return /^http:\/\//.test(src) ? src : Amour.CDNURL + src;
@@ -283,7 +251,7 @@
      */
     
     var initSync = function () {
-        var authToken = localStorage.getItem('auth-token');
+        var authToken = Amour.storage.get('auth-token');
         var originalSync = Backbone.sync;
         Backbone.sync = function (method, model, options) {
             if (authToken) {
@@ -297,11 +265,11 @@
             },
             set: function (token) {
                 authToken = _.clone(token);
-                localStorage.setItem('auth-token', authToken);
+                Amour.storage.set('auth-token', authToken);
             },
             clear: function () {
                 authToken = null;
-                localStorage.removeItem('auth-token');
+                Amour.storage.del('auth-token');
             }
         };
     };
@@ -325,11 +293,32 @@
         });
     };
     
+    var initErrorReporting = function() {
+        if (window['amour-disable-error-reporting']) return;
+        var ClientError = Amour.Model.extend({
+            urlRoot: Amour.APIHost + '/clients/error/' 
+        });
+        window.onerror = function(message) {
+            try {
+                var error = new ClientError();
+                error.save({
+                    message: message,
+                    detail: {
+                        url: location.href,
+                        error: arguments,
+                        userAgent: navigator.userAgent
+                    }
+                }, {global: false});
+            } catch (e) {}
+        };
+    };
+    
     /* 
      * Export
      */
     initSync();
     initAjaxEvents();
+    initErrorReporting();
     window.Amour = Amour;
     
 })();

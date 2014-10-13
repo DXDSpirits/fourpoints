@@ -1,6 +1,9 @@
-define(['app'], function(App) {
+define([
+    'app',
+    'pageview'
+], function(App, PageView) {
     
-    App.Pages.Instruction = new (Amour.PageView.extend({
+    App.Pages.Instruction = new (PageView.extend({
         events: {},
         initPage: function() {},
         render: function() {}

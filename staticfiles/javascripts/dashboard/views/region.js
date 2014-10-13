@@ -1,4 +1,7 @@
-define(['app'], function(App) {
+define([
+    'app',
+    'pageview'
+], function(App, PageView) {
     
     var CitiesView = Amour.CollectionView.extend({
         ModelView: Amour.ModelView.extend({
@@ -11,14 +14,12 @@ define(['app'], function(App) {
                 return { 'data-bg-src': this.model.get('image') }
             },
             viewCity: function() {
-                App.router.goTo('City', {
-                    city: this.model.toJSON()
-                });
+                App.router.navigate('city/' + this.model.id);
             }
         })
     });
     
-    App.Pages.Region = new (Amour.PageView.extend({
+    App.Pages.Region = new (PageView.extend({
         events: {},
         initPage: function() {
             this.cities = new App.Collections.Cities();
@@ -31,9 +32,9 @@ define(['app'], function(App) {
         },
         render: function() {
             this.$el.scrollTop(0);
-            var region = this.options.region || 1;
+            var regionId = this.options.regionId || 1;
             this.cities.fetch({
-                data: { region: region }
+                data: { region: regionId }
             });
         }
     }))({el: $('#view-region')});

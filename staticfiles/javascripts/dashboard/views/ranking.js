@@ -1,4 +1,7 @@
-define(['app'], function(App) {
+define([
+    'app',
+    'pageview'
+], function(App, PageView) {
     
     var RankingView = Amour.CollectionView.extend({
         ModelView: Amour.ModelView.extend({
@@ -9,7 +12,7 @@ define(['app'], function(App) {
         })
     });
     
-    App.Pages.Ranking = new (Amour.PageView.extend({
+    App.Pages.Ranking = new (PageView.extend({
         events: {
             
         },
