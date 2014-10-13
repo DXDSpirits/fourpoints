@@ -11,6 +11,7 @@ newrelic.ini
 
 .sass-cache
 *.css
+*.css.map
 
 # Local Dev
 # _custom-local.scss

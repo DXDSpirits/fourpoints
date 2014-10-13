@@ -8,7 +8,8 @@ body > header, body > .header-navbar {
     left: 0;
     width: 100%;
     height: 60px;
-    background-color: #05374e;
+    //background-color: #05374e;
+    background-color: #fff;
     border-bottom: 5px solid $brand-primary;
     padding-left: 80px;
     > .logo {
@@ -16,7 +17,7 @@ body > header, body > .header-navbar {
         left: 10px;
         top: 10px;
         width: 60px;
-        height: 40px;
+        height: 38px;
     }
     > .nav {
         height: 40px;
@@ -28,7 +29,7 @@ body > header, body > .header-navbar {
                 white-space: nowrap;
                 padding: 10px;
                 text-align: center;
-                color: #fff;
+                color: $brand-primary;
                 border: 0;
                 &:hover {
                     background-color: transparent;
@@ -37,6 +38,7 @@ body > header, body > .header-navbar {
                 border-top-right-radius: 5px;
             }
             &.active > a {
+                color: #fff;
                 background-color: $brand-primary;
                 > .fa { display: none; }
             }
@@ -51,7 +53,8 @@ body > footer, body > .footer-navbar {
     left: 0;
     width: 100%;
     height: 70px;
-    background-color: #05374e;
+    //background-color: #05374e;
+    background-color: #fff;
     padding: 10px;
     .img {
         background-size: contain;
