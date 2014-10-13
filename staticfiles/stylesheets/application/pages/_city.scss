@@ -1,0 +1,65 @@
+
+#view-city {
+    overflow: hidden;
+    padding: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    > article {
+        margin-left: 50px;
+        background-color: $brand-primary;
+        padding: 50px 20px 90px;
+        height: 100%;
+        @include transition-transform(.35s ease-in-out);
+        @include translate3d(100%, 0, 0);
+        &.open {
+            @include translate3d(0, 0, 0);
+            .left-btn {
+                @include rotateY(180deg);
+            }
+        }
+        position: relative;
+    }
+    .left-btn {
+        @include user-select(none);
+        cursor: pointer;
+        background-color: $brand-primary;
+        &:active {
+            background-color: darken($brand-primary, 5%);
+        }
+        position: absolute;
+        width: 30px;
+        height: 100%;
+        top: 0;
+        left: -30px;
+        .fa {
+            position: relative;
+            top: 40%;
+        }
+    }
+    .title {
+        margin-top: -40px;
+    }
+    .btn-play {
+        &.disabled, &.played {
+            font-size: 1em;
+        }
+    }
+    .content {
+        height: 100%;
+        @include scrollable(1px);
+    }
+    .ad {
+        position: absolute;
+        margin: 0;
+        padding: 5px 10px;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #184d66;
+        color: #fff;
+        > a {
+            color: $brand-warning;
+        }
+    }
+}

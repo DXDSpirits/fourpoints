@@ -1,0 +1,33 @@
+
+#view-question {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding-top: 60px;
+    .question-list {
+        margin-right: 20px;
+    }
+    .question-item {
+        margin: 20px 0;
+        font-size: 1.2em;
+    }
+    .radio {
+        margin: 0 0 0 30px;
+    }
+    .radio label {
+        display: block;
+        padding-top: 15px;
+        padding-bottom: 10px;
+    }
+    .radio input[type="radio"] {
+        margin-top: 0;
+        height: 24px;
+    }
+    /*.radio label {
+        padding-left: 0;
+        padding-right: 30px;
+    }
+    .radio input[type="radio"] {
+        float: right;
+        margin-left: 0;
+        margin-right: -30px;
+    }*/
+}

@@ -1,0 +1,18 @@
+
+#view-ranking {
+    .ranking-title, .ranking-item {
+        font-weight: bold;
+        background: #fff;
+        border-radius: 3px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        :nth-child(1) { color: #797373; padding-right: 0; text-align: left; }
+        :nth-child(2) { color: #4a86aa; padding-left: 0; padding-right: 0; text-align: center; }
+        :nth-child(3) { color: #a94547; padding-left: 0; text-align: right; }
+    }
+    .ranking-item {
+        font-size: 1.2em;
+    }
+}
