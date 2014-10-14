@@ -13,9 +13,7 @@ define([
     });
     
     App.Pages.Ranking = new (PageView.extend({
-        events: {
-            
-        },
+        events: {},
         initPage: function() {
             this.rankings = new App.Collections.Rankings();
             this.views = {
@@ -47,6 +45,9 @@ define([
                 reset: true,
                 data: { platform: App.platform },
                 success: function(collection) {
+                    collection.each(function(model, index) {
+                        model.set('index', index + 1);
+                    });
                     if (collection.findWhere({user: '你的成绩'}) == null && App.user.id != null) {
                         self.showMyRanking();
                     }

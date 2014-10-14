@@ -7,22 +7,12 @@ from django.contrib.auth.models import User
 
 from .models import Play, Ranking, VerifyCode
 from .serializers import UserSerializer, UserSimpleSerializer, PlaySerializer, RankingSerializer
-from .permissions import IsSelf, IsOwner, Answerable
+from .permissions import IsSelf, Answerable#, IsOwner
 from .sms import send_veriry_code
 
 from rest_framework import generics, filters, viewsets, status, mixins
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-
-class IsOwnerFilterBackend(filters.BaseFilterBackend):
-    def filter_queryset(self, request, queryset, view):
-        pk = view.kwargs.get(view.lookup_field, None)
-        method = request.method
-        if (method in {'GET'} and pk is None):
-            return queryset.filter(user=request.user)
-        else:
-            return queryset
 
 
 class UserListCreate(generics.ListCreateAPIView):
@@ -74,6 +64,19 @@ class CodeView(APIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
 
+class IsOwnerFilterBackend(filters.BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        pk = view.kwargs.get(view.lookup_field, None)
+        method = request.method
+        if (method in {'GET'} and pk is None):
+            if request.user.is_authenticated():
+                return queryset.filter(user=request.user)
+            else:
+                return queryset.none()
+        else:
+            return queryset
+
+
 class PlayViewSet(mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin,
@@ -82,11 +85,13 @@ class PlayViewSet(mixins.CreateModelMixin,
                   viewsets.GenericViewSet):
     queryset = Play.objects.all()
     serializer_class = PlaySerializer
-    permission_classes = (IsOwner, Answerable)
+    #permission_classes = (IsOwner, Answerable)
+    permission_classes = (Answerable,)
     filter_backends = (IsOwnerFilterBackend,)
     
     def pre_save(self, obj):
-        obj.user = self.request.user
+        user = self.request.user
+        obj.user = user if user.is_authenticated() else None 
 
 
 class RankingViewSet(viewsets.ReadOnlyModelViewSet):

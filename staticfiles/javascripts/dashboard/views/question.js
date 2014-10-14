@@ -5,8 +5,25 @@ define([
     
     var QuestionsView = Amour.CollectionView.extend({
         ModelView: Amour.ModelView.extend({
-            template: '<p><strong>{{text}}</strong></p>{{#choices}}<p class="radio"><label><input type="radio" value="{{id}}" name=question-{{question}}> {{text}}</label></p>{{/choices}}',
-            className: 'question-item'
+            template: '<p class="title">{{index}}. {{text}}</p>' + 
+                      '<div class="icon-up-down"><i class="fa fa-chevron-down"></i><i class="fa fa-chevron-up"></i></div>' + 
+                      '<div class="choices">' + 
+                      '{{#choices}}<p class="radio"><label><input type="radio" value="{{id}}" name=question-{{question}}> {{text}}</label></p>{{/choices}}' +
+                      '</div>',
+            className: 'question-item',
+            events: {
+                'click': 'onClickTitle',
+                'click .radio': 'completeQuestion'
+            },
+            onClickTitle: function() {
+                if (!this.$el.hasClass('open')) {
+                    this.$el.addClass('open')
+                        .siblings().removeClass('open');
+                }
+            },
+            completeQuestion: function() {
+                this.$el.addClass('complete');
+            }
         })
     });
     
@@ -83,6 +100,9 @@ define([
                 city.fetch({
                     success: function(model) {
                         var questions = _.sample(model.get('questions'), 5);
+                        _.each(questions, function(question, index) {
+                            question.index = index + 1
+                        });
                         self.questions.set(questions);
                     }
                 });

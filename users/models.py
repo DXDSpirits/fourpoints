@@ -24,7 +24,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 
 class Play(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True)
     city = models.ForeignKey(City)
     
     score = models.IntegerField()
@@ -68,7 +68,7 @@ class Ranking(models.Model):
 
 @receiver(post_save, sender=Play)
 def update_ranking(sender, instance=None, created=False, **kwargs):
-    if instance.complete:
+    if instance.complete and instance.user is not None:
         ranking, _created = Ranking.objects.get_or_create(user=instance.user,
                                                           platform=instance.platform,
                                                           defaults={'score': 0})

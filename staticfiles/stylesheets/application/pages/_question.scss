@@ -2,32 +2,57 @@
 #view-question {
     color: #fff;
     padding-top: 60px;
+    padding-bottom: 60px;
+    .btn-finish {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
     .question-list {
-        margin-right: 20px;
+        height: 100%;
+        @include scrollable();
     }
     .question-item {
-        margin: 20px 0;
-        font-size: 1.2em;
+        padding: 10px 30px 10px 0;
+        font-size: 1em;
+        position: relative;
+    }
+    .icon-up-down {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        width: 19px;
+        height: 19px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #fff;
+        color: $brand-primary;
+    }
+    .fa-chevron-down { display: none; }
+    .fa-chevron-up { display: inline-block; }
+    .choices {
+        overflow: hidden;
+        height: 0;
+    }
+    .open {
+        .fa-chevron-down { display: inline-block; }
+        .fa-chevron-up { display: none; }
+        .choices { height: auto; }
+    }
+    .complete .title {
+        color: #aeddea;
     }
     .radio {
-        margin: 0 0 0 30px;
+        margin: 0 0 0 15px;
     }
     .radio label {
         display: block;
-        padding-top: 15px;
-        padding-bottom: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
     }
     .radio input[type="radio"] {
         margin-top: 0;
         height: 24px;
     }
-    /*.radio label {
-        padding-left: 0;
-        padding-right: 30px;
-    }
-    .radio input[type="radio"] {
-        float: right;
-        margin-left: 0;
-        margin-right: -30px;
-    }*/
 }

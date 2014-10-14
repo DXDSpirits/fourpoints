@@ -21,6 +21,7 @@ define([
         },
         ready: function() {
             this.$('.hero-layer').addClass('hidden');
+            this.$('.wrapper').removeClass('invisible');
             this.$('.merge').removeClass('merge');
         },
         selectCard: function(e) {
