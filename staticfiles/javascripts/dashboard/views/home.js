@@ -29,6 +29,9 @@ define([
             this.$('.card').removeClass('selected');
             $card.addClass('selected');
             this.$('.btn-go').text('Ready? Go!');
+            var region = $card.data('region');
+            this.$('.poi-layer').addClass('invisible');
+            this.$('.poi-layer[data-region=' + region + ']').removeClass('invisible');
         },
         render: function() {
             this.$('.btn-go').text('开始游戏');
