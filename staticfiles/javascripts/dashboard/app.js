@@ -24,11 +24,11 @@ define(function() {
         }
     });
     
-    $('body').on('click', '#sharetip .btn', function() {
-        $('#sharetip').addClass('hidden');
-    });
-    
     App.showShareTip = function() {
+        $('#sharetip').removeClass('hidden').once('click', function() {
+            $(this).addClass('hidden');
+        });
+        return;
         if (!localStorage.getItem('user-shared-to-social')) {
             $('#sharetip').removeClass('hidden');
             localStorage.setItem('user-shared-to-social', true);

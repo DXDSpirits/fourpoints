@@ -40,6 +40,7 @@ define([
             });
         },
         render: function() {
+            App.showShareTip();
             var self = this;
             this.rankings.fetch({
                 reset: true,
