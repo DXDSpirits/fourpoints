@@ -21,6 +21,9 @@ define([
     
     App.Pages.Score = new (PageView.extend({
         events: {
+            'click .btn-send': 'getcode',
+            'click .btn-verify': 'verify',
+            'click .btn-cancel': 'cancelLogin',
             'click .btn-replay': 'replay'
         },
         initPage: function() {
@@ -32,11 +35,64 @@ define([
                 })
             };
         },
+        signin: function() {
+            var self = this;
+            var mobile = this.$('input[name=mobile]').val() || null;
+            if (mobile) {
+                App.user.login({
+                    username : mobile,
+                    password : mobile
+                }, {
+                    success : function() {
+                        self.refreshScore();
+                    },
+                    error : function() {
+                        alert('登录失败');
+                    }
+                });
+            }
+        },
+        verify: function() {
+            var mobile = this.$('input[name=mobile]').val() || null;
+            var code = +this.$('input[name=code]').val();
+            if (mobile && code) {
+                verifyCode.set({ mobile: mobile, code: code });
+                Backbone.sync('update', verifyCode, {
+                    url: Amour.APIHost + '/users/code/',
+                    success: this.signin,
+                    error: function() {
+                        alert('验证码错误');
+                    }
+                });
+            } else {
+                this.signin();
+            }
+        },
+        getcode: function() {
+            var mobile = this.$('input[name=mobile]').val() || null;
+            if (mobile) {
+                var $btn = $('.btn-send');
+                $btn.html('<i class="fa fa-refresh fa-spin"></i>');
+                verifyCode.set({ mobile: mobile });
+                Backbone.sync('create', verifyCode, {
+                    url: Amour.APIHost + '/users/code/',
+                    success: function() {
+                        $btn.addClass('disabled').text('已发送验证码');
+                    }
+                });
+            }
+        },
+        cancelLogin: function() {
+            this.$('.btn-send').removeClass('disabled').text('发送验证码');
+            this.$('.login-box').addClass('hidden');
+        },
         replay: function() {
             App.router.navigate('home');
         },
-        render: function() {
-            App.showShareTip();
+        refreshScore: function() {
+            this.$('.btn-send').removeClass('disabled').text('发送验证码');
+            var logged_in = (Amour.TokenAuth.get() != null);
+            this.$('.login-box').toggleClass('hidden', logged_in);
             var self = this;
             App.plays.fetch({
                 reset: true,
@@ -51,6 +107,11 @@ define([
                     self.plays.reset(filter);
                 }
             });
+        },
+        render: function() {
+            App.showShareTip();
+            var logged_in = (Amour.TokenAuth.get() != null);
+            this.refreshScore();
         }
     }))({el: $('#view-score')});
     

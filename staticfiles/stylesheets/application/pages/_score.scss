@@ -19,4 +19,27 @@
     .score-item {
         font-size: 1.2em;
     }
+    .login-box {
+        position: absolute;
+        left: 0;
+        top: 20px;
+        margin: 20px;
+        padding-top: 1px;
+        background-color: lighten($brand-primary, 20%);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+        border-radius: 5px;
+        overflow: hidden;
+        .btn {
+            color: darken($brand-primary, 30%);
+            background: transparent;
+            border-color: transparent;
+            border-radius: 0;
+        }
+        > form {
+            margin: 0 20px;
+        }
+        .btn-send {
+            height: $input-height-base;
+        }
+    }
 }
