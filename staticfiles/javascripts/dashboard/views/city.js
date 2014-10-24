@@ -36,7 +36,7 @@ define([
             var cityPlayed = _.contains(App.plays.citiesPlayed(), this.city.id);
             this.$('.btn-play').toggleClass('played', cityPlayed || outOfPlay);
             this.$('.btn-play').text(outOfPlay ? '今日五次答题机会已用完' : 
-                                    (cityPlayed ? '已答题，换个城市' : '开始答题'));
+                                    (cityPlayed ? '已答题，换个城市' : '抢答赢免费住宿'));
         },
         render: function() {
             this.$el.removeClass('open');

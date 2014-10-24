@@ -7,7 +7,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     > article {
-        background-color: $brand-primary;
+        background-color: $brand-info;
         margin-right: 50px;
         padding: 20px 0 80px 20px;
         height: 100%;
@@ -30,9 +30,9 @@
         }
         @include user-select(none);
         cursor: pointer;
-        background-color: $brand-primary;
+        background-color: $brand-info;
         &:active {
-            background-color: darken($brand-primary, 5%);
+            background-color: darken($brand-info, 5%);
         }
     }
     .btn-play {
@@ -47,17 +47,6 @@
         opacity: 0;
         @include transition(opacity .35s ease-in-out);
     }
-    &.open {
-        > article {
-            @include translate3d(0, 0, 0);
-        }
-        .left-btn {
-            @include rotateY(180deg);
-        }
-        .btn-play {
-            opacity: 1;
-        }
-    }
     .ad {
         position: absolute;
         z-index: 3;
@@ -71,6 +60,19 @@
         color: #fff;
         > a {
             color: $brand-warning;
+        }
+        opacity: 0;
+        @include transition(opacity .35s ease-in-out);
+    }
+    &.open {
+        > article {
+            @include translate3d(0, 0, 0);
+        }
+        .left-btn {
+            @include rotateY(180deg);
+        }
+        .btn-play, .ad {
+            opacity: 1;
         }
     }
 }
