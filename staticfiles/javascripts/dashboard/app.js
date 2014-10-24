@@ -145,6 +145,7 @@ define(function() {
                 Amour.TokenAuth.set(response.token);
                 if (success) success(model, response, options);
                 model.trigger('login');
+                model.fetch();
             };
             this.save({}, options);
         }
@@ -153,11 +154,6 @@ define(function() {
     //Amour.TokenAuth.clear();
     App.user = new App.Models.User();
     App.plays = new App.Collections.Plays();
-    
-    App.user.on('login', function() {
-        App.user.fetch();
-        App.plays.fetch({reset:true});
-    });
     
     var bindWxSharing = function() {
         var match = window.location.search.match(/[\?\&]radius=(\d+)(&|$)/);
@@ -188,7 +184,10 @@ define(function() {
     App.start = function() {
         bindWxSharing();
         fillImages();
-        if (Amour.TokenAuth.get() != null) App.user.trigger('login');
+        App.plays.fetch({
+            reset: true,
+            data: { platform: App.platform }
+        });
         var cityId = localStorage.getItem('city-left-from');
         if (cityId != null) {
             localStorage.removeItem('city-left-from');

@@ -10,7 +10,7 @@ from .serializers import UserSerializer, UserSimpleSerializer, PlaySerializer, R
 from .permissions import IsSelf, Answerable#, IsOwner
 from .sms import send_veriry_code
 
-from rest_framework import generics, filters, viewsets, status, mixins
+from rest_framework import generics, filters, viewsets, status, mixins, decorators
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -21,12 +21,6 @@ class UserListCreate(generics.ListCreateAPIView):
     
     def get_queryset(self):
         return self.queryset.filter(id=self.request.user.id)
-    
-    def pre_save(self, obj):
-        code = str(random.randint(1000, 9999))
-        send_veriry_code(obj.username, code)
-        obj.set_password(code)
-        obj.is_active = False
 
 
 class UserDetail(generics.RetrieveAPIView):
@@ -92,7 +86,17 @@ class PlayViewSet(mixins.CreateModelMixin,
     
     def pre_save(self, obj):
         user = self.request.user
-        obj.user = user if user.is_authenticated() else None 
+        obj.user = user if user.is_authenticated() else None
+    
+    @decorators.action(methods=['put'])
+    def belong(self, request, pk=None):
+        user = self.request.user
+        obj = self.get_object()
+        if user.is_authenticated() and obj.user is None:
+            obj.user = user
+            obj.save(update_fields=['user'])
+        serializer = PlaySerializer(obj, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class RankingViewSet(viewsets.ReadOnlyModelViewSet):

@@ -46,7 +46,7 @@ define([
                     username : mobile,
                     password : mobile
                 }, {
-                    success : this.refreshScore,
+                    //success : function() {}, login event will trigger active page refresh 
                     error : function() {
                         alert('登录失败');
                     }
@@ -87,21 +87,18 @@ define([
             this.$('.btn-send').removeClass('disabled').text('发送验证码');
             this.$('.login-box').addClass('hidden');
         },
-        refreshScore: function() {
-            this.$('.btn-send').removeClass('disabled').text('发送验证码');
-            var logged_in = (Amour.TokenAuth.get() != null);
-            this.$('.login-box').toggleClass('hidden', logged_in);
-            App.plays.fetch({
-                reset: true,
-                data: { platform: App.platform },
-                success: this.renderScoreList()
-            });
-        },
         replay: function() {
             App.router.navigate('home');
         },
         share: function() {
             App.showShareTip();
+        },
+        refreshScore: function() {
+            App.plays.fetch({
+                reset: true,
+                data: { platform: App.platform },
+                success: this.renderScoreList
+            });
         },
         renderScoreList: function() {
             var today = moment().dayOfYear();
@@ -119,8 +116,22 @@ define([
             this.$('.summary-total-time').text(time_str);
         },
         render: function() {
+            this.$('.btn-send').removeClass('disabled').text('发送验证码');
             var logged_in = (Amour.TokenAuth.get() != null);
-            this.refreshScore();
+            this.$('.login-box').toggleClass('hidden', logged_in);
+            if (logged_in) {
+                var newPlayId = localStorage.getItem('new-play-id');
+                if (newPlayId == null) {
+                    this.refreshScore();
+                } else {
+                    localStorage.removeItem('new-play-id');
+                    var play = new App.Models.Play({id: newPlayId});
+                    play.save({}, {
+                        url: play.url() + 'belong/',
+                        success: this.refreshScore
+                    });
+                }
+            }
         }
     }))({el: $('#view-score')});
     

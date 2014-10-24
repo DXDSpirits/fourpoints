@@ -54,7 +54,8 @@ define([
             this.play.save({
                 answers: answers
             }, {
-                success: function() {
+                success: function(model) {
+                    localStorage.setItem('new-play-id', model.id);
                     App.router.navigate('score');
                 }
             });

@@ -10,6 +10,11 @@
         bottom: 0;
         width: 100%
     }
+    > .wrapper {
+        position: relative;
+        height: 100%;
+        @include scrollable(1px);
+    }
     .score-title, .score-item {
         font-weight: bold;
         background: #fff;
