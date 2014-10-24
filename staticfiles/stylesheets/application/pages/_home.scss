@@ -7,7 +7,7 @@
     .wrapper {
         position: relative;
         overflow: hidden;
-        min-height: 100%;
+        height: 100%;
     }
     .hero-layer {
         position: absolute;
@@ -19,13 +19,25 @@
         background-position: bottom;
         background-size: 100% auto;
     }
+    .hero-layer-text {
+        width: 100%;
+        height: 100%;
+        background-position: top;
+        background-size: 100% auto;
+    }
     .btn-go {
-        //margin-left: -15px;
-        //margin-right: -15px;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: 0;
     }
     .map {
         padding-top: 75%;
-        position: relative;
+        position: absolute;
+        left: 0;
+        bottom: 30px;
+        width: 100%;
+        z-index: -1;
     }
     .poi-layer {
         position: absolute;
