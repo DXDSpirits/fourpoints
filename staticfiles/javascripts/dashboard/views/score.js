@@ -3,6 +3,8 @@ define([
     'pageview'
 ], function(App, PageView) {
     
+    var verifyCode = new Amour.Model();
+    
     var ScoreView = Amour.CollectionView.extend({
         ModelView: Amour.ModelView.extend({
             template: '<div class="col-xs-2">{{index}}</div>' +
@@ -27,6 +29,7 @@ define([
             'click .btn-replay': 'replay'
         },
         initPage: function() {
+            _.bindAll(this, 'signin', 'refreshScore');
             this.plays = new App.Collections.Plays();
             this.views = {
                 score: new ScoreView({
@@ -36,16 +39,13 @@ define([
             };
         },
         signin: function() {
-            var self = this;
             var mobile = this.$('input[name=mobile]').val() || null;
             if (mobile) {
                 App.user.login({
                     username : mobile,
                     password : mobile
                 }, {
-                    success : function() {
-                        self.refreshScore();
-                    },
+                    success : this.refreshScore,
                     error : function() {
                         alert('登录失败');
                     }
@@ -109,7 +109,7 @@ define([
             });
         },
         render: function() {
-            App.showShareTip();
+            //App.showShareTip();
             var logged_in = (Amour.TokenAuth.get() != null);
             this.refreshScore();
         }
