@@ -19,13 +19,12 @@ define(function() {
             (curPage == '#ranking' ||
              curPage == '#instruction' ||
              curPage == '#home')) {
-            $el.addClass('active').siblings().removeClass('active');
             App.router.navigate(target);
         }
     });
     
     App.showShareTip = function() {
-        $('#sharetip').removeClass('hidden').once('click', function() {
+        $('#sharetip').removeClass('hidden').one('click', function() {
             $(this).addClass('hidden');
         });
         return;

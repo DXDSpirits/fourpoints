@@ -40,6 +40,8 @@ define([
             });
         },
         render: function() {
+            var $btn = $('.header-navbar>ul>li[data-target=ranking]');
+            $btn.addClass('active').siblings().removeClass('active');
             App.showShareTip();
             var self = this;
             this.rankings.fetch({

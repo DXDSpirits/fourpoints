@@ -34,6 +34,8 @@ define([
             this.$('.poi-layer[data-region=' + region + ']').removeClass('invisible');
         },
         render: function() {
+            var $btn = $('.header-navbar>ul>li[data-target=home]');
+            $btn.addClass('active').siblings().removeClass('active');
             this.$('.btn-go').text('开始游戏');
             this.$('.card').removeClass('selected');
             return this;
