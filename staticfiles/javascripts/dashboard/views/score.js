@@ -8,8 +8,8 @@ define([
     var ScoreView = Amour.CollectionView.extend({
         ModelView: Amour.ModelView.extend({
             template: '<div class="col-xs-2">{{index}}</div>' +
-                      '<div class="col-xs-2">{{solved}}</div>' +
-                      '<div class="col-xs-4">{{formatted_time}}</div>' +
+                      '<div class="col-xs-3">{{formatted_time}}</div>' +
+                      '<div class="col-xs-3">{{solved}}</div>' +
                       '<div class="col-xs-4">{{score}}</div>',
             className: 'row score-item',
             templateHelpers: {
@@ -26,10 +26,11 @@ define([
             'click .btn-send': 'getcode',
             'click .btn-verify': 'verify',
             'click .btn-cancel': 'cancelLogin',
-            'click .btn-replay': 'replay'
+            'click .btn-replay': 'replay',
+            'click .btn-share': 'share'
         },
         initPage: function() {
-            _.bindAll(this, 'signin', 'refreshScore');
+            _.bindAll(this, 'signin', 'refreshScore', 'renderScoreList');
             this.plays = new App.Collections.Plays();
             this.views = {
                 score: new ScoreView({
@@ -86,30 +87,38 @@ define([
             this.$('.btn-send').removeClass('disabled').text('发送验证码');
             this.$('.login-box').addClass('hidden');
         },
-        replay: function() {
-            App.router.navigate('home');
-        },
         refreshScore: function() {
             this.$('.btn-send').removeClass('disabled').text('发送验证码');
             var logged_in = (Amour.TokenAuth.get() != null);
             this.$('.login-box').toggleClass('hidden', logged_in);
-            var self = this;
             App.plays.fetch({
                 reset: true,
                 data: { platform: App.platform },
-                success: function(collection) {
-                    var today = moment().dayOfYear();
-                    var filter = _.chain(collection.toJSON()).filter(function(play) {
-                        return moment(play.time_created).dayOfYear() == today
-                    }).each(function(play, index) {
-                        play.index = index + 1;
-                    }).value();
-                    self.plays.reset(filter);
-                }
+                success: this.renderScoreList()
             });
         },
+        replay: function() {
+            App.router.navigate('home');
+        },
+        share: function() {
+            App.showShareTip();
+        },
+        renderScoreList: function() {
+            var today = moment().dayOfYear();
+            var total_score = 0, total_time = 0;
+            var filter = _.chain(App.plays.toJSON()).filter(function(play) {
+                return moment(play.time_created).dayOfYear() == today
+            }).each(function(play, index) {
+                play.index = index + 1;
+                total_score += play.score;
+                total_time += play.time;
+            }).value();
+            this.plays.reset(filter);
+            this.$('.summary-total-score').text(total_score);
+            var time_str = parseInt(total_time / 60) + '\'' + parseInt(total_time % 60);
+            this.$('.summary-total-time').text(time_str);
+        },
         render: function() {
-            //App.showShareTip();
             var logged_in = (Amour.TokenAuth.get() != null);
             this.refreshScore();
         }
