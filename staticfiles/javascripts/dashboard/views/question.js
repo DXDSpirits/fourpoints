@@ -12,17 +12,21 @@ define([
                       '</div>',
             className: 'question-item',
             events: {
-                'click': 'onClickTitle',
+                'click .title': 'onClickTitle',
                 'click .radio': 'completeQuestion'
             },
             onClickTitle: function() {
                 if (!this.$el.hasClass('open')) {
                     this.$el.addClass('open')
                         .siblings().removeClass('open');
+                } else {
+                    this.$el.removeClass('open');
                 }
             },
             completeQuestion: function() {
                 this.$el.addClass('complete');
+                this.$el.removeClass('open');
+                this.$el.next().addClass('open');
             }
         })
     });
