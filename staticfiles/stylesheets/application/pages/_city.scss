@@ -24,15 +24,28 @@
         height: 100%;
         top: 0;
         right: 0;
-        .fa {
-            position: relative;
-            top: 40%;
-        }
         @include user-select(none);
         cursor: pointer;
         background-color: $brand-info;
         &:active {
             background-color: darken($brand-info, 5%);
+        }
+        .fa {
+            display: block;
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            margin-top: -6px;
+        }
+        > span {
+            display: block;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            margin-top: -45px;
+            width: 18px;
+            height: 90px;
+            font-size: 16px;
         }
     }
     .btn-play {
@@ -70,6 +83,12 @@
         }
         .left-btn {
             @include rotateY(180deg);
+            .fa {
+                left: 15px;
+            }
+            > span {
+                display: none;
+            }
         }
         .btn-play, .ad {
             opacity: 1;
