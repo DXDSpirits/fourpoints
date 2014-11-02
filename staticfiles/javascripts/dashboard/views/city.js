@@ -18,7 +18,13 @@ define([
             window.open(this.city.get('adurl'), '_blank', 'location=no');
         },
         openArticle: function() {
-            this.$el.toggleClass('open');
+            if (this.$el.hasClass('open')) {
+                this.$el.removeClass('open');
+            } else {
+                this.$el.addClass('open');
+                App.showGuideLayer(4, true);
+            }
+            
         },
         play: function() {
             if (this.$('.btn-play').hasClass('played')) {
@@ -28,6 +34,7 @@ define([
             }
         },
         renderCity: function() {
+            App.showGuideLayer(3, true);
             this.$('.content').scrollTop(0);
             Amour.loadBgImage(this.$el, this.city.get('image'));
             this.$('.title').html(this.city.get('name'));

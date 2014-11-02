@@ -42,7 +42,7 @@ define([
         render: function() {
             var $btn = $('.header-navbar>ul>li[data-target=ranking]');
             $btn.addClass('active').siblings().removeClass('active');
-            App.showShareTip();
+            App.showGuideLayer(8);
             var self = this;
             this.rankings.fetch({
                 reset: true,

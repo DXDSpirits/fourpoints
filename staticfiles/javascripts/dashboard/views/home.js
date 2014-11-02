@@ -17,6 +17,8 @@ define([
             if ($selected.length) {
                 var selectedRegion = +$selected.data('region');
                 App.router.navigate('region/' + selectedRegion);
+            } else {
+                App.showGuideLayer(1);
             }
         },
         ready: function() {

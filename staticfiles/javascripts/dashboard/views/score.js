@@ -91,7 +91,7 @@ define([
             App.router.navigate('home');
         },
         share: function() {
-            App.showShareTip();
+            App.showGuideLayer(7);
         },
         refreshScore: function() {
             App.plays.fetch({
@@ -118,8 +118,8 @@ define([
         render: function() {
             this.$('.btn-send').removeClass('disabled').text('发送验证码');
             var logged_in = (Amour.TokenAuth.get() != null);
-            this.$('.login-box').toggleClass('hidden', logged_in);
             if (logged_in) {
+                this.$('.login-box').addClass('hidden');
                 var newPlayId = localStorage.getItem('new-play-id');
                 if (newPlayId == null) {
                     this.refreshScore();
@@ -131,6 +131,9 @@ define([
                         success: this.refreshScore
                     });
                 }
+            } else {
+                this.$('.login-box').removeClass('hidden');
+                App.showGuideLayer(6, true);
             }
         }
     }))({el: $('#view-score')});

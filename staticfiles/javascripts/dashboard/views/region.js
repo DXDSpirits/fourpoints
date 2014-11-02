@@ -34,7 +34,10 @@ define([
             this.$el.scrollTop(0);
             var regionId = this.options.regionId || 1;
             this.cities.fetch({
-                data: { region: regionId }
+                data: { region: regionId },
+                success: function() {
+                    App.showGuideLayer(2, true);
+                }
             });
         }
     }))({el: $('#view-region')});

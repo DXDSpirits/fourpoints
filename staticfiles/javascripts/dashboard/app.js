@@ -23,15 +23,18 @@ define(function() {
         }
     });
     
-    App.showShareTip = function() {
-        $('#sharetip').removeClass('hidden').one('click', function() {
-            $(this).addClass('hidden');
+    App.showGuideLayer = function(index, once) {
+        var itemName = 'guide-layer-shown-' + index;
+        //if (once && localStorage.getItem(itemName)) return;
+        localStorage.setItem(itemName, true);
+        var $guide = $('#guide-layer');
+        Amour.loadBgImage($guide, 'images/guide-layer-' + index + '.png');
+        $guide.removeClass('hidden');
+        var hideGuide = _.once(function() {
+            $guide.addClass('hidden');
         });
-        return;
-        if (!localStorage.getItem('user-shared-to-social')) {
-            $('#sharetip').removeClass('hidden');
-            localStorage.setItem('user-shared-to-social', true);
-        }
+        $guide.one('click', hideGuide);
+        _.delay(hideGuide, 3000);
     }
     
     /*

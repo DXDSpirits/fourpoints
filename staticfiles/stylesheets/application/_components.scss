@@ -1,5 +1,5 @@
 
-#sharetip {
+#guide-layer {
     position: absolute;
     z-index: 9999;
     top: 0;
@@ -7,12 +7,8 @@
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.9);
-    background-repeat: no-repeat;
-    background-size: 260px 160px;
-    background-position: top right;
-    padding-top: 200px;
-    padding-right: 30px;
-    text-align: right;
+    background-size: contain;
+    background-position: top;
 }
 
 #apploader {
