@@ -73,6 +73,22 @@ define(function() {
     };
     
     /*
+     * Utilities
+     */
+    
+    App.Text = {
+        cleanLineFeed: function(text) {
+            return text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+        },
+        toJSON: function(text) {
+            return _.compact(this.cleanLineFeed(text).split('\n'));
+        },
+        toString: function(json) {
+            return _.isArray(json) ? json.join('\n') : json;
+        }
+    };
+    
+    /*
      * Models and Collections API
      */
     
@@ -191,13 +207,6 @@ define(function() {
             reset: true,
             data: { platform: App.platform }
         });
-        var cityId = localStorage.getItem('city-left-from');
-        if (cityId != null) {
-            localStorage.removeItem('city-left-from');
-            App.router.navigate('city/' + cityId);
-        } else {
-            App.router.navigate('home');
-        }
         Backbone.history.start();
     };
     

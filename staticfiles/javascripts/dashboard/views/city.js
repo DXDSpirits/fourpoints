@@ -14,17 +14,19 @@ define([
         },
         goToAd: function(e) {
             e.preventDefault && e.preventDefault();
-            localStorage.setItem('city-left-from', this.city.id);
-            window.open(this.city.get('adurl'), '_blank', 'location=no');
+            localStorage.setItem('left-city-to-ad', true);
+            location.href = this.city.get('adurl');
+        },
+        showGuide: function() {
+            if (this.$el.hasClass('open')) {
+                App.showGuideLayer(4, true);
+            } else {
+                App.showGuideLayer(3, true);
+            }
         },
         openArticle: function() {
-            if (this.$el.hasClass('open')) {
-                this.$el.removeClass('open');
-            } else {
-                this.$el.addClass('open');
-                App.showGuideLayer(4, true);
-            }
-            
+            this.$el.toggleClass('open');
+            this.showGuide();
         },
         play: function() {
             if (this.$('.btn-play').hasClass('played')) {
@@ -33,12 +35,25 @@ define([
                 App.router.navigate('question/' + this.city.id);
             }
         },
+        parsedDesc: function() {
+            var description = this.city.get('description');
+            var lines = App.Text.toJSON(description);
+            var text = '';
+            _.each(lines, function(line) {
+                if (line[0] == '*') {
+                    text += '<p class="subtitle">' + line.slice(1).trim() + '</p>';
+                } else {
+                    text += '<p>' + line + '</p>';
+                }
+            });
+            return text;
+        },
         renderCity: function() {
-            App.showGuideLayer(3, true);
+            this.showGuide();
             this.$('.content').scrollTop(0);
             Amour.loadBgImage(this.$el, this.city.get('image'));
             this.$('.title').html(this.city.get('name'));
-            this.$('.content').html(this.city.get('description'));
+            this.$('.content').html(this.parsedDesc());
             var outOfPlay = App.plays.timesToday() >= 5;
             var cityPlayed = _.contains(App.plays.citiesPlayed(), this.city.id);
             this.$('.btn-play').toggleClass('played', cityPlayed || outOfPlay);
@@ -46,7 +61,13 @@ define([
                                     (cityPlayed ? '已答题，换个城市' : '抢答赢免费住宿'));
         },
         render: function() {
-            this.$el.removeClass('open');
+            var flag = localStorage.getItem('left-city-to-ad');
+            if (flag) {
+                localStorage.removeItem('left-city-to-ad');
+                this.$el.addClass('open');
+            } else {
+                this.$el.removeClass('open');
+            }
             if (this.options.city) {
                 this.city.set(this.options.city)
                 this.renderCity();

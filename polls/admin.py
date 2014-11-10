@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.forms import ModelForm
+from django.forms.widgets import Textarea
 import models
 import polls
 
@@ -29,9 +31,10 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class CityAdmin(admin.ModelAdmin):
-    class QuestionInline(admin.StackedInline):
-        model = models.Question
-        extra = 0
+#     class QuestionInline(admin.StackedInline):
+#         model = models.Question
+#         extra = 0
+#     inlines = [QuestionInline]
     
     def thumbnail(self, instance):
         return u'<img src="%s" style="max-width:100px;height:50px;" alt="" />' % instance.image.url
@@ -43,10 +46,16 @@ class CityAdmin(admin.ModelAdmin):
             polls.random_questions(city)
     random_questions.short_description = "Generate Random Questions"
     
+    class CityForm(ModelForm):
+        class Meta:
+            widgets = {
+                'description': Textarea(attrs={'class': 'input-xxlarge', 'rows': '20'})
+            }
+    
     list_display = ['id', 'region', 'name', 'thumbnail', 'adurl']
     list_display_links = ['id', 'name']
-    inlines = [QuestionInline]
     actions = ['random_questions']
+    form = CityForm
 
 
 class RegionAdmin(admin.ModelAdmin):
