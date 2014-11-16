@@ -88,7 +88,7 @@ class PlayViewSet(mixins.CreateModelMixin,
         user = self.request.user
         obj.user = user if user.is_authenticated() else None
     
-    @decorators.action(methods=['put'])
+    @decorators.action(methods=['put'],permission_classes=[])
     def belong(self, request, pk=None):
         user = self.request.user
         obj = self.get_object()
