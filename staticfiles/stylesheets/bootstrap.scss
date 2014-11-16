@@ -1,54 +1,66 @@
-// Core variables and mixins
 @import "custom";
-@import "bootstrap/variables";
-@import "bootstrap/mixins";
 
-// Reset and dependencies
-@import "bootstrap/normalize";
-@import "bootstrap/print";
-@import "bootstrap/glyphicons";
+//======================================== Bootstrap ========================================
+@import "bootstrap/bootstrap";
+//===========================================================================================
 
-// Core CSS
-@import "bootstrap/scaffolding";
-@import "bootstrap/type";
-@import "bootstrap/code";
-@import "bootstrap/grid";
-@import "bootstrap/tables";
-@import "bootstrap/forms";
-@import "bootstrap/buttons";
+a:hover, a:focus {
+    color: $link-hover-color;
+    text-decoration: none;
+}
 
-// Components
-@import "bootstrap/component-animations";
-@import "bootstrap/dropdowns";
-@import "bootstrap/button-groups";
-@import "bootstrap/input-groups";
-@import "bootstrap/navs";
-@import "bootstrap/navbar";
-@import "bootstrap/breadcrumbs";
-@import "bootstrap/pagination";
-@import "bootstrap/pager";
-@import "bootstrap/labels";
-@import "bootstrap/badges";
-@import "bootstrap/jumbotron";
-@import "bootstrap/thumbnails";
-@import "bootstrap/alerts";
-@import "bootstrap/progress-bars";
-@import "bootstrap/media";
-@import "bootstrap/list-group";
-@import "bootstrap/panels";
-@import "bootstrap/responsive-embed";
-@import "bootstrap/wells";
-@import "bootstrap/close";
+.invisible {
+    opacity: 0;
+    visibility: hidden;
+}
 
-// Components w/ JavaScript
-@import "bootstrap/modals";
-@import "bootstrap/tooltip";
-@import "bootstrap/popovers";
-@import "bootstrap/carousel";
+.img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
-// Utility classes
-@import "bootstrap/utilities";
-@import "bootstrap/responsive-utilities";
+.img-loading {
+    //background-color: rgba(255, 255, 255, .9);
+    background-color: transparent;
+    background-size: 32px 32px !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
 
-// Customized styles
-@import "bootstrap-theme";
+.img-circle {
+    border-radius: 50%;
+}
+
+@media (max-width: ($screen-xs-min - 1)) {
+    @include responsive-visibility('.hidden-xxs');
+}
+
+.form-control {
+    @include box-shadow(none);
+    &:focus {
+        outline: 0;
+        @include box-shadow(none);
+    }
+}
+
+input[type=tel],
+input[type=url],
+input[type=text],
+input[type=email],
+input[type=search],
+input[type=number],
+input[type=password],
+textarea {
+    &.form-control {
+        -webkit-appearance: none;
+    }
+}
+
+.btn {
+    border-radius: 0;
+}
+
+.progress {
+    border-radius: 0;
+}
