@@ -1,5 +1,89 @@
 
 #view-instruction {
     color: #fff;
-    background: rgba(40, 104, 132, 0.7);
+    .section-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 10px 0;
+        .small {
+            font-size: 14px;
+        }
+    }
+    .subtitle {
+        font-weight: bold;
+        line-height: 25px;
+        margin: 10px 0;
+    }
+    .icon {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 0;
+        height: 25px;
+        width: 25px;
+        background-image: url(#{$static-url}images/4icons.png);
+        background-repeat: no-repeat;
+        background-size: 50px 50px;
+        &.watch   { background-position: 0 0; }
+        &.paper   { background-position: 0 -25px; }
+        &.diamond { background-position: -25px 0; }
+        &.star    { background-position: -25px -25px; }
+    }
+    .padding-text {
+        padding-left: 25px;
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            display: block;
+            margin: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            .o {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+        li.steps-guide {
+            padding: 5px 10px;
+        }
+        mark {
+            background-color: inherit;
+            color: #e9e971;
+        }
+    }
+    .steps-guide {
+        border: 1px dotted #fff;
+        border-radius: 5px;
+        background-color: rgba(#fff, 0.2);
+        > p {
+            font-size: 12px;
+            width: 50%;
+            margin: 5px 0;
+        }
+        .oc {
+            display: inline-block;
+            background-color: #fff;
+            color: #246785;
+            border-radius: 50%;
+            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+            ling-height: 16px;
+            text-align: center;
+        }
+    }
+    .double-line-spliter {
+        width: 100%;
+        height: 5px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        border-top: 1px solid rgba(#fff, 0.2);
+        border-bottom: 1px solid rgba(#fff, 0.2);
+    }
+    .banner {
+        padding-top: 25%;
+        margin: 0 -15px -15px;
+    }
 }

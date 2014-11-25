@@ -236,7 +236,7 @@
     Amour.loadBgImage = function(el, src, options) {
         if (!src) return;
         options = options || {};
-        el.css('background-image', 'url(' + Amour.CDNURL + 'images/loading.gif' + ')');
+        el.css('background-image', 'url(' + Amour.CDNURL + 'images/loading-light.gif' + ')');
         var image = new Image(), image_src = Amour.imageFullpath(src);
         image.onload = function() {
             el.removeClass('img-loading');

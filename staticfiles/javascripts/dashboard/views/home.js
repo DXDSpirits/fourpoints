@@ -22,6 +22,7 @@ define([
             }
         },
         ready: function() {
+            App.showGuideLayer(1);
             this.$('.hero-layer').addClass('hidden');
             this.$('.wrapper').removeClass('invisible');
             this.$('.merge').removeClass('merge');
