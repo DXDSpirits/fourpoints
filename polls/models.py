@@ -39,7 +39,7 @@ class Question(models.Model):
 class Choice(models.Model):
     question = models.ForeignKey(Question)
     text = models.CharField(max_length=200)
-    right = models.BooleanField()
+    right = models.BooleanField(default=False)
     
     def __unicode__(self):
         return unicode(self.text)

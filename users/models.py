@@ -17,7 +17,8 @@ class VerifyCode(models.Model):
         return self.mobile
 
 
-@receiver(post_save, sender=get_user_model())
+#@receiver(post_save, sender=get_user_model())
+@receiver(post_save, sender=User)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
@@ -34,7 +35,7 @@ class Play(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     
-    complete = models.BooleanField()
+    complete = models.BooleanField(default=False)
     platform = models.SlugField()
     
     class Meta:
