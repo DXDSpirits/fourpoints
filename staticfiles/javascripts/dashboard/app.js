@@ -25,7 +25,7 @@ define(function() {
     
     App.showGuideLayer = function(index, once) {
         var itemName = 'guide-layer-shown-' + index;
-        //if (once && localStorage.getItem(itemName)) return;
+        if (once && localStorage.getItem(itemName)) return;
         localStorage.setItem(itemName, true);
         var $guide = $('#guide-layer');
         Amour.loadBgImage($guide, 'images/guide-layer-' + index + '.png');
@@ -35,7 +35,7 @@ define(function() {
         });
         $guide.one('click', hideGuide);
         _.delay(hideGuide, 3000);
-    }
+    };
     
     /*
      * Ajax Events

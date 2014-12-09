@@ -33,9 +33,9 @@ class CodeView(APIView):
     def post(self, request, *args, **kwargs):
         mobile = request.DATA.get('mobile')
         if mobile:
-            #code = str(random.randint(1000, 9999))
-            #send_veriry_code(mobile, code)
-            code = 1234
+            code = str(random.randint(1000, 9999))
+            send_veriry_code(mobile, code)
+            #code = 1234
             verifycode, created = VerifyCode.objects.get_or_create(mobile = mobile,
                                                                    defaults={'code': code})
             if not created:
