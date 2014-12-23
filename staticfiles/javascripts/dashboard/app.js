@@ -178,12 +178,12 @@ define(function() {
         var match = window.location.search.match(/[\?\&]radius=(\d+)(&|$)/);
         var radius = match ? +match[1] : 0;
         var message = {
-            "img_url": "http://fourpoints.oatpie.com/static/images/fp-logo.jpg",
+            "img_url": "http://fourpoints.oatpie.com/static/images/fp-avatar.jpg",
             "img_width" : "640",
             "img_height" : "640",
             "link" : [window.location.origin, window.location.pathname, '?radius=', radius + 1].join(''),
-            "desc" : '福朋自由派, 带你玩转旅行新地点',
-            "title" : '福朋自由派, 带你玩转旅行新地点'
+            "desc" : '福朋擂主高调炫“绩”，不服来挑战！争夺免费住宿！',
+            "title" : '福朋擂主高调炫“绩”，不服来挑战！争夺免费住宿！'
         };
         var onBridgeReady = function () {
             WeixinJSBridge.on('menu:share:appmessage', function(argv) {
