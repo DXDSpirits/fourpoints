@@ -15,10 +15,7 @@ define(function() {
         var curPage = location.hash;
         var $el = $(e.currentTarget);
         var target = $el.data('target');
-        if (!App.Playing &&
-            (curPage == '#ranking' ||
-             curPage == '#instruction' ||
-             curPage == '#home')) {
+        if (!App.Playing) {
             App.router.navigate(target);
         }
     });
