@@ -91,7 +91,11 @@ define([
             App.router.navigate('home');
         },
         share: function() {
-            App.showGuideLayer(7);
+            if (Amour.isWeixin) {
+                App.showGuideLayer(7);
+            } else {
+                App.shareToWeibo();
+            }
         },
         refreshScore: function() {
             App.plays.fetch({
@@ -104,7 +108,7 @@ define([
             var today = moment().dayOfYear();
             var total_score = 0, total_time = 0;
             var filter = _.chain(App.plays.toJSON()).filter(function(play) {
-                return moment(play.time_created).dayOfYear() == today
+                return moment(play.time_created).dayOfYear() == today;
             }).each(function(play, index) {
                 play.index = index + 1;
                 total_score += play.score;

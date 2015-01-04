@@ -126,7 +126,7 @@ define(function() {
         timesToday: function() {
             var today = moment().dayOfYear();
             return this.filter(function(play) {
-                return today == moment(play.get('time_created')).dayOfYear()
+                return today == moment(play.get('time_created')).dayOfYear();
             }).length;
         }
     });
@@ -175,6 +175,14 @@ define(function() {
     App.plays = new App.Collections.Plays();
     
     var bindWxSharing = function() {
+        $('title').text('外出“游礼”，赢免费住宿，测测你旅行地知多少？');
+        var image = new Image();
+        image.src = 'http://fourpoints.oatpie.com/static/images/fp-avatar.jpg';
+        $('body').prepend($(image).css({
+            'position': 'absolute',
+            'z-index': '-9999',
+            'width': '200px'
+        }));
         var match = window.location.search.match(/[\?\&]radius=(\d+)(&|$)/);
         var radius = match ? +match[1] : 0;
         var message = {
@@ -182,8 +190,8 @@ define(function() {
             "img_width" : "640",
             "img_height" : "640",
             "link" : [window.location.origin, window.location.pathname, '?radius=', radius + 1].join(''),
-            "desc" : '福朋擂主高调炫“绩”，不服来挑战！争夺免费住宿！',
-            "title" : '福朋擂主高调炫“绩”，不服来挑战！争夺免费住宿！'
+            "desc" : '福朋自由派',
+            "title" : '外出“游礼”，赢免费住宿，测测你旅行地知多少？'
         };
         var onBridgeReady = function () {
             WeixinJSBridge.on('menu:share:appmessage', function(argv) {
@@ -200,8 +208,26 @@ define(function() {
         }
     };
     
+    App.shareToWeibo = function() {
+        var getWeiboLink = function(s, d, e, r, l, p, t, z, c) {
+            var f = 'http://service.weibo.com/share/share.php?appkey=', u = z || d.location,
+            p = ['&url=', e(u), '&title=', e(t || d.title), '&source=', e(r), '&sourceUrl=', e(l), 
+                '&content=', c || 'gb2312', '&pic=', e(p || '')].join('');
+            return [f, p].join('');
+        };
+        var url = 'http://fourpoints.oatpie.com/';
+        var content  = '#福朋自游派#【外出“游礼”，抢答赢免费住宿】还有更多幸运奖品等你来！玩转旅行新地点，你能得多少分？趣味题目抢答开始>>';
+        var pic = 'http://fourpoints.oatpie.com/static/images/fp-avatar.jpg';
+        var link = getWeiboLink(screen, document, encodeURIComponent,
+                                'http://www.wedfairy.com', 'http://www.wedfairy.com',
+                                pic, content, url, 'utf-8');
+        window.open(link, '_blank');
+    };
+    
     App.start = function() {
-        bindWxSharing();
+        if (Amour.isWeixin) {
+            bindWxSharing();
+        }
         fillImages();
         App.plays.fetch({
             reset: true,
