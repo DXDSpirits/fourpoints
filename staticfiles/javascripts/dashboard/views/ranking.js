@@ -42,7 +42,11 @@ define([
         render: function() {
             var $btn = $('.header-navbar>ul>li[data-target=ranking]');
             $btn.addClass('active').siblings().removeClass('active');
-            App.showGuideLayer(8);
+            if (Amour.isWeixin) {
+                App.showGuideLayer(8);
+            } else {
+                App.showGuideLayer(9);
+            }
             var self = this;
             this.rankings.fetch({
                 reset: true,

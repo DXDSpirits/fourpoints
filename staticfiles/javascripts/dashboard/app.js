@@ -32,6 +32,9 @@ define(function() {
         $guide.removeClass('hidden');
         var hideGuide = _.once(function() {
             $guide.addClass('hidden');
+            if (index == 9 && !localStorage.getItem(itemName)) {
+                App.shareToWeibo();
+            }
         });
         $guide.one('click', hideGuide);
         _.delay(hideGuide, 3000);
@@ -227,6 +230,8 @@ define(function() {
     App.start = function() {
         if (Amour.isWeixin) {
             bindWxSharing();
+        } else {
+            $('title').text('#福朋自游派#【外出“游礼”，抢答赢免费住宿】还有更多幸运奖品等你来！玩转旅行新地点，你能得多少分？趣味题目抢答开始');
         }
         fillImages();
         App.plays.fetch({
