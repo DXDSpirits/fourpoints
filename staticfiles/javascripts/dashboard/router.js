@@ -67,12 +67,15 @@ define(['app'], function(App) {
         },
         question: function(cid) {
             pageRouter.goTo('Question', { cityId: cid });
+            this.navigate('', { trigger: false });
         },
         score: function() {
             pageRouter.goTo('Score');
+            this.navigate('', { trigger: false });
         },
         ranking: function(storyId) {
             pageRouter.goTo('Ranking');
+            this.navigate('', { trigger: false });
         },
         login: function() {
             pageRouter.goTo('Login');
