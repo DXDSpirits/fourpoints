@@ -12,7 +12,7 @@ define([
                       '</div>',
             className: 'question-item',
             events: {
-                'click .title': 'onClickTitle',
+                'click .title,.icon-up-down': 'onClickTitle',
                 'click .radio': 'completeQuestion'
             },
             onClickTitle: function() {
