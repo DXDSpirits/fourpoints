@@ -58,7 +58,7 @@ class Answer(models.Model):
 
 class Ranking(models.Model):
     user = models.ForeignKey(User)
-    score = models.IntegerField()
+    score = models.IntegerField(db_index=True)
     platform = models.SlugField()
     
     last_modified = models.DateTimeField(auto_now=True)
