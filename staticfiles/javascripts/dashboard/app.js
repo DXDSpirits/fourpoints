@@ -232,8 +232,8 @@ define(function() {
         }
         fillImages();
         App.plays.fetch({
-            reset: true,
-            data: { platform: App.platform }
+            //data: { platform: App.platform },
+            reset: true
         });
         Backbone.history.start();
     };

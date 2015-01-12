@@ -100,7 +100,7 @@ define([
         refreshScore: function() {
             App.plays.fetch({
                 reset: true,
-                data: { platform: App.platform },
+                //data: { platform: App.platform },
                 success: this.renderScoreList
             });
         },
