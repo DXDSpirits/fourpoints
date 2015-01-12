@@ -1,4 +1,6 @@
-from django.contrib.auth import get_user_model
+from datetime import date
+
+#from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
@@ -70,9 +72,11 @@ class Ranking(models.Model):
 
 @receiver(post_save, sender=Play)
 def update_ranking(sender, instance=None, created=False, **kwargs):
-    if instance.complete and instance.user is not None:
+    if (instance.complete and 
+        instance.user is not None and 
+        Play.objects.filter(user=instance.user, time_created__gte=date.today()).count() < 5):
         ranking, _created = Ranking.objects.get_or_create(user=instance.user,
-                                                          platform=instance.platform,
+                                                          #platform=instance.platform,
                                                           defaults={'score': 0})
         ranking.score += instance.score
         ranking.save(update_fields=['score'])
