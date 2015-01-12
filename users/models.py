@@ -65,7 +65,8 @@ class Ranking(models.Model):
     
     class Meta:
         index_together = [['platform', 'score',],]
-        ordering = ['platform', '-score']
+        #ordering = ['platform', '-score']
+        ordering = ['-score']
 
 @receiver(post_save, sender=Play)
 def update_ranking(sender, instance=None, created=False, **kwargs):

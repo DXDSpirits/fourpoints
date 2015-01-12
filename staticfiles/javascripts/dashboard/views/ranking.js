@@ -28,7 +28,7 @@ define([
             var myRanking = new App.Collections.Rankings();
             myRanking.fetch({
                 data: {
-                    platform: App.platform,
+                    //platform: App.platform,
                     user: App.user.id
                 },
                 success: function(collection) {
@@ -50,7 +50,7 @@ define([
             var self = this;
             this.rankings.fetch({
                 reset: true,
-                data: { platform: App.platform },
+                //data: { platform: App.platform },
                 success: function(collection) {
                     collection.each(function(model, index) {
                         model.set('index', index + 1);

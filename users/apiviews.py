@@ -103,7 +103,8 @@ class RankingViewSet(viewsets.ReadOnlyModelViewSet):
     class RankingFilter(django_filters.FilterSet):
         class Meta:
             model = Ranking
-            fields = ['platform', 'user']
+            #fields = ['platform', 'user']
+            fields = ['user']
             ordering = ['-score']
     queryset = Ranking.objects.all()
     serializer_class = RankingSerializer
