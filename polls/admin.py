@@ -17,6 +17,7 @@ class ChoiceAdmin(admin.ModelAdmin):
     list_display = ['id', 'of_city', 'question', 'right', 'text']
     list_display_links = ['id', 'text']
     list_editable = ['right']
+    list_filter = ['question__city']
     ordering = ['id']
     list_per_page = 40
 
